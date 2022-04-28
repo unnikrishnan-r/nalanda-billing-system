@@ -1,0 +1,42 @@
+{
+  "name": "nalanda-billing-system",
+  "version": "1.0.0",
+  "description": "Application that manages Latex Collection and Billing for Nalanda Associates",
+  "main": "server.js",
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node ./server/server.js",
+    "start:dev": "concurrently \"nodemon ./server --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "(cd server && npm install) && (cd client && npm install)",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unnikrishnan-r/nalanda-billing-system"
+  },
+  "author": "Unnikrishnan Ramachandran",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "if-env": "^1.0.4"
+  },
+  "bugs": {
+    "url": "https://github.com/unnikrishnan-r/nalanda-billing-system/issues"
+  },
+  "homepage": "https://github.com/unnikrishnan-r/nalanda-billing-system/blob/main/README.md"
+}
