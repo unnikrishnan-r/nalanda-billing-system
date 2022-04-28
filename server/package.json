@@ -1,0 +1,36 @@
+{
+  "name": "nalanda-billing-system",
+  "version": "1.0.0",
+  "description": "Application that manages Latex Collection and Billing for Nalanda Associates",
+  "main": "server.js",
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unnikrishnan-r/nalanda-billing-system"
+  },
+  "author": "Unnikrishnan Ramachandran",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "10.0.3",
+    "concurrently": "^4.1.2",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.2",
+    "axios": "^0.18.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "if-env": "^1.0.4",
+    "moment": "^2.24.0"
+  },
+  "bugs": {
+    "url": "https://github.com/unnikrishnan-r/nalanda-billing-system/issues"
+  },
+  "homepage": "https://github.com/unnikrishnan-r/nalanda-billing-system/blob/main/README.md"
+}
