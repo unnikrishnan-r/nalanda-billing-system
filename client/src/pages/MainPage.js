@@ -25,17 +25,46 @@ import API from "../utils/API";
 class MainPage extends Component {
   state = {
     customerList: [],
-    rowdata: [
-      { make: "Toyota", model: "Celica", price: 35000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-    ],
+    // rowdata: [
+    //   { make: "Toyota", model: "Celica", price: 35000 },
+    //   { make: "Ford", model: "Mondeo", price: 32000 },
+    //   { make: "Porsche", model: "Boxster", price: 72000 },
+    // ],
     columnDefs: [
-      { field: "customerId", filter: "agSetColumnFilter" },
-      { field: "customerName", filter: "agSetColumnFilter" },
-      { field: "customerAddress", filter: "agSetColumnFilter" },
-      { field: "customerPhone", filter: "agSetColumnFilter" },
-      { field: "customerBalance", filter: "agSetColumnFilter" }
+      {
+        field: "customerId",
+        filter: "agSetColumnFilter",
+        headerName: "Customer Id",
+      },
+      {
+        field: "customerName",
+        filter: "agSetColumnFilter",
+        headerName: "Customer Name",
+        editable: true,
+      },
+      {
+        field: "customerAddress",
+        filter: "agSetColumnFilter",
+        headerName: "Address",
+        editable: true,
+      },
+      {
+        field: "customerPhone",
+        filter: "agSetColumnFilter",
+        headerName: "Phone",
+        editable: true,
+      },
+      {
+        field: "customerBalance",
+        filter: "agSetColumnFilter",
+        headerName: "Net Due",
+      },
+      {
+        field: "customerStatus",
+        filter: "agSetColumnFilter",
+        headerName: "Status",
+      },
+
     ],
   };
 
@@ -62,7 +91,7 @@ class MainPage extends Component {
         <br></br>
         <br></br>
         <Container></Container>
-        <div className="ag-theme-alpine" style={{ height:500 }}>
+        <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
