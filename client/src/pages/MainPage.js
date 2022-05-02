@@ -57,7 +57,7 @@ class MainPage extends Component {
       {
         field: "customerBalance",
         filter: "agSetColumnFilter",
-        headerName: "Net Due",
+        headerName: "Net Due Amount",
       },
       {
         field: "customerStatus",
