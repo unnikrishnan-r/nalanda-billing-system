@@ -8,7 +8,9 @@ export default class index extends Component {
         <Navbar.Brand href="#home">Nalanda Latex Management System!!!</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="#home">Customers</Nav.Link>
-          <Nav.Link href="#features">Latex Collection</Nav.Link>
+          <Nav.Link href="#latexCollection">Latex Collection</Nav.Link>
+          <Nav.Link href="#cashPayments">Cash Payments</Nav.Link>
+          <Nav.Link href="#billingInvoices">Billing & Invoices</Nav.Link>
         </Nav>
       </Navbar>
     );
