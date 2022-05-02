@@ -62,7 +62,7 @@ class MainPage extends Component {
       {
         field: "customerStatus",
         filter: "agSetColumnFilter",
-        headerName: "Status",
+        headerName: "Customer Status",
       },
 
     ],
