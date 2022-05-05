@@ -35,34 +35,40 @@ class MainPage extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
+        floatingFilter:true
       },
       {
         field: "customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
         editable: true,
+        floatingFilter:true
       },
       {
         field: "customerAddress",
         filter: "agSetColumnFilter",
         headerName: "Address",
         editable: true,
+        floatingFilter:true
       },
       {
         field: "customerPhone",
         filter: "agSetColumnFilter",
         headerName: "Phone",
         editable: true,
+        floatingFilter:true
       },
       {
         field: "customerBalance",
         filter: "agSetColumnFilter",
         headerName: "Net Due Amount",
+        floatingFilter:true
       },
       {
         field: "customerStatus",
         filter: "agSetColumnFilter",
         headerName: "Customer Status",
+        floatingFilter:true
       },
 
     ],
