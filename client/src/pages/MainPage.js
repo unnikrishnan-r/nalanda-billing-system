@@ -4,9 +4,8 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-
 import "ag-grid-enterprise";
-// import "./style.css"
+import "./style.css"
 import {
   Row,
   Col,
@@ -18,7 +17,6 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
-
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
 
@@ -35,49 +33,46 @@ class MainPage extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
-        floatingFilter:true
+        floatingFilter: true
       },
       {
         field: "customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
         editable: true,
-        floatingFilter:true
+        floatingFilter: true
       },
       {
         field: "customerAddress",
         filter: "agSetColumnFilter",
         headerName: "Address",
         editable: true,
-        floatingFilter:true
+        floatingFilter: true
       },
       {
         field: "customerPhone",
         filter: "agSetColumnFilter",
         headerName: "Phone",
         editable: true,
-        floatingFilter:true
+        floatingFilter: true
       },
       {
         field: "customerBalance",
         filter: "agSetColumnFilter",
         headerName: "Net Due Amount",
-        floatingFilter:true
+        floatingFilter: true,
       },
       {
         field: "customerStatus",
         filter: "agSetColumnFilter",
         headerName: "Customer Status",
-        floatingFilter:true
+        floatingFilter: true
       },
-
     ],
   };
-
   componentDidMount = () => {
     this.loadCustomers();
   };
-
   loadCustomers = () => {
     API.getCustomerList()
       .then((res) => {
@@ -89,14 +84,18 @@ class MainPage extends Component {
         console.log(err);
       });
   };
-
   render() {
     return (
       <>
         <Navbar></Navbar>
         <br></br>
         <br></br>
-        <Container></Container>
+        <Container >
+          <a href = "/addcustomer">
+          <Button varient="contained" size="small " id="btn">Add Customer</Button>
+          </a>
+        </Container>
+        <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.customerList}
@@ -107,5 +106,4 @@ class MainPage extends Component {
     );
   }
 }
-
 export default withRouter(MainPage);
