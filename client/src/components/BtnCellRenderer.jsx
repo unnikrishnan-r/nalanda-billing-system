@@ -10,7 +10,7 @@ export default class BtnCellRenderer extends Component {
     render() {
       return (
         <label className="switch">
-        <input type="checkbox"/>
+        <input type="checkbox" checked={this.props.data.customerStatus}/>
           <span className="slider round"></span>
       </label>
       )
