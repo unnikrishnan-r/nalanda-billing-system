@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
+import BtnCellRenderer from "../components/BtnCellRenderer";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css"
-import BtnCellRenderer from "../components/BtnCellRenderer";
-
 import {
   Row,
   Col,
@@ -78,7 +77,7 @@ class MainPage extends Component {
         cellRenderer: 'btnCellRenderer',
         cellRendererParams: {
           clicked: function(field) {
-            alert(`${field} was clicked`);
+            console.log(`${field}`)
           },
         },
         floatingFilter: true
@@ -96,7 +95,6 @@ class MainPage extends Component {
       .then((res) => {
         console.log(res);
         this.setState({ customerList: res.data });
-        // console.log(this.state.customerList);
       })
       .catch((err) => {
         console.log(err);
@@ -109,6 +107,9 @@ class MainPage extends Component {
         <br></br>
         <br></br>
         <Container >
+          <a href = "/addcustomer">
+          <Button varient="contained" size="small " id="btn">Add Customer</Button>
+          </a>
         </Container>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>

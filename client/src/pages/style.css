@@ -1,4 +1,11 @@
-
+#btn {
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    font: menu;
+    font-family: system-ui;
+    margin-left: auto;
+}
 .ag-theme-alpine {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
