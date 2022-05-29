@@ -30,12 +30,6 @@ function currencyFormatter(params) {
 }
 class MainPage extends Component {
   state = {
-    customerList: [],
-    // rowdata: [
-    //   { make: "Toyota", model: "Celica", price: 35000 },
-    //   { make: "Ford", model: "Mondeo", price: 32000 },
-    //   { make: "Porsche", model: "Boxster", price: 72000 },
-    // ],
     columnDefs: [
       {
         field: "customerId",
@@ -77,7 +71,7 @@ class MainPage extends Component {
         headerName: "Customer Status",
         cellRenderer: 'btnCellRenderer',
         cellRendererParams: {
-          clicked: function(field) {
+          clicked: function (field) {
             alert(`${field} was clicked`);
           },
         },

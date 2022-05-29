@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-
+import LatexCollection from "./pages/LatexCollection";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}
           <Route exact path="/" component={MainPage} />
-
+          <Route exact path="/latexCollection" component={LatexCollection} />
         </Switch>
       </div>
     </Router>
