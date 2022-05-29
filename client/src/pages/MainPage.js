@@ -4,8 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
-import "./style.css"
-import BtnCellRenderer from "../components/BtnCellRenderer";
+import "./style.css";
 
 import {
   Row,
@@ -23,10 +22,10 @@ import API from "../utils/API";
 function formatNumber(number) {
   return Math.floor(number)
     .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 function currencyFormatter(params) {
-  return 'Rs.' + formatNumber(params.value);
+  return "Rs." + formatNumber(params.value);
 }
 class MainPage extends Component {
   state = {
@@ -41,53 +40,70 @@ class MainPage extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
-        floatingFilter: true
+        floatingFilter: true,
+        sortable: true,
       },
       {
         field: "customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
         editable: true,
-        floatingFilter: true
+        floatingFilter: true,
+        sortable: true,
       },
       {
         field: "customerAddress",
         filter: "agSetColumnFilter",
         headerName: "Address",
         editable: true,
-        floatingFilter: true
+        floatingFilter: true,
       },
       {
         field: "customerPhone",
         filter: "agSetColumnFilter",
         headerName: "Phone",
         editable: true,
-        floatingFilter: true
+        floatingFilter: true,
       },
       {
         field: "customerBalance",
         filter: "agSetColumnFilter",
         headerName: "Net Due Amount",
         floatingFilter: true,
-        valueFormatter: currencyFormatter
+        sortable: true,
+        valueFormatter: currencyFormatter,
       },
       {
         field: "customerStatus",
         filter: "agSetColumnFilter",
         headerName: "Customer Status",
-        cellRenderer: 'btnCellRenderer',
-        cellRendererParams: {
-          clicked: function(field) {
-            alert(`${field} was clicked`);
-          },
-        },
-        floatingFilter: true
+        sortable: true,
+        cellRenderer: (params) => (
+          <Form.Check
+            type="switch"
+            id={params.data.customerId}
+            checked={params.data.customerStatus}
+            onChange={() => this.handleCustomerStatusChange(params)}
+          />
+        ),
       },
     ],
-    frameworkComponents: {
-      btnCellRenderer: BtnCellRenderer
-    },
   };
+  //Function to handle the change of customer status switch
+  handleCustomerStatusChange(params) {
+    /*Creates a copy of the customerList
+    1. use "map" to search original customer list using the id of the clicked switch to locate the object to update
+    2. If found, replace the customer status by flipping the current value of the switch
+    3. If not found, return the original customer
+    4. Use Set State to update the latest customer list to state
+    */
+    let newCustomerList = this.state.customerList.map((oldCustomer) =>
+      oldCustomer.customerId === params.data.customerId
+        ? { ...oldCustomer, customerStatus: !params.data.customerStatus }
+        : oldCustomer
+    );
+    this.setState({ customerList: newCustomerList });
+  }
   componentDidMount = () => {
     this.loadCustomers();
   };
@@ -108,16 +124,15 @@ class MainPage extends Component {
         <Navbar></Navbar>
         <br></br>
         <br></br>
-        <Container >
-        </Container>
+        <Container></Container>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
-            frameworkComponents={this.state.frameworkComponents}
           ></AgGridReact>
         </div>
+        <br></br>
       </>
     );
   }
