@@ -77,6 +77,7 @@ class MainPage extends Component {
         field: "customerStatus",
         filter: "agSetColumnFilter",
         headerName: "Customer Status",
+        floatingFilter: true,
         sortable: true,
         cellRenderer: (params) => (
           <Form.Check
@@ -96,6 +97,7 @@ class MainPage extends Component {
     2. If found, replace the customer status by flipping the current value of the switch
     3. If not found, return the original customer
     4. Use Set State to update the latest customer list to state
+    5. Update the database
     */
     let newCustomerList = this.state.customerList.map((oldCustomer) =>
       oldCustomer.customerId === params.data.customerId
@@ -103,6 +105,16 @@ class MainPage extends Component {
         : oldCustomer
     );
     this.setState({ customerList: newCustomerList });
+    API.updateCustomer({
+      ...params.data,
+      customerStatus: !params.data.customerStatus,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   //Update function
