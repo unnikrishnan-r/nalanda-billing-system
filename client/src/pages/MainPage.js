@@ -104,6 +104,18 @@ class MainPage extends Component {
     );
     this.setState({ customerList: newCustomerList });
   }
+
+  //Update function
+  onCellValueChanged(params) {
+    console.log(params.data);
+    API.updateCustomer(params.data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   componentDidMount = () => {
     this.loadCustomers();
   };
@@ -132,6 +144,7 @@ class MainPage extends Component {
             columnDefs={this.state.columnDefs}
             paginationAutoPageSize={true}
             pagination={true}
+            onCellValueChanged={this.onCellValueChanged}
           ></AgGridReact>
         </div>
         <br></br>
