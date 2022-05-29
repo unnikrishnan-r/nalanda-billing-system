@@ -130,6 +130,8 @@ class MainPage extends Component {
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
+            paginationAutoPageSize={true}
+            pagination={true}
           ></AgGridReact>
         </div>
         <br></br>
