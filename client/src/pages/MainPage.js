@@ -71,7 +71,6 @@ class MainPage extends Component {
         headerName: "Net Due Amount",
         floatingFilter: true,
         sortable: true,
-
         valueFormatter: currencyFormatter,
       },
       {
