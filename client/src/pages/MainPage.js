@@ -41,6 +41,7 @@ class MainPage extends Component {
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
         floatingFilter: true,
+        sortable: true,
       },
       {
         field: "customerName",
@@ -48,6 +49,7 @@ class MainPage extends Component {
         headerName: "Customer Name",
         editable: true,
         floatingFilter: true,
+        sortable: true,
       },
       {
         field: "customerAddress",
@@ -68,12 +70,15 @@ class MainPage extends Component {
         filter: "agSetColumnFilter",
         headerName: "Net Due Amount",
         floatingFilter: true,
+        sortable: true,
+
         valueFormatter: currencyFormatter,
       },
       {
         field: "customerStatus",
         filter: "agSetColumnFilter",
         headerName: "Customer Status",
+        sortable: true,
         cellRenderer: (params) => (
           <Form.Check
             type="switch"
