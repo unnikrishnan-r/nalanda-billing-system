@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import BtnCellRenderer from "../components/BtnCellRenderer";
+import Moment from 'react-moment';
 import {
     Row,
     Col,
@@ -26,6 +27,10 @@ function formatNumber(number) {
 function currencyFormatter(params) {
     return 'Rs.' + formatNumber(params.value);
 }
+function dateFormate(params)
+{
+    return <Moment>{params.value}</Moment>
+}
 class LatexCollection extends Component {
     state = {
         columnDefs: [
@@ -36,25 +41,23 @@ class LatexCollection extends Component {
                 floatingFilter: true
             },
             {
-                field: "customerName",
-                filter: "agDateColumnFilter",
-                headerName: "Customer Name",
 
+                field: "customerName",
+                filter: "agSetColumnFilter",
+                headerName: "Customer Name",
                 floatingFilter: true
             },
             {
                 field: "collectionDate",
-                filter: "agSetColumnFilter",
+                filter: "agDateColumnFilter",
                 headerName: "Collenction Date",
-                
-
+                valueFormatter: dateFormate,
                 floatingFilter: true
             },
             {
                 field: "grossWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Gross Weight",
-
                 floatingFilter: true
             },
             {
@@ -72,8 +75,8 @@ class LatexCollection extends Component {
             },
             {
                 field: "drcPercent",
-                filter: "DRC %",
-                headerName: "Net Weight",
+                filter: "agSetColumnFilter",
+                headerName: "DRC %",
                 floatingFilter: true
             },
             {
@@ -103,9 +106,6 @@ class LatexCollection extends Component {
             },
 
         ],
-        frameworkComponents: {
-            btnCellRenderer: BtnCellRenderer
-        },
     };
     componentDidMount = () => {
         this.loadLatexCollection();
@@ -115,7 +115,7 @@ class LatexCollection extends Component {
             .then((res) => {
                 console.log(res);
                 this.setState({ latexCollection: res.data });
-                // console.log(this.state.customerList);
+
             })
             .catch((err) => {
                 console.log(err);
@@ -132,7 +132,7 @@ class LatexCollection extends Component {
                 <br></br>
                 <div className="ag-theme-alpine" style={{ height: 500 }}>
                     <AgGridReact
-                        rowData={this.state.customerList}
+                        rowData={this.state.latexCollection}
                         columnDefs={this.state.columnDefs}
                         frameworkComponents={this.state.frameworkComponents}
                     ></AgGridReact>
