@@ -2,6 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import LatexPage from "./pages/LatexPage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,6 +15,9 @@ function App() {
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}
           <Route exact path="/" component={MainPage} />
+          <Route exact path="/home" component={MainPage} />
+          <Route exact path="/latex" component={LatexPage} />
+
 
         </Switch>
       </div>
