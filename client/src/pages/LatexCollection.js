@@ -4,8 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
-import BtnCellRenderer from "../components/BtnCellRenderer";
-import Moment from 'react-moment';
+import StatusRenderer from "../components/StatusRenderer";
 import {
     Row,
     Col,
@@ -27,10 +26,6 @@ function formatNumber(number) {
 function currencyFormatter(params) {
     return 'Rs.' + formatNumber(params.value);
 }
-function dateFormate(params)
-{
-    return <Moment>{params.value}</Moment>
-}
 class LatexCollection extends Component {
     state = {
         columnDefs: [
@@ -38,11 +33,12 @@ class LatexCollection extends Component {
                 field: "customerId",
                 filter: "agSetColumnFilter",
                 headerName: "Customer Id",
-                floatingFilter: true
+                floatingFilter: true,
+
             },
             {
 
-                field: "customerName",
+                field: "Customer.customerName",
                 filter: "agSetColumnFilter",
                 headerName: "Customer Name",
                 floatingFilter: true
@@ -51,7 +47,6 @@ class LatexCollection extends Component {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
                 headerName: "Collenction Date",
-                valueFormatter: dateFormate,
                 floatingFilter: true
             },
             {
@@ -80,7 +75,7 @@ class LatexCollection extends Component {
                 floatingFilter: true
             },
             {
-                field: "dryWeightt",
+                field: "dryWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Dry Weight",
                 floatingFilter: true
@@ -99,13 +94,17 @@ class LatexCollection extends Component {
                 valueFormatter: currencyFormatter
             },
             {
-                field: "payementStatus",
+                field: "paymentStatus",
                 filter: "agSetColumnFilter",
                 headerName: "Payement Status",
+                cellRenderer: 'statusRenderer',
                 floatingFilter: true,
             },
 
         ],
+        frameworkComponents: {
+            statusRenderer: StatusRenderer
+        },
     };
     componentDidMount = () => {
         this.loadLatexCollection();
