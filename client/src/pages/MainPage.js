@@ -18,6 +18,7 @@ import {
   Table,
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
+import NewCustomerForm from "../components/NewCustomerForm";
 import API from "../utils/API";
 function formatNumber(number) {
   return Math.floor(number)
@@ -29,6 +30,7 @@ function currencyFormatter(params) {
 }
 class MainPage extends Component {
   state = {
+    addCustomerFormTrigger: false,
     customerList: [],
     // rowdata: [
     //   { make: "Toyota", model: "Celica", price: 35000 },
@@ -128,8 +130,30 @@ class MainPage extends Component {
         console.log(err);
       });
   }
+
+  showAddCustomerForm = () => {
+    this.setState({
+      addCustomerFormTrigger: true,
+    });
+  };
+  closeAddCustomerForm = () => {
+    this.setState({
+      addCustomerFormTrigger: false,
+    });
+    this.componentDidMount();
+  };
+
+  handleNewCustomerFormChange =(x) =>{
+    console.log(x)
+
+  };
+  submitAddCustomerForm =() =>{
+    console.log("clicked submit")
+  }
   componentDidMount = () => {
+    console.log("Component mount")
     this.loadCustomers();
+    this.setState({ addCustomerFormTrigger: false });
   };
   loadCustomers = () => {
     API.getCustomerList()
@@ -150,6 +174,9 @@ class MainPage extends Component {
         <br></br>
         <Container></Container>
         <br></br>
+        <button onClick={this.showAddCustomerForm}>Add Customer</button>
+        <br></br>
+        <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.customerList}
@@ -159,6 +186,13 @@ class MainPage extends Component {
             onCellValueChanged={this.onCellValueChanged}
           ></AgGridReact>
         </div>
+
+        <NewCustomerForm
+          trigger={this.state.addCustomerFormTrigger}
+          closeAddCustomerForm={this.closeAddCustomerForm}
+          submitAddCustomerForm={this.submitAddCustomerForm}
+        >
+        </NewCustomerForm>
         <br></br>
       </>
     );
