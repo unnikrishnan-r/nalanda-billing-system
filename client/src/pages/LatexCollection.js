@@ -4,6 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
+import moment from "moment";
 import StatusRenderer from "../components/StatusRenderer";
 import {
     Row,
@@ -47,13 +48,17 @@ class LatexCollection extends Component {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
                 headerName: "Collenction Date",
-                floatingFilter: true
+                floatingFilter: true,
+                cellRenderer: (data) => {
+                    return moment(data.collectionDate).format('MM/DD/YYYY HH:mm')
+                }
             },
             {
                 field: "grossWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Gross Weight",
-                floatingFilter: true
+                floatingFilter: true,
+                editable:true
             },
             {
                 field: "tareWeight",
@@ -72,7 +77,8 @@ class LatexCollection extends Component {
                 field: "drcPercent",
                 filter: "agSetColumnFilter",
                 headerName: "DRC %",
-                floatingFilter: true
+                floatingFilter: true,
+                editable: true
             },
             {
                 field: "dryWeight",
