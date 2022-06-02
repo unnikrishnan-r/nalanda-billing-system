@@ -9,7 +9,7 @@ export default class index extends Component {
         <Nav className="mr-auto">
           <Nav.Link href="home">Customers</Nav.Link>
           <Nav.Link href="latex">Latex Collection</Nav.Link>
-          <Nav.Link href="#cashPayments">Cash Payments</Nav.Link>
+          <Nav.Link href="cashpayment">Cash Payments</Nav.Link>
           <Nav.Link href="#billingInvoices">Billing & Invoices</Nav.Link>
         </Nav>
       </Navbar>

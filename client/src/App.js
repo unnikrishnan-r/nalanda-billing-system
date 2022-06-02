@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import LatexPage from "./pages/LatexPage";
+import  CashPayments from "./pages/CashPayments"
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,8 +18,7 @@ function App() {
           <Route exact path="/" component={MainPage} />
           <Route exact path="/home" component={MainPage} />
           <Route exact path="/latex" component={LatexPage} />
-
-
+          <Route exact path="/cashpayment" component={CashPayments} />
         </Switch>
       </div>
     </Router>
