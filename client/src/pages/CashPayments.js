@@ -23,7 +23,7 @@ import API from "../utils/API";
 
 class CashPayments extends Component {
   state = {
-    addCashPaymentFormTrigger: true,
+    addCashPaymentFormTrigger: false,
   };
 
   showCashPaymentForm = () => {
@@ -45,6 +45,11 @@ class CashPayments extends Component {
     return (
       <>
         <Navbar></Navbar>
+        <br></br>
+        <br></br>
+        <button onClick={this.showCashPaymentForm}>New cash Advance</button>
+        <br></br>
+        <br></br>
         <NewCashPaymentForm
           trigger={this.state.addCashPaymentFormTrigger}
           closeCashPaymentForm={this.closeCashPaymentForm}
