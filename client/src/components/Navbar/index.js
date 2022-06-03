@@ -13,7 +13,7 @@ export class index extends Component {
           <Link className="mr-3" style={{ color: "black" }} to="/latexCollection">
             Latex Collection
           </Link>
-          <Link className="mr-3" style={{ color: "black" }} to="/cashPayments">
+          <Link className="mr-3" style={{ color: "black" }} to="/cashpayment">
             Cash Payments
           </Link>
           <Link className="mr-3" style={{ color: "black" }} to="/billingInvoices">
