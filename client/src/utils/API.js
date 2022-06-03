@@ -40,4 +40,9 @@ export default {
       }
     );
   },
+  getLatexCollection: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
+
+  }
 };
+

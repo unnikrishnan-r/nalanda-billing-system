@@ -5,11 +5,11 @@ export default class index extends Component {
   render() {
     return (
       <Navbar bg="primary" variant="dark">
-        <Navbar.Brand href="#home">Nalanda Latex Management System!!!</Navbar.Brand>
+        <Navbar.Brand href="/">Nalanda Latex Management System!!!</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="home">Customers</Nav.Link>
           <Nav.Link href="latex">Latex Collection</Nav.Link>
           <Nav.Link href="cashpayment">Cash Payments</Nav.Link>
+          <Nav.Link href="/">Customers</Nav.Link>
           <Nav.Link href="#billingInvoices">Billing & Invoices</Nav.Link>
         </Nav>
       </Navbar>
