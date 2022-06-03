@@ -19,6 +19,17 @@ import {
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
+function headerHeightGetter() {
+    var columnHeaderTexts = [
+      ...document.querySelectorAll('.ag-header-cell-text'),
+    ];
+    var clientHeights = columnHeaderTexts.map(
+      (headerText) => headerText.clientHeight
+    );
+    var tallestHeaderTextHeight = Math.max(...clientHeights);
+  
+    return tallestHeaderTextHeight;
+  }
 function formatNumber(number) {
     return Math.floor(number)
         .toString()
@@ -108,6 +119,26 @@ class LatexCollection extends Component {
             },
 
         ],
+        defaultColDef: {
+            resizable: true,
+              sortable: true,
+              wrapText: true,
+              autoHeight: true,
+              headerComponentParams: {
+                template:
+                  '<div class="ag-cell-label-container" role="presentation">' +
+                  '  <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button"></span>' +
+                  '  <div ref="eLabel" class="ag-header-cell-label" role="presentation">' +
+                  '    <span ref="eSortOrder" class="ag-header-icon ag-sort-order"></span>' +
+                  '    <span ref="eSortAsc" class="ag-header-icon ag-sort-ascending-icon"></span>' +
+                  '    <span ref="eSortDesc" class="ag-header-icon ag-sort-descending-icon"></span>' +
+                  '    <span ref="eSortNone" class="ag-header-icon ag-sort-none-icon"></span>' +
+                  '    <span ref="eText" class="ag-header-cell-text" role="columnheader" style="white-space: normal;"></span>' +
+                  '    <span ref="eFilter" class="ag-header-icon ag-filter-icon"></span>' +
+                  '  </div>' +
+                  '</div>',
+          },
+        },
         frameworkComponents: {
             statusRenderer: StatusRenderer
         },
@@ -126,6 +157,12 @@ class LatexCollection extends Component {
                 console.log(err);
             });
     };
+    headerHeightSetter() {
+        var padding = 20;
+        var height = headerHeightGetter() + padding;
+        this.api.setHeaderHeight(height);
+        this.api.resetRowHeights();
+      }
     render() {
         return (
             <>
@@ -139,6 +176,9 @@ class LatexCollection extends Component {
                     <AgGridReact
                         rowData={this.state.latexCollection}
                         columnDefs={this.state.columnDefs}
+                        defaultColDef={this.state.defaultColDef}
+                        onFirstDataRendered={this.headerHeightSetter}
+                        onColumnResized={this.headerHeightSetter}
                         frameworkComponents={this.state.frameworkComponents}
                     ></AgGridReact>
                 </div>

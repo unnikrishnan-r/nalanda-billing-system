@@ -91,6 +91,12 @@ class MainPage extends Component {
         ),
       },
     ],
+    defaultColDef: {
+      resizable: true,
+        sortable: true,
+        wrapText: true,
+        autoHeight: true,
+    }
   };
   //Function to handle the change of customer status switch
   handleCustomerStatusChange(params) {
@@ -181,6 +187,7 @@ class MainPage extends Component {
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
+            defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
             onCellValueChanged={this.onCellValueChanged}
