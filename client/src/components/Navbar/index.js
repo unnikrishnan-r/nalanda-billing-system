@@ -7,10 +7,6 @@ export class index extends Component {
       <Navbar bg="primary" variant="dark">
         <Navbar.Brand href="/">Nalanda Latex Management System!!!</Navbar.Brand>
         <Nav className="mr-auto">
-          {/* <Nav.Link href="/">Customers</Nav.Link>
-          <Nav.Link href="/latexCollection">Latex Collection</Nav.Link>
-          <Nav.Link href="#cashPayments">Cash Payments</Nav.Link>
-          <Nav.Link href="#billingInvoices">Billing & Invoices</Nav.Link> */}
           <Link className="mr-3" style={{ color: "black" }} to="/">
             Customers
           </Link>
