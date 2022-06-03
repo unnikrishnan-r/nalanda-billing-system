@@ -28,6 +28,18 @@ export default {
       }
     );
   },
+  createCashEntry: function (cashEntry) {
+    console.log(cashEntry);
+    return axios.post(
+      `https://nalandaapi.herokuapp.com/api/cashPayment`,
+      cashEntry,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
 
