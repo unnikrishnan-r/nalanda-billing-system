@@ -17,7 +17,7 @@ class AddLatexForm extends Component {
         collectionDate: "2022-02-02",
         tareWeight: 0,
         grossWeight: 1,
-        barrelNumber: "A20 L",
+        barrelNumber: "",
     };
     onChange = (selectedUsers) => {
         this.setState({
@@ -71,7 +71,7 @@ class AddLatexForm extends Component {
                         collectionDate: "2022-02-02",
                         tareWeight: 0,
                         grossWeight: 1,
-                        barrelNumber:"A20 L",
+                        barrelNumber:"",
                     });
                     this.props.closeAddlatexForm();
                 })
@@ -141,6 +141,19 @@ class AddLatexForm extends Component {
                                 name="grossWeight"
                                 onChange={this.handleInputChange}
                                 value={this.state.grossWeight}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="titleText">
+                                <Form.Label>Barrel Number</Form.Label>
+                            </div>
+                            <Form.Control
+                                type="text"
+                                placeholder="barrel-no"
+                                name="barrelNumber"
+                                onChange={this.handleInputChange}
+                                value={this.state.barrelNumber}
                                 required
                             />
                         </Form.Group>
