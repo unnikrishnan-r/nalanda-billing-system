@@ -40,6 +40,18 @@ export default {
       }
     );
   },
+  addLatexEntry:  function (latexEntry) {
+    console.log(latexEntry);
+    return axios.post(
+      `https://nalandaapi.herokuapp.com/api/latexCollection`,
+      latexEntry,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
 
