@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import  CashPayments from "./pages/CashPayments"
+import BillingInvoices from "./pages/BillingInvoice"
 
 import LatexCollection from "./pages/LatexCollection";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/home" component={MainPage} />
           <Route exact path="/cashpayment" component={CashPayments} />
           <Route exact path="/latexCollection" component={LatexCollection} />
+          <Route exact path="/billingInvoices" component={BillingInvoices} />
         </Switch>
       </div>
     </Router>
