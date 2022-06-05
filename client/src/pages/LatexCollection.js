@@ -139,6 +139,9 @@ class LatexCollection extends Component {
                 console.log(err);
             });
     };
+    componentDidUpdate(){
+        this.loadLatexCollection();
+    }
     render() {
         return (
             <>

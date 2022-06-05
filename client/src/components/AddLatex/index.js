@@ -17,6 +17,7 @@ class AddLatexForm extends Component {
         collectionDate: "2022-02-02",
         tareWeight: 0,
         grossWeight: 1,
+        barrelNumber: "A20 L",
     };
     onChange = (selectedUsers) => {
         this.setState({
@@ -58,6 +59,7 @@ class AddLatexForm extends Component {
                 collectionDate: this.state.collectionDate,
                 tareWeight: this.state.tareWeight,
                 grossWeight: this.state.grossWeight,
+                barrelNumber: this.state.barrelNumber,
             };
             console.log(newLatexEntry);
             API.addLatexEntry(newLatexEntry)
@@ -69,6 +71,7 @@ class AddLatexForm extends Component {
                         collectionDate: "2022-02-02",
                         tareWeight: 0,
                         grossWeight: 1,
+                        barrelNumber:"A20 L",
                     });
                     this.props.closeAddlatexForm();
                 })
