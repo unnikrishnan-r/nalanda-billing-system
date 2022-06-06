@@ -93,7 +93,8 @@ class LatexCollection extends Component {
                 field: "unitRatePerKg",
                 filter: "agSetColumnFilter",
                 headerName: "Rate /Kg",
-                floatingFilter: true
+                floatingFilter: true,
+                valueFormatter: currencyFormatter
             },
             {
                 field: "totalAmount",
@@ -124,6 +125,7 @@ class LatexCollection extends Component {
         this.setState({
             addLatexFormTrigger: false,
         });
+        this.componentDidMount();
     };
     componentDidMount = () => {
         this.loadLatexCollection();
@@ -139,9 +141,6 @@ class LatexCollection extends Component {
                 console.log(err);
             });
     };
-    componentDidUpdate(){
-        this.loadLatexCollection();
-    }
     render() {
         return (
             <>
