@@ -41,8 +41,18 @@ export default {
     );
   },
   getLatexCollection: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
-
-  }
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
+  },
+  calculateInvoiceAmount: function (invoiceReq) {
+    console.log(invoiceReq);
+    return axios.post(
+      `http://localhost:3005/api/calculateInvoiceAmount`,
+      invoiceReq,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
 };
-

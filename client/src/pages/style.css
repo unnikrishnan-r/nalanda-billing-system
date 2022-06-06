@@ -54,3 +54,8 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 5px;
+}
