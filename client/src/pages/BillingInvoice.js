@@ -7,7 +7,15 @@ import "ag-grid-enterprise";
 import "./style.css";
 
 import Navbar from "../components/Navbar";
-import { Tabs, Tab, Container, Card, Form, Button } from "react-bootstrap";
+import {
+  Tabs,
+  Tab,
+  Container,
+  Card,
+  Form,
+  Button,
+  ListGroup,
+} from "react-bootstrap";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
@@ -23,6 +31,7 @@ class BillingInvoices extends Component {
     billFromDate: moment(),
     billToDate: moment(),
     ratePerKg: "",
+    showBillSummary: false,
   };
   onBillFromDateChange = (date) => {
     this.setState({ billFromDate: moment(date) });
@@ -46,7 +55,13 @@ class BillingInvoices extends Component {
       billToDate: this.state.billToDate,
       unitRatePerKg: parseInt(this.state.ratePerKg),
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          BillSummaryRecord: res.data,
+          showBillSummary: true,
+        });
+      })
       .catch((err) => console.log(err));
   }
 
@@ -127,6 +142,43 @@ class BillingInvoices extends Component {
                     Calculate Invoice Amount
                   </Button>
                 </div>
+                {this.state.showBillSummary ? (
+                  <div>
+                    <br></br>
+                    <br></br>
+                    <Card style={{ width: "36rem" }}>
+                      <Card.Header>
+                        <h2>Invoice Summary</h2>
+                      </Card.Header>
+                      <ListGroup variant="flush">
+                        <ListGroup.Item>
+                          Number of Customers:{" "}
+                          {this.state.BillSummaryRecord.numberOfBills}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          Total Net Weight:
+                          {this.state.BillSummaryRecord.totalNetWeight}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          Total Dry Weight:
+                          {this.state.BillSummaryRecord.totaldryWeight}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          Rate/Kg:{this.state.BillSummaryRecord.unitRatePerKg}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          Total Invoice Amount:
+                          {this.state.BillSummaryRecord.totalBillAmount}
+                        </ListGroup.Item>
+                      </ListGroup>
+                      <Button variant="primary">
+                        Generate & Print Invoices
+                      </Button>
+                    </Card>
+                  </div>
+                ) : (
+                  ""
+                )}
               </Tab>
               <Tab eventKey="invoiceHistory" title="Billing & Invoice History">
                 {" "}
