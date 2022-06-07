@@ -46,6 +46,7 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Customer Id",
                 floatingFilter: true,
+                suppressSizeToFit:true,
 
             },
             {
@@ -53,7 +54,8 @@ class LatexCollection extends Component {
                 field: "Customer.customerName",
                 filter: "agSetColumnFilter",
                 headerName: "Customer Name",
-                floatingFilter: true
+                floatingFilter: true,
+                suppressSizeToFit:true,
             },
             {
                 field: "collectionDate",
@@ -62,53 +64,61 @@ class LatexCollection extends Component {
                 floatingFilter: true,
                 cellRenderer: (data) => {
                     return moment(data.collectionDate).format('MM/DD/YYYY HH:mm')
-                }
+                },
+                suppressSizeToFit:true,
             },
             {
                 field: "grossWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Gross Weight",
                 floatingFilter: true,
-                editable:true
+                editable:true,
+                suppressSizeToFit:true,
             },
             {
                 field: "tareWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Barrel Weight",
                 floatingFilter: true,
+                suppressSizeToFit:true,
 
             },
             {
                 field: "netWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Net Weight",
-                floatingFilter: true
+                floatingFilter: true,
+                suppressSizeToFit:true,
             },
             {
                 field: "drcPercent",
                 filter: "agSetColumnFilter",
                 headerName: "DRC %",
                 floatingFilter: true,
-                editable: true
+                editable: true,
+                suppressSizeToFit:true,
             },
             {
                 field: "dryWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Dry Weight",
-                floatingFilter: true
+                floatingFilter: true,
+                suppressSizeToFit:true,
             },
             {
                 field: "unitRatePerKg",
                 filter: "agSetColumnFilter",
                 headerName: "Rate /Kg",
-                floatingFilter: true
+                floatingFilter: true,
+                suppressSizeToFit:true,
             },
             {
                 field: "totalAmount",
                 filter: "agSetColumnFilter",
                 headerName: "Total Amount",
                 floatingFilter: true,
-                valueFormatter: currencyFormatter
+                valueFormatter: currencyFormatter,
+                suppressSizeToFit:true,
             },
             {
                 field: "paymentStatus",
@@ -116,9 +126,11 @@ class LatexCollection extends Component {
                 headerName: "Payement Status",
                 cellRenderer: 'statusRenderer',
                 floatingFilter: true,
+                suppressSizeToFit:true,
             },
 
         ],
+        onGridReady: (event) => event.api.sizeColumnsToFit(),
         defaultColDef: {
             resizable: true,
               sortable: true,
@@ -143,6 +155,14 @@ class LatexCollection extends Component {
             statusRenderer: StatusRenderer
         },
     };
+
+    onGridReady = (params) => {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+    }
+    onFirstRendered = (params) => {
+        params.api.sizeColumnsToFit();
+      };
     componentDidMount = () => {
         this.loadLatexCollection();
     };
@@ -163,6 +183,7 @@ class LatexCollection extends Component {
         this.api.setHeaderHeight(height);
         this.api.resetRowHeights();
       }
+
     render() {
         return (
             <>
@@ -172,14 +193,16 @@ class LatexCollection extends Component {
                 <Container >
                 </Container>
                 <br></br>
-                <div className="ag-theme-alpine" style={{ height: 500 }}>
+                <div className="ag-theme-alpine" style={{ height: 500 }} >
                     <AgGridReact
                         rowData={this.state.latexCollection}
                         columnDefs={this.state.columnDefs}
                         defaultColDef={this.state.defaultColDef}
                         onFirstDataRendered={this.headerHeightSetter}
                         onColumnResized={this.headerHeightSetter}
+                        onFirstRendered={this.onFirstRendered.bind(this)}
                         frameworkComponents={this.state.frameworkComponents}
+                        onGridReady={this.onGridReady}
                     ></AgGridReact>
                 </div>
             </>
