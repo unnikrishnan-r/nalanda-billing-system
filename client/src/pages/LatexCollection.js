@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import moment from "moment";
+import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
 import {
     Row,
@@ -17,6 +18,7 @@ import {
     Modal,
     Table,
 } from "react-bootstrap";
+import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
 function formatNumber(number) {
@@ -29,6 +31,7 @@ function currencyFormatter(params) {
 }
 class LatexCollection extends Component {
     state = {
+        addLatexFormTrigger: false,
         columnDefs: [
             {
                 field: "customerId",
@@ -50,7 +53,7 @@ class LatexCollection extends Component {
                 headerName: "Collenction Date",
                 floatingFilter: true,
                 cellRenderer: (data) => {
-                    return moment(data.collectionDate).format('MM/DD/YYYY HH:mm')
+                    return moment(data.data.collectionDate).format('DD/MM/YYYY')
                 }
             },
             {
@@ -58,7 +61,7 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Gross Weight",
                 floatingFilter: true,
-                editable:true
+                editable: true
             },
             {
                 field: "tareWeight",
@@ -112,6 +115,16 @@ class LatexCollection extends Component {
             statusRenderer: StatusRenderer
         },
     };
+    showAddLatexForm = () => {
+        this.setState({
+            addLatexFormTrigger: true,
+        });
+    };
+    closeAddlatexForm = () => {
+        this.setState({
+            addLatexFormTrigger: false,
+        });
+    };
     componentDidMount = () => {
         this.loadLatexCollection();
     };
@@ -126,13 +139,17 @@ class LatexCollection extends Component {
                 console.log(err);
             });
     };
+    componentDidUpdate(){
+        this.loadLatexCollection();
+    }
     render() {
         return (
             <>
                 <Navbar></Navbar>
                 <br></br>
                 <br></br>
-                <Container >
+                <Container>
+                    <button onClick={this.showAddLatexForm}>Add Collection</button>
                 </Container>
                 <br></br>
                 <div className="ag-theme-alpine" style={{ height: 500 }}>
@@ -141,6 +158,10 @@ class LatexCollection extends Component {
                         columnDefs={this.state.columnDefs}
                         frameworkComponents={this.state.frameworkComponents}
                     ></AgGridReact>
+                    <AddLatex
+                        trigger={this.state.addLatexFormTrigger}
+                        closeAddlatexForm={this.closeAddlatexForm}
+                    ></AddLatex>
                 </div>
             </>
         );
