@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import moment from "moment";
+import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
 import {
     Row,
@@ -17,6 +18,7 @@ import {
     Modal,
     Table,
 } from "react-bootstrap";
+import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
 function headerHeightGetter() {
@@ -44,14 +46,14 @@ function currencyFormatter(params) {
 class LatexCollection extends Component {
     state = {
 
+        addLatexFormTrigger: false,
         columnDefs: [
             {
                 field: "customerId",
                 filter: "agSetColumnFilter",
                 headerName: "Customer Id",
                 floatingFilter: true,
-                //width:130,
-
+                
             },
             {
 
@@ -59,34 +61,31 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Customer Name",
                 floatingFilter: true,
-                //width:130,
+                
             },
             {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
                 headerName: "Collenction Date",
                 floatingFilter: true,
-                //width:150,
+        
                 cellRenderer: (data) => {
-                    return moment(data.collectionDate).format('MM/DD/YYYY HH:mm')
-                },
-
+                    return moment(data.data.collectionDate).format('DD/MM/YYYY')
+                }
             },
             {
                 field: "grossWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Gross Weight",
                 floatingFilter: true,
-                editable:true,
-                //width:130,
-                
+                editable: true
             },
             {
                 field: "tareWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Barrel Weight",
                 floatingFilter: true,
-                //width:130,
+                
 
             },
             {
@@ -94,7 +93,7 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Net Weight",
                 floatingFilter: true,
-                //width:130,
+                
             },
             {
                 field: "drcPercent",
@@ -102,14 +101,14 @@ class LatexCollection extends Component {
                 headerName: "DRC %",
                 floatingFilter: true,
                 editable: true,
-                //width:120,
+                
             },
             {
                 field: "dryWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Dry Weight",
                 floatingFilter: true,
-                //width:130,
+    
             },
             {
                 field: "unitRatePerKg",
@@ -124,7 +123,7 @@ class LatexCollection extends Component {
                 headerName: "Total Amount",
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
-                //width:130,
+                
             },
             {
                 field: "paymentStatus",
@@ -132,7 +131,7 @@ class LatexCollection extends Component {
                 headerName: "Payement Status",
                 cellRenderer: 'statusRenderer',
                 floatingFilter: true,
-                //width:130,
+                
             },
 
         ],
@@ -175,6 +174,16 @@ class LatexCollection extends Component {
     onFirstDataRendered = (params) => {
         params.api.sizeColumnsToFit();
       };
+    showAddLatexForm = () => {
+        this.setState({
+            addLatexFormTrigger: true,
+        });
+    };
+    closeAddlatexForm = () => {
+        this.setState({
+            addLatexFormTrigger: false,
+        });
+    };
     componentDidMount = () => {
         this.loadLatexCollection();
     };
@@ -197,7 +206,8 @@ class LatexCollection extends Component {
                 <Navbar></Navbar>
                 <br></br>
                 <br></br>
-                <Container >
+                <Container>
+                    <button onClick={this.showAddLatexForm}>Add Collection</button>
                 </Container>
                 <br></br>
                 <div className="ag-theme-alpine" style={{ height: 500 }} >
@@ -209,6 +219,10 @@ class LatexCollection extends Component {
                         onGridReady={this.onGridReady}
                         onFirstDataRendered={this.onFirstDataRendered.bind(this)}
                     ></AgGridReact>
+                    <AddLatex
+                        trigger={this.state.addLatexFormTrigger}
+                        closeAddlatexForm={this.closeAddlatexForm}
+                    ></AddLatex>
                 </div>
             </>
         );

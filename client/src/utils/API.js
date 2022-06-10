@@ -28,8 +28,36 @@ export default {
       }
     );
   },
+  createCashEntry: function (cashEntry) {
+    console.log(cashEntry);
+    return axios.post(
+      `https://nalandaapi.herokuapp.com/api/cashPayment`,
+      cashEntry,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
+  addLatexEntry:  function (latexEntry) {
+    console.log(latexEntry);
+    return axios.post(
+      `https://nalandaapi.herokuapp.com/api/latexCollection`,
+      latexEntry,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
+
+  },
+  getCashEntry: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment")
 
   }
 };
