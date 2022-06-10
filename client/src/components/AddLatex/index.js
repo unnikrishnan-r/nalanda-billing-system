@@ -26,15 +26,6 @@ class AddLatexForm extends Component {
         console.log(selectedUsers);
     };
 
-    loadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
-        );
-        const json = await response.json();
-
-        callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
-    };
-
     // Handles updating component state when the user types into the input field
     handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -89,11 +80,10 @@ class AddLatexForm extends Component {
                     <h1>Add Latex Collection</h1>
                     <br></br>
                     <AsyncSelect
-                        isMulti
                         components={animatedComponent}
                         value={this.state.selectedUsers}
                         placeholder={"Select Customer"}
-                        loadOptions={this.loadOptions}
+                        loadOptions={API.loadOptions}
                         onChange={this.onChange}
                     />
                     <Form
