@@ -64,5 +64,9 @@ export default {
 
     callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
   },
+  getCashEntry: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment")
+
+  }
 };
 
