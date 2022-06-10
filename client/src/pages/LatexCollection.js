@@ -38,15 +38,19 @@ function formatNumber(number) {
 function currencyFormatter(params) {
     return 'Rs.' + formatNumber(params.value);
 }
+
+
+
 class LatexCollection extends Component {
     state = {
+
         columnDefs: [
             {
                 field: "customerId",
                 filter: "agSetColumnFilter",
                 headerName: "Customer Id",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
 
             },
             {
@@ -55,17 +59,18 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Customer Name",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
             },
             {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
                 headerName: "Collenction Date",
                 floatingFilter: true,
+                //width:150,
                 cellRenderer: (data) => {
                     return moment(data.collectionDate).format('MM/DD/YYYY HH:mm')
                 },
-                suppressSizeToFit:true,
+
             },
             {
                 field: "grossWeight",
@@ -73,14 +78,15 @@ class LatexCollection extends Component {
                 headerName: "Gross Weight",
                 floatingFilter: true,
                 editable:true,
-                suppressSizeToFit:true,
+                //width:130,
+                
             },
             {
                 field: "tareWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Barrel Weight",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
 
             },
             {
@@ -88,7 +94,7 @@ class LatexCollection extends Component {
                 filter: "agSetColumnFilter",
                 headerName: "Net Weight",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
             },
             {
                 field: "drcPercent",
@@ -96,21 +102,21 @@ class LatexCollection extends Component {
                 headerName: "DRC %",
                 floatingFilter: true,
                 editable: true,
-                suppressSizeToFit:true,
+                //width:120,
             },
             {
                 field: "dryWeight",
                 filter: "agSetColumnFilter",
                 headerName: "Dry Weight",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
             },
             {
                 field: "unitRatePerKg",
                 filter: "agSetColumnFilter",
                 headerName: "Rate /Kg",
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
             },
             {
                 field: "totalAmount",
@@ -118,7 +124,7 @@ class LatexCollection extends Component {
                 headerName: "Total Amount",
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
-                suppressSizeToFit:true,
+                //width:130,
             },
             {
                 field: "paymentStatus",
@@ -126,16 +132,17 @@ class LatexCollection extends Component {
                 headerName: "Payement Status",
                 cellRenderer: 'statusRenderer',
                 floatingFilter: true,
-                suppressSizeToFit:true,
+                //width:130,
             },
 
         ],
-        onGridReady: (event) => event.api.sizeColumnsToFit(),
+        
         defaultColDef: {
             resizable: true,
               sortable: true,
               wrapText: true,
               autoHeight: true,
+              suppressHorizontalScroll: false,
               headerComponentParams: {
                 template:
                   '<div class="ag-cell-label-container" role="presentation">' +
@@ -159,8 +166,13 @@ class LatexCollection extends Component {
     onGridReady = (params) => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-    }
-    onFirstRendered = (params) => {
+        API.getLatexCollection()
+            .then((res) => {
+                console.log(res);
+                this.setState({ latexCollection: res.data });
+            })
+    };
+    onFirstDataRendered = (params) => {
         params.api.sizeColumnsToFit();
       };
     componentDidMount = () => {
@@ -177,12 +189,7 @@ class LatexCollection extends Component {
                 console.log(err);
             });
     };
-    headerHeightSetter() {
-        var padding = 20;
-        var height = headerHeightGetter() + padding;
-        this.api.setHeaderHeight(height);
-        this.api.resetRowHeights();
-      }
+
 
     render() {
         return (
@@ -198,11 +205,9 @@ class LatexCollection extends Component {
                         rowData={this.state.latexCollection}
                         columnDefs={this.state.columnDefs}
                         defaultColDef={this.state.defaultColDef}
-                        onFirstDataRendered={this.headerHeightSetter}
-                        onColumnResized={this.headerHeightSetter}
-                        onFirstRendered={this.onFirstRendered.bind(this)}
                         frameworkComponents={this.state.frameworkComponents}
                         onGridReady={this.onGridReady}
+                        onFirstDataRendered={this.onFirstDataRendered.bind(this)}
                     ></AgGridReact>
                 </div>
             </>
