@@ -40,7 +40,7 @@ export default {
       }
     );
   },
-  addLatexEntry:  function (latexEntry) {
+  addLatexEntry: function (latexEntry) {
     console.log(latexEntry);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/latexCollection`,
@@ -55,6 +55,14 @@ export default {
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
 
+  },
+  loadOptions: async (inputText, callback) => {
+    const response = await fetch(
+      `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
+    );
+    const json = await response.json();
+
+    callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
   },
   getCashEntry: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment")

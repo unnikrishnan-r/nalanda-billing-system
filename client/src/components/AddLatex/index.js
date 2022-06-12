@@ -17,22 +17,13 @@ class AddLatexForm extends Component {
         collectionDate: "2022-02-02",
         tareWeight: 0,
         grossWeight: 1,
-        barrelNumber: "A20 L",
+        barrelNumber: "",
     };
     onChange = (selectedUsers) => {
         this.setState({
             selectedUsers: selectedUsers || [],
         });
         console.log(selectedUsers);
-    };
-
-    loadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
-        );
-        const json = await response.json();
-
-        callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
     };
 
     // Handles updating component state when the user types into the input field
@@ -71,7 +62,7 @@ class AddLatexForm extends Component {
                         collectionDate: "2022-02-02",
                         tareWeight: 0,
                         grossWeight: 1,
-                        barrelNumber:"A20 L",
+                        barrelNumber:"",
                     });
                     this.props.closeAddlatexForm();
                 })
@@ -89,11 +80,10 @@ class AddLatexForm extends Component {
                     <h1>Add Latex Collection</h1>
                     <br></br>
                     <AsyncSelect
-                        isMulti
                         components={animatedComponent}
                         value={this.state.selectedUsers}
                         placeholder={"Select Customer"}
-                        loadOptions={this.loadOptions}
+                        loadOptions={API.loadOptions}
                         onChange={this.onChange}
                     />
                     <Form
@@ -141,6 +131,19 @@ class AddLatexForm extends Component {
                                 name="grossWeight"
                                 onChange={this.handleInputChange}
                                 value={this.state.grossWeight}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="titleText">
+                                <Form.Label>Barrel Number</Form.Label>
+                            </div>
+                            <Form.Control
+                                type="text"
+                                placeholder="barrel-no"
+                                name="barrelNumber"
+                                onChange={this.handleInputChange}
+                                value={this.state.barrelNumber}
                                 required
                             />
                         </Form.Group>
