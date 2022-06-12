@@ -120,6 +120,8 @@ class CashPayments extends Component {
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
+            paginationAutoPageSize={true}
+            pagination={true}
           ></AgGridReact>
         </div>
         <NewCashPaymentForm
