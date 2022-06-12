@@ -113,6 +113,7 @@ class CashPayments extends Component {
         <br></br>
         <br></br>
         <Container></Container>
+        <button onClick={this.showCashPaymentForm}>New cash Advance</button>
         <br></br>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
