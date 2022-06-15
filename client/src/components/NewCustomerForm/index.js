@@ -63,7 +63,8 @@ class NewCustomerForm extends Component {
     return this.props.trigger ? (
       <div className="newCustomer">
         <div className="newCustomerInner">
-          <h1>New Customer</h1>
+          <h4 style={{ fontWeight: "bold"}}>New Customer</h4>
+          <hr size="" width="" color="grey"/>  
           <Form
             noValidate
             validated={this.state.validated}
@@ -71,7 +72,7 @@ class NewCustomerForm extends Component {
           >
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Customer name</Form.Label>
+                <Form.Label>Customer Name</Form.Label><span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="text"
@@ -85,7 +86,7 @@ class NewCustomerForm extends Component {
             </Form.Group>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Customer Address</Form.Label>
+                <Form.Label>Address</Form.Label><span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="text"
@@ -98,7 +99,7 @@ class NewCustomerForm extends Component {
             </Form.Group>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Customer Phone Number</Form.Label>
+                <Form.Label>Phone</Form.Label><span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="number"
@@ -112,7 +113,7 @@ class NewCustomerForm extends Component {
             </Form.Group>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Customer Email</Form.Label>
+                <Form.Label>Customer's Email</Form.Label>
               </div>
               <Form.Control
                 type="text"
@@ -123,16 +124,7 @@ class NewCustomerForm extends Component {
                 required
               />
             </Form.Group>
-
-            <Button
-              id="subBtn"
-              variant="info"
-              className="btn btn-light cancel-button"
-              onClick={() => this.props.closeAddCustomerForm()}
-            >
-              Cancel
-            </Button>
-
+            <hr size="" width="" color="grey"/>  
             <Button
               id="subBtn"
               variant="info"
@@ -141,6 +133,14 @@ class NewCustomerForm extends Component {
               onClick={() => this.props.submitAddCustomerForm()}
             >
               Submit
+            </Button>
+            <Button
+              id="subBtn"
+              variant="info"
+              className="btn btn-light cancel-button"
+              onClick={() => this.props.closeAddCustomerForm()}
+            >
+              Cancel
             </Button>
           </Form>
         </div>
