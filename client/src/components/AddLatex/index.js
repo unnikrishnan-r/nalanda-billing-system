@@ -77,8 +77,10 @@ class AddLatexForm extends Component {
             <div className="newLatex">
                 {" "}
                 <div className="newLatexInner">
-                    <h1>Add Latex Collection</h1>
+                    <h4 style={{ fontWeight: "bold"}}>New latex collection entry</h4>
+                    <hr size="" width="" color="grey"/>  
                     <br></br>
+                    <h6>Customer Name</h6>
                     <AsyncSelect
                         components={animatedComponent}
                         value={this.state.selectedUsers}
@@ -91,7 +93,6 @@ class AddLatexForm extends Component {
                         validated={this.state.validated}
                         onSubmit={this.handleOnSubmit}
                     >
-                        <br></br>
                         <br></br>
 
                         <Form.Group>
@@ -147,16 +148,7 @@ class AddLatexForm extends Component {
                                 required
                             />
                         </Form.Group>
-
-                        <Button
-                            id="subBtn"
-                            variant="info"
-                            className="btn btn-light cancel-button"
-                            onClick={() => this.props.closeAddlatexForm()}
-                        >
-                            Cancel
-                        </Button>
-
+                        <hr size="" width="" color="grey"/>  
                         <Button
                             id="subBtn"
                             variant="info"
@@ -166,6 +158,16 @@ class AddLatexForm extends Component {
                         >
                             Add collection
                         </Button>
+                        <Button
+                            id="subBtn"
+                            variant="info"
+                            className="btn btn-light cancel-button"
+                            onClick={() => this.props.closeAddlatexForm()}
+                        >
+                            Cancel
+                        </Button>
+
+                        
                     </Form>
                 </div>
             </div>
