@@ -31,3 +31,7 @@
 #subBtn{
     float:right;
 }
+#mandatory{
+    color: red;
+    font-weight: bold;
+}

@@ -80,7 +80,8 @@ class AddLatexForm extends Component {
                     <h4 style={{ fontWeight: "bold"}}>New latex collection entry</h4>
                     <hr size="" width="" color="grey"/>  
                     <br></br>
-                    <h6>Customer Name</h6>
+                    <h6 style={{display:"inline"}}>Customer Name</h6><span id="mandatory"> * </span>
+                   
                     <AsyncSelect
                         components={animatedComponent}
                         value={this.state.selectedUsers}
@@ -94,10 +95,9 @@ class AddLatexForm extends Component {
                         onSubmit={this.handleOnSubmit}
                     >
                         <br></br>
-
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Collection Date</Form.Label>
+                                <Form.Label>Collection Date</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="date"
@@ -111,7 +111,7 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Barrel Weight</Form.Label>
+                                <Form.Label>Barrel Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="number"
@@ -124,7 +124,7 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Gross Weight</Form.Label>
+                                <Form.Label>Gross Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="number"
@@ -137,7 +137,7 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Barrel Number</Form.Label>
+                                <Form.Label>Barrel Number</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="text"
