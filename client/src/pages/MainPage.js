@@ -180,7 +180,9 @@ class MainPage extends Component {
         <br></br>
         <Container></Container>
         <br></br>
-        <button onClick={this.showAddCustomerForm}>Add Customer</button>
+        <button id="addCustomer" onClick={this.showAddCustomerForm}>Add Customer</button>
+        <button className="exportbtn"> Export</button>
+        <button className="printbtn"> Print</button>
         <br></br>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
