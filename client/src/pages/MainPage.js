@@ -96,6 +96,7 @@ class MainPage extends Component {
         sortable: true,
         wrapText: true,
         autoHeight: true,
+        flex: 1
     }
   };
   //Function to handle the change of customer status switch
