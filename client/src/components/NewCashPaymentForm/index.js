@@ -86,8 +86,10 @@ class NewCashPaymentForm extends Component {
       <div className="newCashPayment">
         {" "}
         <div className="newCashPaymentInner">
-          <h1>New Cash Payment</h1>
+          <h4 style={{ fontWeight: "bold"}}>New Cash Payment entry</h4>
+          <hr size="" width="" color="grey"/>  
           <br></br>
+          <h6 style={{ fontWeight:"normal",display:"inline"}}>Customer Name</h6><span id="mandatory"> * </span>
           <AsyncSelect
             isMulti
             components={animatedComponent}
@@ -102,11 +104,9 @@ class NewCashPaymentForm extends Component {
             onSubmit={this.handleOnSubmit}
           >
             <br></br>
-            <br></br>
-
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Amount</Form.Label>
+                <Form.Label>Amount</Form.Label><span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="number"
@@ -131,16 +131,7 @@ class NewCashPaymentForm extends Component {
                 required
               />
             </Form.Group>
-
-            <Button
-              id="subBtn"
-              variant="info"
-              className="btn btn-light cancel-button"
-              onClick={() => this.props.closeCashPaymentForm()}
-            >
-              Cancel
-            </Button>
-
+            <hr size="" width="" color="grey"/> 
             <Button
               id="subBtn"
               variant="info"
@@ -148,6 +139,14 @@ class NewCashPaymentForm extends Component {
               className="btn btn-success submit-button"
             >
               Submit
+            </Button>
+            <Button
+              id="subBtn"
+              variant="info"
+              className="btn btn-light cancel-button"
+              onClick={() => this.props.closeCashPaymentForm()}
+            >
+              Cancel
             </Button>
           </Form>
         </div>
