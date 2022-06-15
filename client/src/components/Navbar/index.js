@@ -4,21 +4,13 @@ import { Navbar, Nav } from "react-bootstrap";
 export class index extends Component {
   render() {
     return (
-      <Navbar bg="primary" variant="dark">
-        <Navbar.Brand href="/">Nalanda Latex Management System!!!</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Link className="mr-3" style={{ color: "black" }} to="/">
-            Customers
-          </Link>
-          <Link className="mr-3" style={{ color: "black" }} to="/latexCollection">
-            Latex Collection
-          </Link>
-          <Link className="mr-3" style={{ color: "black" }} to="/cashpayment">
-            Cash Payments
-          </Link>
-          <Link className="mr-3" style={{ color: "black" }} to="/billingInvoices">
-            Billing & Invoices
-          </Link>
+      <Navbar bg="light" variant="light">
+        <Navbar.Brand href="/">Nalanda Associates</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/">Customers</Nav.Link>
+          <Nav.Link href="/latexCollection">Latex Collection</Nav.Link>
+          <Nav.Link href="/cashpayment">Cash Payments</Nav.Link>
+          <Nav.Link href="/billingInvoices">Billing & Invoices</Nav.Link>
         </Nav>
       </Navbar>
     );
