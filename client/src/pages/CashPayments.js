@@ -76,6 +76,13 @@ class CashPayments extends Component {
       }
 
     ],
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+      wrapText: true,
+      autoHeight: true,
+      flex:1
+    }
   };
 
   showCashPaymentForm = () => {
@@ -120,8 +127,10 @@ class CashPayments extends Component {
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
+            defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
+
           ></AgGridReact>
         </div>
         <NewCashPaymentForm
