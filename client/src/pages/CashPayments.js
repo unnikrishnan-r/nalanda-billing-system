@@ -28,6 +28,7 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
+let gridApi;
 class CashPayments extends Component {
   state = {
     addCashPaymentFormTrigger: false,
@@ -76,6 +77,13 @@ class CashPayments extends Component {
       }
 
     ],
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+      wrapText: true,
+      autoHeight: true,
+      flex:1
+    }
   };
 
   showCashPaymentForm = () => {
@@ -102,7 +110,12 @@ class CashPayments extends Component {
         console.log(err);
       });
   };
-
+  onGridReady = (params) =>{
+    gridApi = params.api;
+  }
+  onExportClick = () =>{
+    gridApi.exportDataAsCsv();
+  }
   render() {
     {
       console.log("test cash page");
@@ -113,15 +126,20 @@ class CashPayments extends Component {
         <br></br>
         <br></br>
         <Container></Container>
-        <button onClick={this.showCashPaymentForm}>New cash Advance</button>
+        <br></br>
+        <button id="addCashPayment" onClick={this.showCashPaymentForm}>Add cash Advance</button>
+        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
+        <button className="printbtn"> Print</button>
         <br></br>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
+            defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
+            onGridReady={this.onGridReady}
           ></AgGridReact>
         </div>
         <NewCashPaymentForm

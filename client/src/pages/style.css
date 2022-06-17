@@ -54,7 +54,7 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-#addCollection {
+#addCashPayment {
     background-color: #2196F3;
     border: 5px;
     height: 30px;
