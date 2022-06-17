@@ -40,7 +40,7 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
-
+let gridApi;
 class LatexCollection extends Component {
   state = {
     addLatexFormTrigger: false,
@@ -147,7 +147,7 @@ class LatexCollection extends Component {
       statusRenderer: StatusRenderer,
     },
   };
-
+  
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -156,6 +156,9 @@ class LatexCollection extends Component {
       this.setState({ latexCollection: res.data });
     });
   };
+  onExportClick = () =>{
+    this.gridApi.exportDataAsCsv();
+  }
   onFirstDataRendered = (params) => {
     params.api.sizeColumnsToFit();
   };
@@ -189,9 +192,12 @@ class LatexCollection extends Component {
         <Navbar></Navbar>
         <br></br>
         <br></br>
-        <Container>
-          <button onClick={this.showAddLatexForm}>Add Collection</button>
-        </Container>
+        <Container></Container>
+        <br></br>
+        <button id="addCollection" onClick={this.showAddLatexForm}>Add Collection</button>
+        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
+        <button className="printbtn"> Print</button>
+        <br></br>
         <br></br>
         <div className="ag-theme-alpine" style={{ height: 500 }}>
           <AgGridReact
