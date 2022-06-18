@@ -37,13 +37,13 @@ class CashPayments extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
-        floatingFilter: true
+        floatingFilter: true,
       },
       {
         field: "Customer.customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
-        floatingFilter: true
+        floatingFilter: true,
       },
       {
         field: "paymentDate",
@@ -51,8 +51,8 @@ class CashPayments extends Component {
         headerName: "Payement Date",
         floatingFilter: true,
         cellRenderer: (data) => {
-          return moment(data.data.paymentDate).format('DD/MM/YYYY')
-        }
+          return moment(data.data.paymentDate).format("DD/MM/YYYY");
+        },
       },
       {
         field: "paymentType",
@@ -73,17 +73,16 @@ class CashPayments extends Component {
         filter: "agSetColumnFilter",
         headerName: "Notes",
         editable: true,
-        floatingFilter: true
-      }
-
+        floatingFilter: true,
+      },
     ],
     defaultColDef: {
       resizable: true,
       sortable: true,
       wrapText: true,
       autoHeight: true,
-      flex:1
-    }
+      flex: 1,
+    },
   };
 
   showCashPaymentForm = () => {
@@ -110,12 +109,12 @@ class CashPayments extends Component {
         console.log(err);
       });
   };
-  onGridReady = (params) =>{
+  onGridReady = (params) => {
     gridApi = params.api;
-  }
-  onExportClick = () =>{
+  };
+  onExportClick = () => {
     gridApi.exportDataAsCsv();
-  }
+  };
   render() {
     {
       console.log("test cash page");
@@ -124,15 +123,21 @@ class CashPayments extends Component {
       <>
         <Navbar></Navbar>
         <br></br>
-        <br></br>
         <Container></Container>
+        <div className="sub-header">
+          <button id="addCashPayment" onClick={this.showCashPaymentForm}>
+            Add Cash Entry
+          </button>
+          <button className="exportbtn" onClick={this.onExportClick}>
+            {" "}
+            Export
+          </button>
+          <button className="printbtn"> Print</button>
+          <br></br>
+        </div>
+
         <br></br>
-        <button id="addCashPayment" onClick={this.showCashPaymentForm}>Add cash Advance</button>
-        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
-        <button className="printbtn"> Print</button>
-        <br></br>
-        <br></br>
-        <div className="ag-theme-alpine" style={{ height: 500 }}>
+        <div className="ag-theme-alpine grid-box" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}

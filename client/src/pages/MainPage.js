@@ -89,11 +89,11 @@ class MainPage extends Component {
     ],
     defaultColDef: {
       resizable: true,
-        sortable: true,
-        wrapText: true,
-        autoHeight: true,
-        flex: 1
-    }
+      sortable: true,
+      wrapText: true,
+      autoHeight: true,
+      flex: 1,
+    },
   };
   //Function to handle the change of customer status switch
   handleCustomerStatusChange(params) {
@@ -146,15 +146,14 @@ class MainPage extends Component {
     this.componentDidMount();
   };
 
-  handleNewCustomerFormChange =(x) =>{
-    console.log(x)
-
+  handleNewCustomerFormChange = (x) => {
+    console.log(x);
   };
-  submitAddCustomerForm =() =>{
-    console.log("clicked submit")
-  }
+  submitAddCustomerForm = () => {
+    console.log("clicked submit");
+  };
   componentDidMount = () => {
-    console.log("Component mount")
+    console.log("Component mount");
     this.loadCustomers();
     this.setState({ addCustomerFormTrigger: false });
   };
@@ -168,27 +167,32 @@ class MainPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-  }
-  onGridReady = (params) =>{
+  };
+  onGridReady = (params) => {
     gridApi = params.api;
-  }
-  onExportClick = () =>{
+  };
+  onExportClick = () => {
     gridApi.exportDataAsCsv();
-  }
+  };
   render() {
     return (
       <>
         <Navbar></Navbar>
         <br></br>
-        <br></br>
         <Container></Container>
+        <div className="sub-header">
+          <button id="addCustomer" onClick={this.showAddCustomerForm}>
+            Add Customer
+          </button>
+          <button className="exportbtn" onClick={this.onExportClick}>
+            {" "}
+            Export
+          </button>
+          <button className="printbtn"> Print</button>
+          <br></br>
+        </div>
         <br></br>
-        <button id="addCustomer" onClick={this.showAddCustomerForm}>Add Customer</button>
-        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
-        <button className="printbtn"> Print</button>
-        <br></br>
-        <br></br>
-        <div className="ag-theme-alpine" style={{ height: 500}}>
+        <div className="ag-theme-alpine grid-box" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
@@ -204,8 +208,7 @@ class MainPage extends Component {
           trigger={this.state.addCustomerFormTrigger}
           closeAddCustomerForm={this.closeAddCustomerForm}
           submitAddCustomerForm={this.submitAddCustomerForm}
-        >
-        </NewCustomerForm>
+        ></NewCustomerForm>
         <br></br>
       </>
     );
