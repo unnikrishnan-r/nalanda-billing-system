@@ -17,22 +17,13 @@ class AddLatexForm extends Component {
         collectionDate: "2022-02-02",
         tareWeight: 0,
         grossWeight: 1,
-        barrelNumber: "A20 L",
+        barrelNumber: "",
     };
     onChange = (selectedUsers) => {
         this.setState({
             selectedUsers: selectedUsers || [],
         });
         console.log(selectedUsers);
-    };
-
-    loadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
-        );
-        const json = await response.json();
-
-        callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
     };
 
     // Handles updating component state when the user types into the input field
@@ -71,7 +62,7 @@ class AddLatexForm extends Component {
                         collectionDate: "2022-02-02",
                         tareWeight: 0,
                         grossWeight: 1,
-                        barrelNumber:"A20 L",
+                        barrelNumber:"",
                     });
                     this.props.closeAddlatexForm();
                 })
@@ -86,14 +77,16 @@ class AddLatexForm extends Component {
             <div className="newLatex">
                 {" "}
                 <div className="newLatexInner">
-                    <h1>Add Latex Collection</h1>
+                    <h4 style={{ fontWeight: "bold"}}>New latex collection entry</h4>
+                    <hr size="" width="" color="grey"/>  
                     <br></br>
+                    <h6 style={{display:"inline"}}>Customer Name</h6><span id="mandatory"> * </span>
+                   
                     <AsyncSelect
-                        isMulti
                         components={animatedComponent}
                         value={this.state.selectedUsers}
                         placeholder={"Select Customer"}
-                        loadOptions={this.loadOptions}
+                        loadOptions={API.loadOptions}
                         onChange={this.onChange}
                     />
                     <Form
@@ -102,11 +95,9 @@ class AddLatexForm extends Component {
                         onSubmit={this.handleOnSubmit}
                     >
                         <br></br>
-                        <br></br>
-
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Collection Date</Form.Label>
+                                <Form.Label>Collection Date</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="date"
@@ -120,7 +111,7 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Barrel Weight</Form.Label>
+                                <Form.Label>Barrel Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="number"
@@ -133,7 +124,7 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Gross Weight</Form.Label>
+                                <Form.Label>Gross Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="number"
@@ -144,16 +135,20 @@ class AddLatexForm extends Component {
                                 required
                             />
                         </Form.Group>
-
-                        <Button
-                            id="subBtn"
-                            variant="info"
-                            className="btn btn-light cancel-button"
-                            onClick={() => this.props.closeAddlatexForm()}
-                        >
-                            Cancel
-                        </Button>
-
+                        <Form.Group>
+                            <div className="titleText">
+                                <Form.Label>Barrel Number</Form.Label><span id="mandatory"> * </span>
+                            </div>
+                            <Form.Control
+                                type="text"
+                                placeholder="barrel-no"
+                                name="barrelNumber"
+                                onChange={this.handleInputChange}
+                                value={this.state.barrelNumber}
+                                required
+                            />
+                        </Form.Group>
+                        <hr size="" width="" color="grey"/>  
                         <Button
                             id="subBtn"
                             variant="info"
@@ -163,6 +158,16 @@ class AddLatexForm extends Component {
                         >
                             Add collection
                         </Button>
+                        <Button
+                            id="subBtn"
+                            variant="info"
+                            className="btn btn-light cancel-button"
+                            onClick={() => this.props.closeAddlatexForm()}
+                        >
+                            Cancel
+                        </Button>
+
+                        
                     </Form>
                 </div>
             </div>

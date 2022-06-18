@@ -28,6 +28,7 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
+let gridApi;
 class MainPage extends Component {
   state = {
     addCustomerFormTrigger: false,
@@ -91,6 +92,13 @@ class MainPage extends Component {
         ),
       },
     ],
+    defaultColDef: {
+      resizable: true,
+        sortable: true,
+        wrapText: true,
+        autoHeight: true,
+        flex: 1
+    }
   };
   //Function to handle the change of customer status switch
   handleCustomerStatusChange(params) {
@@ -165,7 +173,13 @@ class MainPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
+  onGridReady = (params) =>{
+    gridApi = params.api;
+  }
+  onExportClick = () =>{
+    gridApi.exportDataAsCsv();
+  }
   render() {
     return (
       <>
@@ -174,16 +188,20 @@ class MainPage extends Component {
         <br></br>
         <Container></Container>
         <br></br>
-        <button onClick={this.showAddCustomerForm}>Add Customer</button>
+        <button id="addCustomer" onClick={this.showAddCustomerForm}>Add Customer</button>
+        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
+        <button className="printbtn"> Print</button>
         <br></br>
         <br></br>
-        <div className="ag-theme-alpine" style={{ height: 500 }}>
+        <div className="ag-theme-alpine" style={{ height: 500}}>
           <AgGridReact
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
+            defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
             onCellValueChanged={this.onCellValueChanged}
+            onGridReady={this.onGridReady}
           ></AgGridReact>
         </div>
 

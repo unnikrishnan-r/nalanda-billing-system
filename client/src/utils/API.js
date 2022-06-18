@@ -67,7 +67,14 @@ export default {
       }
     );
   },
+  loadOptions: async (inputText, callback) => {
+    const response = await fetch(
+      `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
+    );
+    const json = await response.json();
 
+    callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
+  },
   getCashEntry: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment");
   },
