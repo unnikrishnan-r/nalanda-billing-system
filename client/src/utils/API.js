@@ -52,6 +52,18 @@ export default {
       }
     );
   },
+  updateLatexEntry: function (latexEntry) {
+    console.log(latexEntry);
+    return axios.put(
+      `https://nalandaapi.herokuapp.com/api/latexCollection/key`,
+      latexEntry,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
   },
