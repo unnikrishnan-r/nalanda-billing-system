@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 
+import moment from "moment";
 import API from "../../utils/API";
 const animatedComponent = makeAnimated();
 
@@ -14,7 +15,7 @@ class NewCashPaymentForm extends Component {
   state = {
     selectedUsers: [],
     validated: false,
-    paymentDate: "2022-02-02",
+    paymentDate: moment(),
     totalAmount: 0,
     paymentType: 1,
     paymentNotes: "",
@@ -55,8 +56,8 @@ class NewCashPaymentForm extends Component {
     } else {
       this.setState({ validated: true });
       const newCashEntry = {
-        customerId: this.state.selectedUsers[0].value,
-        paymentDate: this.state.paymentDate,
+        customerId: this.state.selectedUsers.value,
+        paymentDate: moment(this.state.paymentDate).format("MM/DD/YYYY"),
         totalAmount: this.state.totalAmount,
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
@@ -68,7 +69,7 @@ class NewCashPaymentForm extends Component {
           this.setState({
             selectedUsers: [],
             validated: false,
-            paymentDate: "2022-02-02",
+            paymentDate: moment(),
             totalAmount: 0,
             paymentType: 1,
             paymentNotes: "",
@@ -91,7 +92,6 @@ class NewCashPaymentForm extends Component {
           <br></br>
           <h6 style={{ fontWeight:"normal",display:"inline"}}>Customer Name</h6><span id="mandatory"> * </span>
           <AsyncSelect
-            isMulti
             components={animatedComponent}
             value={this.state.selectedUsers}
             placeholder={"Search using customer name..."}

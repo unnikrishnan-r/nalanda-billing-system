@@ -53,8 +53,19 @@ export default {
     );
   },
   getLatexCollection: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection")
-
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
+  },
+  calculateInvoiceAmount: function (invoiceReq) {
+    console.log(invoiceReq);
+    return axios.post(
+      `https://nalandaapi.herokuapp.com/api/calculateInvoiceAmount`,
+      invoiceReq,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   },
   loadOptions: async (inputText, callback) => {
     const response = await fetch(
@@ -65,8 +76,6 @@ export default {
     callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
   },
   getCashEntry: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment")
-
-  }
+    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment");
+  },
 };
-
