@@ -147,7 +147,20 @@ class LatexCollection extends Component {
       statusRenderer: StatusRenderer,
     },
   };
-  
+
+  //Update function
+  onCellValueChanged = (params) => {
+    console.log(params.data);
+    API.updateLatexEntry(params.data)
+      .then((res) => {
+        console.log(res);  
+        this.componentDidMount();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -156,9 +169,9 @@ class LatexCollection extends Component {
       this.setState({ latexCollection: res.data });
     });
   };
-  onExportClick = () =>{
+  onExportClick = () => {
     this.gridApi.exportDataAsCsv();
-  }
+  };
   onFirstDataRendered = (params) => {
     params.api.sizeColumnsToFit();
   };
@@ -194,8 +207,13 @@ class LatexCollection extends Component {
         <br></br>
         <Container></Container>
         <br></br>
-        <button id="addCollection" onClick={this.showAddLatexForm}>Add Collection</button>
-        <button className="exportbtn" onClick={this.onExportClick}> Export</button>
+        <button id="addCollection" onClick={this.showAddLatexForm}>
+          Add Collection
+        </button>
+        <button className="exportbtn" onClick={this.onExportClick}>
+          {" "}
+          Export
+        </button>
         <button className="printbtn"> Print</button>
         <br></br>
         <br></br>
@@ -207,6 +225,7 @@ class LatexCollection extends Component {
             frameworkComponents={this.state.frameworkComponents}
             paginationAutoPageSize={true}
             pagination={true}
+            onCellValueChanged={this.onCellValueChanged}
             onGridReady={this.onGridReady}
             onFirstDataRendered={this.onFirstDataRendered.bind(this)}
           ></AgGridReact>
