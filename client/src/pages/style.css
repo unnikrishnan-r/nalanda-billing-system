@@ -1,4 +1,5 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 .ag-theme-alpine {
     font-family: Arial, Helvetica, sans-serif;
@@ -71,42 +72,10 @@ input:checked+.slider:before {
     grid-gap: 5px
 }
 
-#addCollection {
+#addCustomer, #addCollection, #addCashPayment {
     background-color: #2595FF;
-    border: 5px;
-    width: 122px;
-    height: 32px;
-    border-radius: 2px;
-    color: white;
-    float: right;
-    margin: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    font-style: normal;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-#addCustomer {
-    background-color: #2595FF;
-    border: 5px;
     width: 121px;
-    height: 32px;
-    border-radius: 2px;
-    color: white;
-    float: right;
-    margin: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    font-style: normal;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-#addCashPayment {
-    background-color:#2595FF ;
     border: 5px;
-    width: 148px;
     height: 32px;
     border-radius: 2px;
     color: white;
@@ -116,8 +85,7 @@ input:checked+.slider:before {
     font-size: 14px;
     line-height: 20px;
     font-style: normal;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+    font-family: 'Open Sans', sans-serif;
 }
 
 .printbtn {
@@ -131,6 +99,7 @@ input:checked+.slider:before {
     border: 1px solid #DBDEDF;
     border-radius: 2px;
     font-weight: 500;
+
 }
 
 .printbtn:before {
@@ -155,6 +124,7 @@ input:checked+.slider:before {
     border: 1px solid #DBDEDF;
     border-radius: 2px;
     font-weight: 500;
+
 }
 
 .exportbtn:before {
@@ -168,4 +138,28 @@ input:checked+.slider:before {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+}
+
+.sub-header {
+    padding-bottom: 10px;
+}
+
+.grid-box {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    /* or 143% */
+
+    align-items: center;
+
+    /* Basic / Black */
+
+    color: #000000;
+
+
+    /* Inside auto layout */
+
+    order: 0;
 }

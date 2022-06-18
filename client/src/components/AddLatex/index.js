@@ -14,9 +14,8 @@ class AddLatexForm extends Component {
     state = {
         selectedUsers: [],
         validated: false,
-        collectionDate: "2022-02-02",
-        tareWeight: 0,
-        grossWeight: 1,
+        collectionDate: new Date(),
+        grossWeight: "",
         barrelNumber: "",
     };
     onChange = (selectedUsers) => {
@@ -48,7 +47,6 @@ class AddLatexForm extends Component {
             const newLatexEntry = {
                 customerId: this.state.selectedUsers.value,
                 collectionDate: this.state.collectionDate,
-                tareWeight: this.state.tareWeight,
                 grossWeight: this.state.grossWeight,
                 barrelNumber: this.state.barrelNumber,
             };
@@ -59,9 +57,8 @@ class AddLatexForm extends Component {
                     this.setState({
                         selectedUsers: [],
                         validated: false,
-                        collectionDate: "2022-02-02",
-                        tareWeight: 0,
-                        grossWeight: 1,
+                        collectionDate: new Date(),
+                        grossWeight: "",
                         barrelNumber:"",
                     });
                     this.props.closeAddlatexForm();
@@ -106,19 +103,6 @@ class AddLatexForm extends Component {
                                 onChange={this.handleInputChange}
                                 value={this.state.collectionDate}
                                 maxLength={10}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <div className="titleText">
-                                <Form.Label>Barrel Weight</Form.Label><span id="mandatory"> * </span>
-                            </div>
-                            <Form.Control
-                                type="number"
-                                placeholder="in Kgs"
-                                name="tareWeight"
-                                onChange={this.handleInputChange}
-                                value={this.state.tareWeight}
                                 required
                             />
                         </Form.Group>

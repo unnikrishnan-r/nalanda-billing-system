@@ -64,8 +64,8 @@ class LatexCollection extends Component {
         floatingFilter: true,
 
         cellRenderer: (data) => {
-          return moment(data.data.collectionDate).format("DD/MM/YYYY");
-        },
+          return moment.utc(data.data.collectionDate).format("DD/MM/YYYY");
+        },  
       },
       {
         field: "grossWeight",
@@ -204,9 +204,8 @@ class LatexCollection extends Component {
       <>
         <Navbar></Navbar>
         <br></br>
-        <br></br>
         <Container></Container>
-        <br></br>
+        <div className="sub-header">
         <button id="addCollection" onClick={this.showAddLatexForm}>
           Add Collection
         </button>
@@ -216,8 +215,9 @@ class LatexCollection extends Component {
         </button>
         <button className="printbtn"> Print</button>
         <br></br>
+        </div>
         <br></br>
-        <div className="ag-theme-alpine" style={{ height: 500 }}>
+        <div className="ag-theme-alpine grid-box" style={{ height: 500 }}>
           <AgGridReact
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}
