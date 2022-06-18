@@ -158,6 +158,7 @@ input:checked+.slider:before {
 }
 
 .exportbtn:before {
+    color: green;
     padding: 3px;
     content: "\f1c3";
     display: inline-block;
