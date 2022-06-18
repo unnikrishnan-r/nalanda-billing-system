@@ -46,7 +46,7 @@ class AddLatexForm extends Component {
         } else {
             this.setState({ validated: true });
             const newLatexEntry = {
-                customerId: this.state.selectedUsers[0].value,
+                customerId: this.state.selectedUsers.value,
                 collectionDate: this.state.collectionDate,
                 tareWeight: this.state.tareWeight,
                 grossWeight: this.state.grossWeight,

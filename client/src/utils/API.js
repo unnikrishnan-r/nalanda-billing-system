@@ -58,7 +58,7 @@ export default {
   calculateInvoiceAmount: function (invoiceReq) {
     console.log(invoiceReq);
     return axios.post(
-      `http://localhost:3005/api/calculateInvoiceAmount`,
+      `https://nalandaapi.herokuapp.com/api/calculateInvoiceAmount`,
       invoiceReq,
       {
         headers: {

@@ -34,10 +34,10 @@ class BillingInvoices extends Component {
     showBillSummary: false,
   };
   onBillFromDateChange = (date) => {
-    this.setState({ billFromDate: moment(date) });
+    this.setState({ billFromDate: moment(date).format("MM/DD/YYYY") });
   };
   onBillToDateChange = (date) => {
-    this.setState({ billToDate: moment(date) });
+    this.setState({ billToDate: moment(date).format("MM/DD/YYYY") });
   };
   // Handles updating component state when the user types into the input field
   handleInputChange = (event) => {
@@ -92,6 +92,7 @@ class BillingInvoices extends Component {
                       date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
                       onDateChange={this.onBillFromDateChange}
                       focused={this.state.focusedBillFrom} // PropTypes.bool
+                      isOutsideRange={() => false}
                       onFocusChange={({ focused }) =>
                         this.setState({ focusedBillFrom: focused })
                       }
@@ -109,6 +110,7 @@ class BillingInvoices extends Component {
                       date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
                       onDateChange={this.onBillToDateChange}
                       focused={this.state.focusedBillTo} // PropTypes.bool
+                      isOutsideRange={() => false}
                       onFocusChange={({ focused }) =>
                         this.setState({ focusedBillTo: focused })
                       }

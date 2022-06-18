@@ -95,7 +95,7 @@ class CashPayments extends Component {
     this.setState({
       addCashPaymentFormTrigger: false,
     });
-    // this.componentDidMount();
+    this.componentDidMount();
   };
   componentDidMount = () => {
     this.loadcashPayments();
