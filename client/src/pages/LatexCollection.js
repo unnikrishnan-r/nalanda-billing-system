@@ -64,8 +64,8 @@ class LatexCollection extends Component {
         floatingFilter: true,
 
         cellRenderer: (data) => {
-          return moment(data.data.collectionDate).format("DD/MM/YYYY");
-        },
+          return moment.utc(data.data.collectionDate).format("DD/MM/YYYY");
+        },  
       },
       {
         field: "grossWeight",

@@ -33,11 +33,6 @@ class MainPage extends Component {
   state = {
     addCustomerFormTrigger: false,
     customerList: [],
-    // rowdata: [
-    //   { make: "Toyota", model: "Celica", price: 35000 },
-    //   { make: "Ford", model: "Mondeo", price: 32000 },
-    //   { make: "Porsche", model: "Boxster", price: 72000 },
-    // ],
     columnDefs: [
       {
         field: "customerId",
