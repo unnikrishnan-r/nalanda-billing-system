@@ -21,7 +21,6 @@ import {
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
-import ReactToPrint from "react-to-print";
 function headerHeightGetter() {
   var columnHeaderTexts = [
     ...document.querySelectorAll(".ag-header-cell-text"),
@@ -217,17 +216,7 @@ class LatexCollection extends Component {
           Export
         </button>
         <div style={{ width: '100%', height: '100%' }}>
-        <ReactToPrint
-          trigger={() => {
-
-            return <button className="printbtn"> Print</button> 
-          }}
-          
-          content = {() => this.componentRef}
-          documentTitle = "LatexPage"
-          pageStyle= "portrait"
-
-        ></ReactToPrint>
+        <button className="printbtn"> Print</button>
         </div>
         <br></br>
         </div>
