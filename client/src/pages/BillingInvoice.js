@@ -47,7 +47,7 @@ class BillingInvoices extends Component {
       {
         field: "numberOfBills",
         filter: "agSetColumnFilter",
-        headerName: "Number of Customers",
+        headerName: "Number of Bills",
         floatingFilter: true,
       },
       {
