@@ -5,7 +5,7 @@ export default class StatusRenderer extends Component {
     }
     render() {
       return (
-        <label>{this.props.data.paymentStatus ? "Paid" : "unpaid"}</label>
+        <label>{this.props.data.paymentStatus ? "Paid" : "Unpaid"}</label>
       )
     }
   }
