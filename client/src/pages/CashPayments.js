@@ -17,7 +17,6 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
-import ReactToPrint from "react-to-print";
 import Navbar from "../components/Navbar";
 import NewCashPaymentForm from "../components/NewCashPaymentForm";
 import API from "../utils/API";
@@ -138,15 +137,7 @@ class CashPayments extends Component {
             {" "}
             Export
           </button>
-          <ReactToPrint
-          trigger={() => {
-
-            return <button className="printbtn"> Print</button> 
-          }}
-          content = {() => this.componentRef}
-          documentTitle = "CashpaymentPage"
-          pageStyle= "print"
-        ></ReactToPrint>
+          <button className="printbtn"> Print</button>
           <br></br>
         </div>
 
