@@ -25,6 +25,63 @@ import API from "../utils/API";
 
 class BillingInvoices extends Component {
   state = {
+    columnDefs: [
+      {
+        field: "billFromDate",
+        filter: "agSetColumnFilter",
+        headerName: "Bill From Date",
+        floatingFilter: true,
+        cellRenderer: (data) => {
+          return moment.utc(data.data.billFromDate).format("DD/MM/YYYY");
+        },
+      },
+      {
+        field: "billToDate",
+        filter: "agSetColumnFilter",
+        headerName: "Bill To Date",
+        floatingFilter: true,
+        cellRenderer: (data) => {
+          return moment.utc(data.data.billToDate).format("DD/MM/YYYY");
+        },
+      },
+      {
+        field: "numberOfBills",
+        filter: "agSetColumnFilter",
+        headerName: "Number of Customers",
+        floatingFilter: true,
+      },
+      {
+        field: "totalNetWeight",
+        filter: "agSetColumnFilter",
+        headerName: "Total Net Weight",
+        floatingFilter: true,
+      },
+      {
+        field: "totaldryWeight",
+        filter: "agSetColumnFilter",
+        headerName: "Total Dry Weight",
+        floatingFilter: true,
+      },
+      {
+        field: "unitRatePerKg",
+        filter: "agSetColumnFilter",
+        headerName: "Unit Rate/Kg",
+        floatingFilter: true,
+      },
+      {
+        field: "totalBillAmount",
+        filter: "agSetColumnFilter",
+        headerName: "Total Bill Amount",
+        floatingFilter: true,
+      },
+    ],
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+      wrapText: true,
+      autoHeight: true,
+      flex: 1,
+    },
     focusedBillFrom: false,
     focusedBillTo: false,
 
@@ -64,6 +121,17 @@ class BillingInvoices extends Component {
       })
       .catch((err) => console.log(err));
   }
+
+  componentDidMount = () => {
+    API.getBillingHistory()
+      .then((res) => {
+        console.log(res);
+        this.setState({ billHistory: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     let numberOfCustomers = "Number of Customers:";
@@ -209,8 +277,18 @@ class BillingInvoices extends Component {
                 eventKey="invoiceHistory"
                 title="Billing & Invoice History"
               >
-                {" "}
-                <h1> Tab 2</h1>
+                <div
+                  className="ag-theme-alpine grid-box"
+                  style={{ height: 500 }}
+                >
+                  <AgGridReact
+                    rowData={this.state.billHistory}
+                    columnDefs={this.state.columnDefs}
+                    defaultColDef={this.state.defaultColDef}
+                    paginationAutoPageSize={true}
+                    pagination={true}
+                  ></AgGridReact>
+                </div>
               </Tab>
             </Tabs>
           </div>

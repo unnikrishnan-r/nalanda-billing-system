@@ -90,4 +90,7 @@ export default {
   getCashEntry: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment");
   },
+  getBillingHistory: function (){
+    return axios.get("https://nalandaapi.herokuapp.com/api/billingSummary")
+  }
 };
