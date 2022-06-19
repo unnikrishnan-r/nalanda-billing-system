@@ -30,7 +30,7 @@ class BillingInvoices extends Component {
 
     billFromDate: moment(),
     billToDate: moment(),
-    ratePerKg: "",
+    ratePerKg: 0,
     showBillSummary: false,
   };
   onBillFromDateChange = (date) => {
@@ -66,6 +66,12 @@ class BillingInvoices extends Component {
   }
 
   render() {
+    let numberOfCustomers = "Number of Customers:";
+    let totalNetWeight = "Total Net Weight:";
+    let totalDryWeight = "Total Dry Weight:";
+    let ratePerKg = "Rate/Kg:";
+    let totaInvoiceAmount = "Total Invoice Amount:";
+
     return (
       <>
         <Navbar></Navbar>
@@ -77,50 +83,56 @@ class BillingInvoices extends Component {
             <Tabs
               defaultActiveKey="calcInvoice"
               id="uncontrolled-tab-example"
-              className="mb-3"
+              className="mb-3 billingTabs"
             >
-              <Tab eventKey="calcInvoice" title="Calculate Invoice Amount">
+              <Tab
+                className="innerTab"
+                eventKey="calcInvoice"
+                title="Calculate Invoice Amount"
+              >
                 <div className="grid-container">
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
                         <Form.Label>From Date</Form.Label>
                       </div>
-                    </Form.Group>
 
-                    <SingleDatePicker
-                      date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
-                      onDateChange={this.onBillFromDateChange}
-                      focused={this.state.focusedBillFrom} // PropTypes.bool
-                      isOutsideRange={() => false}
-                      onFocusChange={({ focused }) =>
-                        this.setState({ focusedBillFrom: focused })
-                      }
-                      id="billFromDate" // PropTypes.string.isRequired,
-                    />
+                      <SingleDatePicker
+                        date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
+                        onDateChange={this.onBillFromDateChange}
+                        focused={this.state.focusedBillFrom} // PropTypes.bool
+                        isOutsideRange={() => false}
+                        onFocusChange={({ focused }) =>
+                          this.setState({ focusedBillFrom: focused })
+                        }
+                        id="billFromDate" // PropTypes.string.isRequired,
+                      />
+                    </Form.Group>
                   </div>
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
                         <Form.Label>To Date</Form.Label>
                       </div>
-                    </Form.Group>
 
-                    <SingleDatePicker
-                      date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
-                      onDateChange={this.onBillToDateChange}
-                      focused={this.state.focusedBillTo} // PropTypes.bool
-                      isOutsideRange={() => false}
-                      onFocusChange={({ focused }) =>
-                        this.setState({ focusedBillTo: focused })
-                      }
-                      id="billToDate" // PropTypes.string.isRequired,
-                    />
+                      <SingleDatePicker
+                        date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
+                        onDateChange={this.onBillToDateChange}
+                        focused={this.state.focusedBillTo} // PropTypes.bool
+                        isOutsideRange={() => false}
+                        onFocusChange={({ focused }) =>
+                          this.setState({ focusedBillTo: focused })
+                        }
+                        id="billToDate" // PropTypes.string.isRequired,
+                      />
+                    </Form.Group>
                   </div>
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
-                        <Form.Label>Average Rate</Form.Label>
+                        <Form.Label className="titleText">
+                          Average Rate
+                        </Form.Label>
                       </div>
 
                       <Form.Control
@@ -131,46 +143,56 @@ class BillingInvoices extends Component {
                         value={this.state.ratePerKg}
                         maxLength={10}
                         required
+                        className="avg-rate"
                       />
                     </Form.Group>
                   </div>
-                  <Button
-                    id="subBtn"
-                    variant="info"
-                    type="submit"
-                    className="btn btn-success submit-button"
-                    onClick={() => this.calculateInvoice()}
-                  >
-                    Calculate Invoice Amount
-                  </Button>
+                  <div className="grid-child purple">
+                    <Form.Group>
+                      <div className="titleText">
+                        <Form.Label className="titleText"></Form.Label>
+                      </div>
+                      <Button
+                        id="subBtn1"
+                        variant="info"
+                        type="submit"
+                        className="btn btn-success submit-button calc-button"
+                        onClick={() => this.calculateInvoice()}
+                      >
+                        Calculate Invoice Amount
+                      </Button>{" "}
+                    </Form.Group>
+                  </div>
+                  <div className="grid-child purple"></div>
                 </div>
                 {this.state.showBillSummary ? (
                   <div>
                     <br></br>
                     <br></br>
-                    <Card style={{ width: "36rem" }}>
+                    <Card className="invoiceCard" style={{ width: "36rem" }}>
                       <Card.Header>
                         <h2>Invoice Summary</h2>
                       </Card.Header>
-                      <ListGroup variant="flush">
+                      <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                         <ListGroup.Item>
-                          Number of Customers:{" "}
-                          {this.state.BillSummaryRecord.numberOfBills}
+                          {numberOfCustomers +
+                            this.state.BillSummaryRecord.numberOfBills}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                          Total Net Weight:
-                          {this.state.BillSummaryRecord.totalNetWeight}
+                          {totalNetWeight +
+                            this.state.BillSummaryRecord.totalNetWeight}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                          Total Dry Weight:
-                          {this.state.BillSummaryRecord.totaldryWeight}
+                          {totalDryWeight +
+                            this.state.BillSummaryRecord.totaldryWeight}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                          Rate/Kg:{this.state.BillSummaryRecord.unitRatePerKg}
+                          {ratePerKg +
+                            this.state.BillSummaryRecord.unitRatePerKg}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                          Total Invoice Amount:
-                          {this.state.BillSummaryRecord.totalBillAmount}
+                          {totaInvoiceAmount +
+                            this.state.BillSummaryRecord.totalBillAmount}
                         </ListGroup.Item>
                       </ListGroup>
                       <Button variant="primary">
@@ -182,7 +204,11 @@ class BillingInvoices extends Component {
                   ""
                 )}
               </Tab>
-              <Tab eventKey="invoiceHistory" title="Billing & Invoice History">
+              <Tab
+                className="innerTab"
+                eventKey="invoiceHistory"
+                title="Billing & Invoice History"
+              >
                 {" "}
                 <h1> Tab 2</h1>
               </Tab>
