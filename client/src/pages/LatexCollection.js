@@ -21,6 +21,7 @@ import {
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
+import ReactToPrint from "react-to-print";
 function headerHeightGetter() {
   var columnHeaderTexts = [
     ...document.querySelectorAll(".ag-header-cell-text"),
@@ -188,7 +189,9 @@ class LatexCollection extends Component {
   };
   componentDidMount = () => {
     this.loadLatexCollection();
+    console.log(this.componentRef)
   };
+  
   loadLatexCollection = () => {
     API.getLatexCollection()
       .then((res) => {
@@ -213,11 +216,23 @@ class LatexCollection extends Component {
           {" "}
           Export
         </button>
-        <button className="printbtn"> Print</button>
+        <div style={{ width: '100%', height: '100%' }}>
+        <ReactToPrint
+          trigger={() => {
+
+            return <button className="printbtn"> Print</button> 
+          }}
+          
+          content = {() => this.componentRef}
+          documentTitle = "LatexPage"
+          pageStyle= "portrait"
+
+        ></ReactToPrint>
+        </div>
         <br></br>
         </div>
         <br></br>
-        <div className="ag-theme-alpine grid-box" style={{ height: 500 }}>
+        <div className="ag-theme-alpine grid-box" style={{ height: 500 }} ref={el=>(this.componentRef=el)}>
           <AgGridReact
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}

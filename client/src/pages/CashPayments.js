@@ -17,6 +17,7 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
+import ReactToPrint from "react-to-print";
 import Navbar from "../components/Navbar";
 import NewCashPaymentForm from "../components/NewCashPaymentForm";
 import API from "../utils/API";
@@ -137,12 +138,20 @@ class CashPayments extends Component {
             {" "}
             Export
           </button>
-          <button className="printbtn"> Print</button>
+          <ReactToPrint
+          trigger={() => {
+
+            return <button className="printbtn"> Print</button> 
+          }}
+          content = {() => this.componentRef}
+          documentTitle = "CashpaymentPage"
+          pageStyle= "print"
+        ></ReactToPrint>
           <br></br>
         </div>
 
         <br></br>
-        <div className="ag-theme-alpine grid-box" style={{ height: 500 }}>
+        <div className="ag-theme-alpine grid-box" style={{ height: 500 }} ref={el=>(this.componentRef=el)}>
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
