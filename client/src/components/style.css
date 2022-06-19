@@ -1,0 +1,22 @@
+.dotPaid {
+    display: inline;
+    height: 8px;
+    width: 8px;
+    background-color: #33BE63;
+    border-radius: 50%;
+    display: inline-block;
+
+}
+
+.dotUnPaid {
+    display: inline;
+    height: 8px;
+    width: 8px;
+    background-color: #DF3826;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+#status {
+    padding-left: 8px;
+}
