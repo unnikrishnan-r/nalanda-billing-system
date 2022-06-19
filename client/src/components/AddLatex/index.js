@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
-
+import moment from "moment";
 import API from "../../utils/API";
 const animatedComponent = makeAnimated();
 
@@ -14,7 +14,7 @@ class AddLatexForm extends Component {
     state = {
         selectedUsers: [],
         validated: false,
-        collectionDate: new Date(),
+        collectionDate: moment(),
         grossWeight: "",
         barrelNumber: "",
     };
@@ -46,7 +46,7 @@ class AddLatexForm extends Component {
             this.setState({ validated: true });
             const newLatexEntry = {
                 customerId: this.state.selectedUsers.value,
-                collectionDate: this.state.collectionDate,
+                collectionDate: moment.utc(this.state.collectionDate).format("MM/DD/YYYY"),
                 grossWeight: this.state.grossWeight,
                 barrelNumber: this.state.barrelNumber,
             };
@@ -57,7 +57,7 @@ class AddLatexForm extends Component {
                     this.setState({
                         selectedUsers: [],
                         validated: false,
-                        collectionDate: new Date(),
+                        collectionDate: moment(),
                         grossWeight: "",
                         barrelNumber:"",
                     });

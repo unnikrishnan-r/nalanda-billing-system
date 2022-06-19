@@ -57,7 +57,7 @@ class NewCashPaymentForm extends Component {
       this.setState({ validated: true });
       const newCashEntry = {
         customerId: this.state.selectedUsers.value,
-        paymentDate: moment(this.state.paymentDate).format("MM/DD/YYYY"),
+        paymentDate: moment.utc(this.state.paymentDate).format("MM/DD/YYYY"),
         totalAmount: this.state.totalAmount,
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
@@ -104,6 +104,33 @@ class NewCashPaymentForm extends Component {
             onSubmit={this.handleOnSubmit}
           >
             <br></br>
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label>Payment Date</Form.Label><span id="mandatory"> * </span>
+              </div>
+              <Form.Control
+                type="date"
+                placeholder="DD/MM/YYYY"
+                name="paymentDate"
+                onChange={this.handleInputChange}
+                value={this.state.paymentDate}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label>Payment Type</Form.Label><span id="mandatory"> * </span>
+              </div>
+              <Form.Control
+                type="text"
+                placeholder=""
+                name="paymentType"
+                onChange={this.handleInputChange}
+                value={this.state.paymentType}
+
+                required
+              />
+            </Form.Group>
             <Form.Group>
               <div className="titleText">
                 <Form.Label>Amount</Form.Label><span id="mandatory"> * </span>
