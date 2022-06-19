@@ -20,6 +20,7 @@ import {
 import Navbar from "../components/Navbar";
 import NewCashPaymentForm from "../components/NewCashPaymentForm";
 import API from "../utils/API";
+import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 function formatNumber(number) {
   return Math.floor(number)
     .toString()
@@ -60,6 +61,7 @@ class CashPayments extends Component {
         headerName: "Payement Type",
         editable: true,
         floatingFilter: true,
+        cellRenderer: "paymentTypeRenderer"
       },
       {
         field: "totalAmount",
@@ -82,6 +84,9 @@ class CashPayments extends Component {
       wrapText: true,
       autoHeight: true,
       flex: 1,
+    },
+    frameworkComponents: {
+      paymentTypeRenderer: PaymentTypeRenderer,
     },
   };
 
@@ -141,6 +146,7 @@ class CashPayments extends Component {
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
+            frameworkComponents={this.state.frameworkComponents}
             defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
