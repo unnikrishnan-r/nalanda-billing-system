@@ -163,3 +163,69 @@ input:checked+.slider:before {
 
     order: 0;
 }
+
+.billingTabs {
+    width: 1403px;
+    height: 56px;
+    left: 17px;
+    top: 199px;
+
+    /* Basic / White */
+
+    background: #FFFFFF;
+}
+
+.innerTab {
+    /* Office 1 */
+
+
+    /* width: 176px; */
+    height: 40px;
+
+    /* Semibold / 14 | 20 */
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    display: flex;
+    align-items: center;
+
+    color: #2595FF;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.avg-rate {
+    line-height: 48px;
+    padding: 11px 11px 9px;
+
+}
+
+.calc-button {
+    align-items: left;
+    width: 250px;
+    height: 48px;
+    left: 1000px;
+    top: 165px;
+    /* Blue Ocean / Primary 500 */
+    background: #2595FF;
+    border-radius: 2px;
+}
+.invoiceCard{
+width: 864px;
+height: 378px;
+left: 0px;
+top: 0px;
+
+background: #F9FAFA;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
