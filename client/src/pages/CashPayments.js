@@ -52,7 +52,7 @@ class CashPayments extends Component {
         headerName: "Payement Date",
         floatingFilter: true,
         cellRenderer: (data) => {
-          return moment(data.data.paymentDate).format("DD/MM/YYYY");
+          return moment.utc(data.data.paymentDate).format("DD/MM/YYYY");
         },
       },
       {
