@@ -16,7 +16,8 @@ class AddLatexForm extends Component {
         validated: false,
         collectionDate: moment(),
         grossWeight: "",
-        barrelNumber: "",
+        tareWeight:"",
+        barrelNumber: "Default",
     };
     onChange = (selectedUsers) => {
         this.setState({
@@ -48,7 +49,8 @@ class AddLatexForm extends Component {
                 customerId: this.state.selectedUsers.value,
                 collectionDate: moment.utc(this.state.collectionDate).format("MM/DD/YYYY"),
                 grossWeight: this.state.grossWeight,
-                barrelNumber: this.state.barrelNumber,
+                tareWeight: this.state.tareWeight,
+                barrelNumber: this.state.barrelNumber
             };
             console.log(newLatexEntry);
             API.addLatexEntry(newLatexEntry)
@@ -59,7 +61,7 @@ class AddLatexForm extends Component {
                         validated: false,
                         collectionDate: moment(),
                         grossWeight: "",
-                        barrelNumber:"",
+                        tareWeight:"",
                     });
                     this.props.closeAddlatexForm();
                 })
@@ -121,14 +123,14 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Barrel Number</Form.Label><span id="mandatory"> * </span>
+                                <Form.Label>Barrel Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="text"
-                                placeholder="barrel-no"
-                                name="barrelNumber"
+                                placeholder="in Kgs"
+                                name="tareWeight"
                                 onChange={this.handleInputChange}
-                                value={this.state.barrelNumber}
+                                value={this.state.tareWeight}
                                 required
                             />
                         </Form.Group>

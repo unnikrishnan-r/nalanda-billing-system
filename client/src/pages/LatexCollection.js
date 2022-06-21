@@ -112,6 +112,7 @@ class LatexCollection extends Component {
         headerName: "Barrel Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        editable: true,
       },
       {
         field: "netWeight",
