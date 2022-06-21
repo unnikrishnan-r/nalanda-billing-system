@@ -4,6 +4,9 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
+import printJS from "print-js";
+import { PDFDocument, StandardFonts, rgb, PDFLib } from "pdf-lib";
+
 import "./style.css";
 
 import Navbar from "../components/Navbar";
@@ -22,6 +25,31 @@ import "react-dates/lib/css/_datepicker.css";
 
 import moment from "moment";
 import API from "../utils/API";
+
+async function mergeAllPDFs(urls) {
+  console.log(urls);
+  //https://stackoverflow.com/questions/21478738/how-can-we-do-pdf-merging-using-javascript
+  const pdfDoc = await PDFDocument.create();
+  const numDocs = urls.length;
+
+  for (var i = 0; i < numDocs; i++) {
+    const donorPdfBytes = await fetch(urls[i]).then((res) => res.arrayBuffer());
+    const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
+    const docLength = donorPdfDoc.getPageCount();
+    for (var k = 0; k < docLength; k++) {
+      const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
+      //console.log("Doc " + i+ ", page " + k);
+      pdfDoc.addPage(donorPage);
+    }
+  }
+
+  const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+
+  // strip off the first part to the first comma "data:image/png;base64,iVBORw0K..."
+  var data_pdf = pdfDataUri.substring(pdfDataUri.indexOf(",") + 1);
+  printJS({ printable: data_pdf, type: "pdf", base64: true ,showModal:true});
+  console.log("Printing Merged PDF");
+}
 
 class BillingInvoices extends Component {
   state = {
@@ -122,6 +150,16 @@ class BillingInvoices extends Component {
       .catch((err) => console.log(err));
   }
 
+  handlePrintClick = (event) => {
+    console.log("Trying to print");
+    const fileName =
+      "https://nalandainvoices.s3.ap-south-1.amazonaws.com/68_02072022.pdf";
+    let urls = [];
+    for (let i = 0; i < 50; i++) {
+      urls.push(fileName);
+    }
+    let combinedPdf = mergeAllPDFs(urls);
+  };
   componentDidMount = () => {
     API.getBillingHistory()
       .then((res) => {
@@ -230,7 +268,17 @@ class BillingInvoices extends Component {
                         Calculate Invoice Amount
                       </Button>{" "}
                     </Form.Group>
+                    <Button
+                      id="subBtn1"
+                      variant="info"
+                      type="submit"
+                      className="btn btn-success submit-button calc-button"
+                      onClick={() => this.handlePrintClick()}
+                    >
+                      Print Invoices
+                    </Button>{" "}
                   </div>
+
                   <div className="grid-child purple"></div>
                 </div>
                 {this.state.showBillSummary ? (
