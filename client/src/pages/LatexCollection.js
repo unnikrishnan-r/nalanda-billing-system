@@ -41,6 +41,34 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 let gridApi;
+
+var dateFilterParams = {
+  comparator: (filterLocalDateAtMidnight, cellValue) => {
+    var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
+    if (dateAsString == null) return -1;
+    var dateParts = dateAsString.split('/');
+    var cellDate = new Date(
+      Number(dateParts[2]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[0])
+    );
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+  },
+  browserDatePicker: true,
+  minValidYear: 2022,
+  buttons: ['clear']
+};
+var defaultFilterParams = {
+  buttons: ['clear']
+};
 class LatexCollection extends Component {
   state = {
     addLatexFormTrigger: false,
@@ -49,17 +77,20 @@ class LatexCollection extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "Customer.customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "collectionDate",
         filter: "agDateColumnFilter",
+        filterParams: dateFilterParams,
         headerName: "Collection Date",
         floatingFilter: true,
 
@@ -71,6 +102,7 @@ class LatexCollection extends Component {
         field: "grossWeight",
         filter: "agSetColumnFilter",
         headerName: "Gross Weight",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
         editable: true,
       },
@@ -78,12 +110,14 @@ class LatexCollection extends Component {
         field: "tareWeight",
         filter: "agSetColumnFilter",
         headerName: "Barrel Weight",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "netWeight",
         filter: "agSetColumnFilter",
         headerName: "Net Weight",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
@@ -91,18 +125,21 @@ class LatexCollection extends Component {
         filter: "agSetColumnFilter",
         headerName: "DRC %",
         floatingFilter: true,
+        filterParams: defaultFilterParams,
         editable: true,
       },
       {
         field: "dryWeight",
         filter: "agSetColumnFilter",
         headerName: "Dry Weight",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "unitRatePerKg",
         filter: "agSetColumnFilter",
         headerName: "Rate /Kg",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
@@ -110,6 +147,7 @@ class LatexCollection extends Component {
         field: "totalAmount",
         filter: "agSetColumnFilter",
         headerName: "Total Amount",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
@@ -117,6 +155,7 @@ class LatexCollection extends Component {
         field: "paymentStatus",
         filter: "agSetColumnFilter",
         headerName: "Payement Status",
+        filterParams: defaultFilterParams,
         cellRenderer: "statusRenderer",
         floatingFilter: true,
       },
