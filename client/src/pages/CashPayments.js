@@ -30,6 +30,33 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 let gridApi;
+var dateFilterParams = {
+  comparator: (filterLocalDateAtMidnight, cellValue) => {
+    var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
+    if (dateAsString == null) return -1;
+    var dateParts = dateAsString.split('/');
+    var cellDate = new Date(
+      Number(dateParts[2]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[0])
+    );
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+  },
+  browserDatePicker: true,
+  minValidYear: 2022,
+  buttons: ['clear']
+};
+var defaultFilterParams = {
+  buttons: ['clear']
+};
 class CashPayments extends Component {
   state = {
     addCashPaymentFormTrigger: false,
@@ -38,18 +65,21 @@ class CashPayments extends Component {
         field: "customerId",
         filter: "agSetColumnFilter",
         headerName: "Customer Id",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "Customer.customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
       },
       {
         field: "paymentDate",
         filter: "agDateColumnFilter",
         headerName: "Payement Date",
+        filterParams: dateFilterParams,
         floatingFilter: true,
         cellRenderer: (data) => {
           return moment.utc(data.data.paymentDate).format("DD/MM/YYYY");
@@ -60,6 +90,7 @@ class CashPayments extends Component {
         filter: "agSetColumnFilter",
         headerName: "Payement Type",
         editable: true,
+        filterParams: defaultFilterParams,
         floatingFilter: true,
         cellRenderer: "paymentTypeRenderer"
       },
@@ -67,6 +98,7 @@ class CashPayments extends Component {
         field: "totalAmount",
         filter: "agSetColumnFilter",
         headerName: "Amount",
+        filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
@@ -74,6 +106,7 @@ class CashPayments extends Component {
         field: "paymentNotes",
         filter: "agSetColumnFilter",
         headerName: "Notes",
+        filterParams: defaultFilterParams,
         editable: true,
         floatingFilter: true,
       },
