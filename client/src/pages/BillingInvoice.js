@@ -144,10 +144,13 @@ class BillingInvoices extends Component {
       <>
         <Navbar></Navbar>
         <br></br>
-        <br></br>
-        <br></br>
+
+        <div id="pagetitle">
+            <h4>Billing And Invoices</h4>
+          </div>
+          <br></br>
         <Container>
-          <div>
+          <div id="Box">
             <Tabs
               defaultActiveKey="calcInvoice"
               id="uncontrolled-tab-example"
@@ -176,7 +179,7 @@ class BillingInvoices extends Component {
                         id="billFromDate" // PropTypes.string.isRequired,
                       />
                     </Form.Group>
-                  </div>
+                  </div >
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
@@ -237,9 +240,9 @@ class BillingInvoices extends Component {
                   <div>
                     <br></br>
                     <br></br>
-                    <Card className="invoiceCard" style={{ width: "36rem" }}>
+                    <Card className="invoiceCard">
                       <Card.Header>
-                        <h2>Invoice Summary</h2>
+                        <h2>Invoice Amount</h2>
                       </Card.Header>
                       <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                         <ListGroup.Item>
