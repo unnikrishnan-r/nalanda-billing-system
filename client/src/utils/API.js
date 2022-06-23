@@ -82,7 +82,7 @@ export default {
   applyRate: function (invoiceReq) {
     console.log(invoiceReq);
     return axios.post(
-      `https://nalandaapi.herokuapp.com/api/api/applyRate`,
+      `https://nalandaapi.herokuapp.com/api/applyRate`,
       invoiceReq,
       {
         headers: {

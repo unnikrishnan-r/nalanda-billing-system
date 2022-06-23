@@ -47,7 +47,7 @@ async function mergeAllPDFs(urls) {
 
   // strip off the first part to the first comma "data:image/png;base64,iVBORw0K..."
   var data_pdf = pdfDataUri.substring(pdfDataUri.indexOf(",") + 1);
-  printJS({ printable: data_pdf, type: "pdf", base64: true ,showModal:true});
+  printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
   console.log("Printing Merged PDF");
 }
 
@@ -138,7 +138,6 @@ class BillingInvoices extends Component {
     API.calculateInvoiceAmount({
       billFromDate: this.state.billFromDate,
       billToDate: this.state.billToDate,
-      unitRatePerKg: parseInt(this.state.ratePerKg),
     })
       .then((res) => {
         console.log(res.data);
@@ -233,26 +232,7 @@ class BillingInvoices extends Component {
                       />
                     </Form.Group>
                   </div>
-                  <div className="grid-child purple">
-                    <Form.Group>
-                      <div className="titleText">
-                        <Form.Label className="titleText">
-                          Average Rate
-                        </Form.Label>
-                      </div>
 
-                      <Form.Control
-                        type="number"
-                        placeholder="Enter the rate per kg"
-                        name="ratePerKg"
-                        onChange={this.handleInputChange}
-                        value={this.state.ratePerKg}
-                        maxLength={10}
-                        required
-                        className="avg-rate"
-                      />
-                    </Form.Group>
-                  </div>
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
@@ -278,9 +258,8 @@ class BillingInvoices extends Component {
                       Print Invoices
                     </Button>{" "}
                   </div>
-
-                  <div className="grid-child purple"></div>
                 </div>
+
                 {this.state.showBillSummary ? (
                   <div>
                     <br></br>
