@@ -82,7 +82,7 @@ export default {
   generateInvoices: function (billToDate) {
     console.log(billToDate);
     return axios.put(
-      `http://localhost:3005/api/invoiceGeneration/generateInvoiceForCustomer`,
+      `https://nalandaapi.herokuapp.com/api/invoiceGeneration/generateInvoiceForCustomer`,
       billToDate,
       {
         headers: {
