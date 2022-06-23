@@ -79,6 +79,18 @@ export default {
       }
     );
   },
+  applyRate: function (invoiceReq) {
+    console.log(invoiceReq);
+    return axios.post(
+      `http://localhost:3005/api/applyRate`,
+      invoiceReq,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
   loadOptions: async (inputText, callback) => {
     const response = await fetch(
       `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`
