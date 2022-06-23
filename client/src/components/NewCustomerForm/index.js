@@ -121,7 +121,6 @@ class NewCustomerForm extends Component {
                 name="customerEmailId"
                 onChange={this.handleInputChange}
                 value={this.state.customerEmailId}
-                required
               />
             </Form.Group>
             <hr size="" width="" color="grey"/>  
