@@ -18,6 +18,9 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
+import { SingleDatePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
+
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
@@ -46,7 +49,7 @@ var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
     var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
     if (dateAsString == null) return -1;
-    var dateParts = dateAsString.split('/');
+    var dateParts = dateAsString.split("/");
     var cellDate = new Date(
       Number(dateParts[2]),
       Number(dateParts[1]) - 1,
@@ -64,10 +67,10 @@ var dateFilterParams = {
   },
   browserDatePicker: true,
   minValidYear: 2022,
-  buttons: ['clear']
+  buttons: ["clear"],
 };
 var defaultFilterParams = {
-  buttons: ['clear']
+  buttons: ["clear"],
 };
 class LatexCollection extends Component {
   state = {
@@ -96,7 +99,7 @@ class LatexCollection extends Component {
 
         cellRenderer: (data) => {
           return moment.utc(data.data.collectionDate).format("DD/MM/YYYY");
-        },  
+        },
       },
       {
         field: "grossWeight",
@@ -142,6 +145,7 @@ class LatexCollection extends Component {
         headerName: "Rate /Kg",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        editable: true,
         valueFormatter: currencyFormatter,
       },
       {
@@ -186,20 +190,53 @@ class LatexCollection extends Component {
     frameworkComponents: {
       statusRenderer: StatusRenderer,
     },
+    billFromDate: moment(),
+    billToDate: moment(),
+    ratePerKg: 0,
   };
+
+  onBillFromDateChange = (date) => {
+    this.setState({ billFromDate: moment(date).format("MM/DD/YYYY") });
+  };
+  onBillToDateChange = (date) => {
+    this.setState({ billToDate: moment(date).format("MM/DD/YYYY") });
+  };
+  // Handles updating component state when the user types into the input field
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    this.setState({
+      [name]: value,
+    });
+    console.log(value);
+  };
+
+  applyRateForAllCustomers() {
+    console.log(this.state);
+    API.applyRate({
+      billFromDate: this.state.billFromDate,
+      billToDate: this.state.billToDate,
+      unitRatePerKg: parseInt(this.state.ratePerKg),
+    })
+      .then((res) => {
+        console.log(res);
+        this.componentDidMount();
+      })
+      .catch((err) => console.log(err));
+  }
 
   //Update function
   onCellValueChanged = (params) => {
     console.log(params.data);
     API.updateLatexEntry(params.data)
       .then((res) => {
-        console.log(res);  
+        console.log(res);
         this.componentDidMount();
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   onGridReady = (params) => {
     this.gridApi = params.api;
@@ -228,9 +265,9 @@ class LatexCollection extends Component {
   };
   componentDidMount = () => {
     this.loadLatexCollection();
-    console.log(this.componentRef)
+    console.log(this.componentRef);
   };
-  
+
   loadLatexCollection = () => {
     API.getLatexCollection()
       .then((res) => {
@@ -247,21 +284,100 @@ class LatexCollection extends Component {
         <Navbar></Navbar>
         <br></br>
         <Container></Container>
-        <div className="sub-header">
-        <button id="addCollection" onClick={this.showAddLatexForm}>
-          Add Collection
-        </button>
-        <button className="exportbtn" onClick={this.onExportClick}>
-          {" "}
-          Export
-        </button>
-        <div style={{ width: '100%', height: '100%' }}>
-        <button className="printbtn"> Print</button>
+        <div className="grid-container">
+          <div className="grid-child purple">
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label>From Date</Form.Label>
+              </div>
+
+              <SingleDatePicker
+                date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
+                onDateChange={this.onBillFromDateChange}
+                focused={this.state.focusedBillFrom} // PropTypes.bool
+                isOutsideRange={() => false}
+                onFocusChange={({ focused }) =>
+                  this.setState({ focusedBillFrom: focused })
+                }
+                id="billFromDate" // PropTypes.string.isRequired,
+              />
+            </Form.Group>
+          </div>
+          <div className="grid-child purple">
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label>To Date</Form.Label>
+              </div>
+
+              <SingleDatePicker
+                date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
+                onDateChange={this.onBillToDateChange}
+                focused={this.state.focusedBillTo} // PropTypes.bool
+                isOutsideRange={() => false}
+                onFocusChange={({ focused }) =>
+                  this.setState({ focusedBillTo: focused })
+                }
+                id="billToDate" // PropTypes.string.isRequired,
+              />
+            </Form.Group>
+          </div>
+          <div className="grid-child purple">
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label className="titleText">Average Rate</Form.Label>
+              </div>
+
+              <Form.Control
+                type="number"
+                placeholder="Enter the rate per kg"
+                name="ratePerKg"
+                onChange={this.handleInputChange}
+                value={this.state.ratePerKg}
+                maxLength={10}
+                required
+                bsPrefix="avg-rate"
+              />
+            </Form.Group>
+          </div>
+          <div className="grid-child purple">
+            <Form.Group>
+              <div className="titleText">
+                <Form.Label className="titleText"></Form.Label>
+              </div>
+              <button id="addCollection" onClick={this.showAddLatexForm}>
+                Add Collection
+              </button>
+              <Button
+                id="applybtn"
+                variant="info"
+                type="submit"
+                className="btn btn-success submit-button calc-button"
+                onClick={() => this.applyRateForAllCustomers()}
+              >
+                Apply Rate
+              </Button>{" "}
+            </Form.Group>
+          </div>
         </div>
+        {/* <div className="sub-header"> */}
+        {/* <button id="addCollection" onClick={this.showAddLatexForm}>
+            Add Collection
+          </button> */}
+        {/* <button className="exportbtn" onClick={this.onExportClick}>
+            {" "}
+            Export
+          </button>
+          <div style={{ width: "100%", height: "100%" }}>
+            <button className="printbtn"> Print</button>
+          </div> */}
+        {/* <br></br>
+        </div> */}
         <br></br>
-        </div>
-        <br></br>
-        <div className="ag-theme-alpine grid-box" style={{ height: 500 }} ref={el=>(this.componentRef=el)}>
+        <div
+          className="ag-theme-alpine grid-box"
+          style={{ height: 500 }}
+          ref={(el) => (this.componentRef = el)}
+        >
           <AgGridReact
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}
