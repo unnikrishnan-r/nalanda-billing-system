@@ -79,6 +79,19 @@ export default {
       }
     );
   },
+  generateInvoices: function (billToDate) {
+    console.log(billToDate);
+    return axios.put(
+      `http://localhost:3005/api/invoiceGeneration/generateInvoiceForCustomer`,
+      billToDate,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
+
   applyRate: function (invoiceReq) {
     console.log(invoiceReq);
     return axios.post(
@@ -91,6 +104,7 @@ export default {
       }
     );
   },
+
   loadOptions: async (inputText, callback) => {
     const response = await fetch(
       `https://nalandaapi.herokuapp.com/api/newcustomer/search?searchString=${inputText}`

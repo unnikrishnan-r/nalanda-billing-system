@@ -141,10 +141,19 @@ class BillingInvoices extends Component {
     })
       .then((res) => {
         console.log(res.data);
-        this.setState({
-          BillSummaryRecord: res.data,
-          showBillSummary: true,
-        });
+        let billSummaryObj = res.data;
+        API.generateInvoices({
+          billFromDate: this.state.billFromDate,
+          billToDate: this.state.billToDate,
+        })
+          .then((res) => {
+            console.log(res.data);
+            this.setState({
+              BillSummaryRecord: billSummaryObj,
+              showBillSummary: true,
+            });
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }
