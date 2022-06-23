@@ -10,10 +10,10 @@ export default class StatusRenderer extends Component {
         {
           (this.props.data.paymentStatus)
             ? <label>
-              <span className="dotPaid"></span><label id="status">Paid</label>
+              <span className="dotPaid"></span><label id="status">Bill Ready</label>
               </label>
             : <label>
-              <span className="dotUnPaid"></span><label id="status">Unpaid</label>
+              <span className="dotUnPaid"></span><label id="status">Bill Pending</label>
               </label>
         }
       </div>
