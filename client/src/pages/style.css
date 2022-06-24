@@ -72,7 +72,10 @@ input:checked+.slider:before {
     grid-gap: 5px
 }
 
-#addCustomer, #addCollection, #addCashPayment ,#applybtn{
+#addCustomer,
+#addCollection,
+#addCashPayment,
+#applybtn {
     background-color: #2595FF;
     width: 121px;
     border: 5px;
@@ -245,4 +248,59 @@ input:checked+.slider:before {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+.customerDetails {
+    position: absolute;
+    width: 1441px;
+    height: 127px;
+    left: 0px;
+    top: 116px;
+
+    background: #F9FAFA;
+}
+
+.contact {
+    position: absolute;
+    width: 680px;
+    height: 261px;
+    left: 24px;
+    top: 271px;
+
+    background: #FFFFFF ;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.collectionStatus {
+
+    position: absolute;
+    width: 680px;
+    height: 261px;
+    left: 737px;
+    top: 271px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.latexCollection {
+    position: absolute;
+    width: 1390px;
+    height: 547px;
+    left: 27px;
+    top: 576px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cashPayment {
+    position: absolute;
+    width: 1390px;
+    height: 569px;
+    left: 27px;
+    top: 1167px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

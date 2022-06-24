@@ -67,6 +67,9 @@ export default {
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
   },
+  getSpecificLatexCollection: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?seqNumber=1&&customerId=1");
+  },
   calculateInvoiceAmount: function (invoiceReq) {
     console.log(invoiceReq);
     return axios.post(
@@ -79,6 +82,7 @@ export default {
       }
     );
   },
+
   generateInvoices: function (billToDate) {
     console.log(billToDate);
     return axios.put(
