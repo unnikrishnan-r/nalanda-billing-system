@@ -67,8 +67,8 @@ export default {
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
   },
-  getSpecificLatexCollection: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?seqNumber=1&&customerId=1");
+  getLatexCollectionPerCustomer: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId=1");
   },
   calculateInvoiceAmount: function (invoiceReq) {
     console.log(invoiceReq);
