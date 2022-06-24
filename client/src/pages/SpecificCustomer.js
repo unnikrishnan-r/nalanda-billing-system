@@ -20,18 +20,19 @@ import {
     Table,
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
+import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 import API from "../utils/API";
 function headerHeightGetter() {
     var columnHeaderTexts = [
-      ...document.querySelectorAll(".ag-header-cell-text"),
+        ...document.querySelectorAll(".ag-header-cell-text"),
     ];
     var clientHeights = columnHeaderTexts.map(
-      (headerText) => headerText.clientHeight
+        (headerText) => headerText.clientHeight
     );
     var tallestHeaderTextHeight = Math.max(...clientHeights);
-  
+
     return tallestHeaderTextHeight;
-  }
+}
 function formatNumber(number) {
     return Math.floor(number)
         .toString()
@@ -71,7 +72,7 @@ var defaultFilterParams = {
 };
 class SpecificCustomer extends Component {
     state = {
-        columnDefs: [
+        latexColumnDefs: [
             {
                 field: "customerId",
                 filter: "agSetColumnFilter",
@@ -157,6 +158,59 @@ class SpecificCustomer extends Component {
                 cellRenderer: "statusRenderer",
                 floatingFilter: true,
             },
+
+        ],
+        cashcolumnDefs: [
+            {
+                field: "customerId",
+                filter: "agSetColumnFilter",
+                headerName: "Customer Id",
+                filterParams: defaultFilterParams,
+                floatingFilter: true,
+            },
+            {
+                field: "Customer.customerName",
+                filter: "agSetColumnFilter",
+                headerName: "Customer Name",
+                filterParams: defaultFilterParams,
+                floatingFilter: true,
+            },
+            {
+                field: "paymentDate",
+                filter: "agDateColumnFilter",
+                headerName: "Payement Date",
+                filterParams: dateFilterParams,
+                floatingFilter: true,
+                cellRenderer: (data) => {
+                    return moment.utc(data.data.paymentDate).format("DD/MM/YYYY");
+                },
+            },
+            {
+                field: "paymentType",
+                filter: "agSetColumnFilter",
+                headerName: "Payement Type",
+                editable: true,
+                filterParams: defaultFilterParams,
+                floatingFilter: true,
+                cellRenderer: "paymentTypeRenderer"
+            },
+            {
+                field: "totalAmount",
+                filter: "agSetColumnFilter",
+                headerName: "Amount",
+                filterParams: defaultFilterParams,
+                floatingFilter: true,
+                valueFormatter: currencyFormatter,
+            },
+            {
+                field: "paymentNotes",
+                filter: "agSetColumnFilter",
+                headerName: "Notes",
+                filterParams: defaultFilterParams,
+                editable: true,
+                floatingFilter: true,
+            }
+
         ],
 
         defaultColDef: {
@@ -182,12 +236,13 @@ class SpecificCustomer extends Component {
         },
         frameworkComponents: {
             statusRenderer: StatusRenderer,
+            paymentTypeRenderer: PaymentTypeRenderer,
         },
     };
     onFirstDataRendered = (params) => {
         params.api.sizeColumnsToFit();
-      };
-    onGridReady = (params) => {
+    };
+    onGridReadyLatex = (params) => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
         API.getLatexCollectionPerCustomer().then((res) => {
@@ -195,8 +250,17 @@ class SpecificCustomer extends Component {
             this.setState({ latexCollection: res.data });
         });
     };
+    onGridReadyCash = (params) => {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        API.getCashEntryPerCustomer().then((res) => {
+            console.log(res);
+            this.setState({ cashPayments: res.data });
+        });
+    };
     componentDidMount = () => {
         this.loadLatexCollection();
+        this.loadcashPayments();
         console.log(this.componentRef);
     };
     loadLatexCollection = () => {
@@ -204,6 +268,16 @@ class SpecificCustomer extends Component {
             .then((res) => {
                 console.log(res);
                 this.setState({ latexCollection: res.data });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    loadcashPayments = () => {
+        API.getCashEntryPerCustomer()
+            .then((res) => {
+                console.log(res);
+                this.setState({ cashPayments: res.data });
             })
             .catch((err) => {
                 console.log(err);
@@ -228,23 +302,36 @@ class SpecificCustomer extends Component {
                     <div className="latexCollection">
                         <h4>Latex Collection</h4>
                         <div className="ag-theme-alpine grid-box"
-                            style={{ height: 500 }}
+                            style={{ height: 450 }}
                         >
                             <AgGridReact
                                 rowData={this.state.latexCollection}
-                                columnDefs={this.state.columnDefs}
+                                columnDefs={this.state.latexColumnDefs}
                                 defaultColDef={this.state.defaultColDef}
                                 frameworkComponents={this.state.frameworkComponents}
                                 paginationAutoPageSize={true}
                                 pagination={true}
-                                onGridReady={this.onGridReady}
+                                onGridReadyLatex={this.onGridReadyLatex}
                                 onFirstDataRendered={this.onFirstDataRendered.bind(this)}
                             ></AgGridReact>
                         </div>
                     </div>
                     <div className="cashPayment">
                         <h4>Cash Payement</h4>
-
+                        <div className="ag-theme-alpine grid-box"
+                            style={{ height: 450 }}
+                        >
+                            <AgGridReact
+                                rowData={this.state.cashPayments}
+                                columnDefs={this.state.cashcolumnDefs}
+                                defaultColDef={this.state.defaultColDef}
+                                frameworkComponents={this.state.frameworkComponents}
+                                paginationAutoPageSize={true}
+                                pagination={true}
+                                onGridReadyCash={this.onGridReadyCash}
+                                onFirstDataRendered={this.onFirstDataRendered.bind(this)}
+                            ></AgGridReact>
+                        </div>
                     </div>
                 </Container>
             </>
