@@ -32,8 +32,6 @@ function currencyFormatter(params) {
 function LinkComponent(params) {
   return (
     <a
-      target="_blank"
-      rel="noopener noreferrer"
       href={"http://localhost:3000/specificUser/" + params.value}
     >
       {params.value}

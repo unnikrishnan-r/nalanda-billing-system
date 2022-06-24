@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/cashpayment" component={CashPayments} />
           <Route exact path="/latexCollection" component={LatexCollection} />
           <Route exact path="/billingInvoices" component={BillingInvoices} />
-          <Route exact path="/specificUser" component={SpecificCustomer}/>
+          <Route exact path="/specificUser/:customerId" component={SpecificCustomer}/>
         </Switch>
       </div>
     </Router>
