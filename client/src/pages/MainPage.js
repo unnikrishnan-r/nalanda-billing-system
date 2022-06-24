@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
+import ReactToPrint from "react-to-print"
 
 import {
   Row,
@@ -28,6 +29,17 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
+function LinkComponent(params) {
+  return (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={"http://localhost:3000/specificUser/" + params.value}
+    >
+      {params.value}
+    </a>
+  );
+}
 let gridApi;
 class MainPage extends Component {
   state = {
@@ -40,6 +52,7 @@ class MainPage extends Component {
         headerName: "Customer Id",
         floatingFilter: true,
         sortable: true,
+        cellRenderer : LinkComponent,
       },
       {
         field: "customerName",
@@ -188,6 +201,7 @@ class MainPage extends Component {
             {" "}
             Export
           </button>
+
           <button className="printbtn"> Print</button>
           <br></br>
         </div>
