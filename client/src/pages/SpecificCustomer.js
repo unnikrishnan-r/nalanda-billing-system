@@ -18,6 +18,7 @@ import {
     Jumbotron,
     Modal,
     Table,
+    ListGroup,
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
@@ -72,6 +73,7 @@ var defaultFilterParams = {
 };
 class SpecificCustomer extends Component {
     state = {
+        customerList: [],
         latexColumnDefs: [
             {
                 field: "customerId",
@@ -263,9 +265,10 @@ class SpecificCustomer extends Component {
         this.loadLatexCollection(customerId);
         this.loadcashPayments(customerId);
         console.log(this.componentRef);
+        this.loadCustomers(customerId);
     };
     loadLatexCollection = (customerId) => {
-        console.log("Calling Latex Data for Customer " , customerId)
+        console.log("Calling Latex Data for Customer ", customerId)
         API.getLatexCollectionPerCustomer(customerId)
             .then((res) => {
                 console.log(res.data);
@@ -285,17 +288,76 @@ class SpecificCustomer extends Component {
                 console.log(err);
             });
     };
+    loadCustomers = (customerId) => {
+        API.getCustomer(customerId)
+            .then((res) => {
+                console.log(res);
+                this.setState({ customerList: res.data });
+                console.log(this.state.customerList);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     render() {
+        let customerName = "Name:";
+        let customerAddress = "Address:";
+        let customerPhone = "Phone Number:";
+        let customerEmail = "Email id:";
+        let netDue = "Net Due:"
+        let status = "Status:"
         return (
             <>
                 <Navbar></Navbar>
                 <Container>
                     <div className="twoBox">
                         <div className="contact">
+                            <span id="contacttitle">Contact</span>
+                            <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
+                                <ListGroup.Item>
+                                    {customerName + this.state.customerList.customerName}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    {customerAddress + this.state.customerList.customerAddress}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    {customerPhone + this.state.customerList.customerPhone}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    {customerEmail + this.state.customerList.customerEmail}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    {status}
+                                </ListGroup.Item>
+
+                            </ListGroup>
 
                         </div>
                         <div className="collectionStatus">
-
+                            <span id="collectiontitle">Collection Status</span>
+                            <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
+                                <ListGroup.Item>
+                                    {netDue + this.state.customerList.customerBalance}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <button className="export">
+                                        {" "}
+                                        Export
+                                    </button>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <button className="invoice" >
+                                        {" "}
+                                        Download Invoice
+                                    </button>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <button className="generateInvoice">
+                                        {" "}
+                                        Generate Invoice
+                                    </button>
+                                </ListGroup.Item>
+                            </ListGroup>
                         </div>
                     </div>
                     <div className="latexCollection">
