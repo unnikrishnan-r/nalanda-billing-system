@@ -89,7 +89,6 @@ class CashPayments extends Component {
         field: "paymentType",
         filter: "agSetColumnFilter",
         headerName: "Payement Type",
-        editable: true,
         filterParams: defaultFilterParams,
         floatingFilter: true,
         cellRenderer: "paymentTypeRenderer"

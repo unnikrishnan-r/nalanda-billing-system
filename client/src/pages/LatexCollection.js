@@ -72,6 +72,18 @@ var dateFilterParams = {
 var defaultFilterParams = {
   buttons: ["clear"],
 };
+
+function checkCellEditableStatus(params) {
+  return !params.data.paymentStatus;
+}
+
+function getRowStyle(params) {
+  return {
+    backgroundColor: params.data.paymentStatus ? "#F5F5F5" : "#FFFFFF",
+    fontStyle: params.data.paymentStatus ? "italic" : "normal",
+    color: params.data.paymentStatus ? "grey" : "black",
+  };
+}
 class LatexCollection extends Component {
   state = {
     addLatexFormTrigger: false,
@@ -107,7 +119,7 @@ class LatexCollection extends Component {
         headerName: "Gross Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "tareWeight",
@@ -115,7 +127,7 @@ class LatexCollection extends Component {
         headerName: "Barrel Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "netWeight",
@@ -130,7 +142,7 @@ class LatexCollection extends Component {
         headerName: "DRC %",
         floatingFilter: true,
         filterParams: defaultFilterParams,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "dryWeight",
@@ -145,7 +157,7 @@ class LatexCollection extends Component {
         headerName: "Rate /Kg",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
         valueFormatter: currencyFormatter,
       },
       {
@@ -163,6 +175,7 @@ class LatexCollection extends Component {
         filterParams: defaultFilterParams,
         cellRenderer: "statusRenderer",
         floatingFilter: true,
+        editable: true,
       },
     ],
 
@@ -382,6 +395,7 @@ class LatexCollection extends Component {
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
+            getRowStyle={getRowStyle}
             frameworkComponents={this.state.frameworkComponents}
             paginationAutoPageSize={true}
             pagination={true}

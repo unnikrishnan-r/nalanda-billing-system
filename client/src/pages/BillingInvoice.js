@@ -262,6 +262,7 @@ class BillingInvoices extends Component {
                       variant="info"
                       type="submit"
                       className="btn btn-success submit-button calc-button"
+                      disabled={!this.state.showBillSummary}
                       onClick={() => this.handlePrintClick()}
                     >
                       Print Invoices
