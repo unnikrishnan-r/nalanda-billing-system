@@ -8,10 +8,10 @@ import API from "../../utils/API";
 class NewCustomerForm extends Component {
   state = {
     validated: false,
-    customerName: null,
-    customerAddress: null,
-    customerPhoneNumber: null,
-    customerEmailId: null,
+    customerName: "",
+    customerAddress: "",
+    customerPhoneNumber: "",
+    customerEmailId: "",
     customerStatus: true,
   };
   // Handles updating component state when the user types into the input field
@@ -26,7 +26,6 @@ class NewCustomerForm extends Component {
   handleOnSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    console.log("Submited");
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -40,16 +39,14 @@ class NewCustomerForm extends Component {
         customerEmail: this.state.customerEmailId,
         customerStatus: this.state.customerStatus,
       };
-      console.log(newCustomer);
       API.createCustomer(newCustomer)
         .then((res) => {
-          console.log(res);
           this.setState({
             validated: false,
-            customerName: null,
-            customerAddress: null,
-            customerPhoneNumber: null,
-            customerEmailId: null,
+            customerName: "",
+            customerAddress: "",
+            customerPhoneNumber: "",
+            customerEmailId: "",
             customerStatus: true,
           });
           this.props.closeAddCustomerForm();
@@ -129,7 +126,6 @@ class NewCustomerForm extends Component {
               variant="info"
               type="submit"
               className="btn btn-success submit-button"
-              onClick={() => this.props.submitAddCustomerForm()}
             >
               Submit
             </Button>

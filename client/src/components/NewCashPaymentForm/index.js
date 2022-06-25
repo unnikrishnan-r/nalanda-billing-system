@@ -25,7 +25,6 @@ class NewCashPaymentForm extends Component {
     this.setState({
       selectedUsers: selectedUsers || [],
     });
-    console.log(selectedUsers);
   };
 
   loadOptions = async (inputText, callback) => {
@@ -48,20 +47,15 @@ class NewCashPaymentForm extends Component {
 
   //Common function to handle dropdown selections - Occupancy and Locations
   handleDropDownSelection = (eventKey, event) => {
-    console.log("Drop Down change");
-    const { name, id } = event.target;
-    console.log(name, id, eventKey);
-
     this.setState({
       paymentName: eventKey,
-      paymentNotes: id === 1 ? "Advance Paid" : "Bill Settlement",
+      paymentNotes: event.target.id === "1" ? "Advance Paid" : "Bill Settlement",
     });
   };
 
   handleOnSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    console.log("Submited");
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -75,10 +69,8 @@ class NewCashPaymentForm extends Component {
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
       };
-      console.log(newCashEntry);
       API.createCashEntry(newCashEntry)
         .then((res) => {
-          console.log(res);
           this.setState({
             selectedUsers: [],
             validated: false,
