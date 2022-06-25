@@ -67,11 +67,11 @@ export default {
   getLatexCollection: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
   },
-  getCashEntryPerCustomer: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment/key?customerId=1");
+  getCashEntryPerCustomer: function (customerId) {
+    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment/key?customerId="+customerId);
   },
-  getLatexCollectionPerCustomer: function () {
-    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId=1");
+  getLatexCollectionPerCustomer: function (customerId) {
+    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId="+customerId);
   },
   calculateInvoiceAmount: function (invoiceReq) {
     console.log(invoiceReq);

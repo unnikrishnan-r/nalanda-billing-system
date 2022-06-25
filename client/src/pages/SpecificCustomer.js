@@ -259,24 +259,26 @@ class SpecificCustomer extends Component {
         });
     };
     componentDidMount = () => {
-        this.loadLatexCollection();
-        this.loadcashPayments();
+        const { customerId } = this.props.match.params;
+        this.loadLatexCollection(customerId);
+        this.loadcashPayments(customerId);
         console.log(this.componentRef);
     };
-    loadLatexCollection = () => {
-        API.getLatexCollectionPerCustomer()
+    loadLatexCollection = (customerId) => {
+        console.log("Calling Latex Data for Customer " , customerId)
+        API.getLatexCollectionPerCustomer(customerId)
             .then((res) => {
-                console.log(res);
+                console.log(res.data);
                 this.setState({ latexCollection: res.data });
             })
             .catch((err) => {
                 console.log(err);
             });
     };
-    loadcashPayments = () => {
-        API.getCashEntryPerCustomer()
+    loadcashPayments = (customerId) => {
+        API.getCashEntryPerCustomer(customerId)
             .then((res) => {
-                console.log(res);
+                console.log(res.data);
                 this.setState({ cashPayments: res.data });
             })
             .catch((err) => {
