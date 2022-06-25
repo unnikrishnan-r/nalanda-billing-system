@@ -290,9 +290,6 @@ class SpecificCustomer extends Component {
             <>
                 <Navbar></Navbar>
                 <Container>
-                    <div className="customerDetails">
-
-                    </div>
                     <div className="twoBox">
                         <div className="contact">
 
@@ -302,7 +299,7 @@ class SpecificCustomer extends Component {
                         </div>
                     </div>
                     <div className="latexCollection">
-                        <h4>Latex Collection</h4>
+                        <span id="titletext">Latex Collection</span>
                         <div className="ag-theme-alpine grid-box"
                             style={{ height: 450 }}
                         >
@@ -319,7 +316,7 @@ class SpecificCustomer extends Component {
                         </div>
                     </div>
                     <div className="cashPayment">
-                        <h4>Cash Payement</h4>
+                        <span id="titletext">Cash Payement</span>
                         <div className="ag-theme-alpine grid-box"
                             style={{ height: 450 }}
                         >
