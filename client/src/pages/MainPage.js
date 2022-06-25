@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+  import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -29,6 +29,19 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 let gridApi;
+
+function checkCellEditableStatus(params) {
+  return params.data.customerStatus;
+}
+
+function getRowStyle(params) {
+  return {
+    backgroundColor: !params.data.customerStatus ? "#F5F5F5" : "#FFFFFF",
+    fontStyle: !params.data.customerStatus ? "italic" : "normal",
+    color: !params.data.customerStatus ? "grey" : "black",
+  };
+}
+
 class MainPage extends Component {
   state = {
     addCustomerFormTrigger: false,
@@ -45,7 +58,7 @@ class MainPage extends Component {
         field: "customerName",
         filter: "agSetColumnFilter",
         headerName: "Customer Name",
-        editable: true,
+        editable: checkCellEditableStatus,
         floatingFilter: true,
         sortable: true,
       },
@@ -53,14 +66,14 @@ class MainPage extends Component {
         field: "customerAddress",
         filter: "agSetColumnFilter",
         headerName: "Address",
-        editable: true,
+        editable: checkCellEditableStatus,
         floatingFilter: true,
       },
       {
         field: "customerPhone",
         filter: "agSetColumnFilter",
         headerName: "Phone",
-        editable: true,
+        editable: checkCellEditableStatus,
         floatingFilter: true,
       },
       {
@@ -197,6 +210,7 @@ class MainPage extends Component {
             rowData={this.state.customerList}
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
+            getRowStyle={getRowStyle}
             paginationAutoPageSize={true}
             pagination={true}
             onCellValueChanged={this.onCellValueChanged}
