@@ -7,15 +7,8 @@ import "ag-grid-enterprise";
 import "./style.css";
 
 import {
-  Row,
-  Col,
   Container,
   Form,
-  Button,
-  Dropdown,
-  Jumbotron,
-  Modal,
-  Table,
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import NewCustomerForm from "../components/NewCustomerForm";
@@ -137,7 +130,6 @@ class MainPage extends Component {
 
   //Update function
   onCellValueChanged(params) {
-    console.log(params.data);
     API.updateCustomer(params.data)
       .then((res) => {
         console.log(res);
@@ -159,23 +151,14 @@ class MainPage extends Component {
     this.componentDidMount();
   };
 
-  handleNewCustomerFormChange = (x) => {
-    console.log(x);
-  };
-  submitAddCustomerForm = () => {
-    console.log("clicked submit");
-  };
   componentDidMount = () => {
-    console.log("Component mount");
     this.loadCustomers();
     this.setState({ addCustomerFormTrigger: false });
   };
   loadCustomers = () => {
     API.getCustomerList()
       .then((res) => {
-        console.log(res);
         this.setState({ customerList: res.data });
-        // console.log(this.state.customerList);
       })
       .catch((err) => {
         console.log(err);
@@ -221,7 +204,6 @@ class MainPage extends Component {
         <NewCustomerForm
           trigger={this.state.addCustomerFormTrigger}
           closeAddCustomerForm={this.closeAddCustomerForm}
-          submitAddCustomerForm={this.submitAddCustomerForm}
         ></NewCustomerForm>
         <br></br>
       </>

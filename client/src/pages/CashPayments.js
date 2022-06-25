@@ -7,15 +7,7 @@ import "ag-grid-enterprise";
 import "./style.css";
 import moment from "moment";
 import {
-  Row,
-  Col,
   Container,
-  Form,
-  Button,
-  Dropdown,
-  Jumbotron,
-  Modal,
-  Table,
 } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import NewCashPaymentForm from "../components/NewCashPaymentForm";
@@ -139,7 +131,6 @@ class CashPayments extends Component {
   loadcashPayments = () => {
     API.getCashEntry()
       .then((res) => {
-        console.log(res);
         this.setState({ cashPayments: res.data });
       })
       .catch((err) => {
@@ -153,9 +144,6 @@ class CashPayments extends Component {
     gridApi.exportDataAsCsv();
   };
   render() {
-    {
-      console.log("test cash page");
-    }
     return (
       <>
         <Navbar></Navbar>

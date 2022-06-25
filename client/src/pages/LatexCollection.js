@@ -8,15 +8,9 @@ import moment from "moment";
 import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
 import {
-  Row,
-  Col,
   Container,
   Form,
   Button,
-  Dropdown,
-  Jumbotron,
-  Modal,
-  Table,
 } from "react-bootstrap";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
@@ -24,17 +18,7 @@ import "react-dates/lib/css/_datepicker.css";
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
-function headerHeightGetter() {
-  var columnHeaderTexts = [
-    ...document.querySelectorAll(".ag-header-cell-text"),
-  ];
-  var clientHeights = columnHeaderTexts.map(
-    (headerText) => headerText.clientHeight
-  );
-  var tallestHeaderTextHeight = Math.max(...clientHeights);
 
-  return tallestHeaderTextHeight;
-}
 function formatNumber(number) {
   return Math.floor(number)
     .toString()
@@ -43,7 +27,6 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
-let gridApi;
 
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -255,7 +238,6 @@ class LatexCollection extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     API.getLatexCollection().then((res) => {
-      console.log(res);
       this.setState({ latexCollection: res.data });
     });
   };
@@ -278,13 +260,11 @@ class LatexCollection extends Component {
   };
   componentDidMount = () => {
     this.loadLatexCollection();
-    console.log(this.componentRef);
   };
 
   loadLatexCollection = () => {
     API.getLatexCollection()
       .then((res) => {
-        console.log(res);
         this.setState({ latexCollection: res.data });
       })
       .catch((err) => {
