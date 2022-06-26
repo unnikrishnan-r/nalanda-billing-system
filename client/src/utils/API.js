@@ -65,6 +65,9 @@ export default {
   getCashEntryPerCustomer: function (customerId) {
     return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment/key?customerId="+customerId);
   },
+  getCustomer: function (customerId) {
+    return axios.get("https://nalandaapi.herokuapp.com/api/newcustomer/"+customerId);
+  },
   getLatexCollectionPerCustomer: function (customerId) {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId="+customerId);
   },
