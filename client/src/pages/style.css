@@ -431,6 +431,7 @@ h4 {
     border: 1px solid #DBDEDF;
     border-radius: 2px;
     font-weight: 500;
+    margin-left: 10px;
 }
 .generateInvoice{
     background-color: #2595FF;
@@ -441,6 +442,7 @@ h4 {
     color: white;
     font-weight: 600;
     line-height: 20px;
+    margin-left: 10px;
 }
 .invoice:before{
     padding: 3px;

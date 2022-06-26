@@ -344,14 +344,10 @@ class SpecificCustomer extends Component {
                                         {" "}
                                         Export
                                     </button>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
                                     <button className="invoice" >
                                         {" "}
                                         Download Invoice
                                     </button>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
                                     <button className="generateInvoice">
                                         {" "}
                                         Generate Invoice
