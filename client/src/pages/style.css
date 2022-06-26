@@ -232,15 +232,18 @@ input:checked+.slider:before {
 
 .invoiceCard {
     width: 864px;
-    height: 378px;
-    left: 0px;
-    top: 0px;
-
+    height: 330px;
+    left: 230px;
     background: #F9FAFA;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    align-items: center;
+    bottom: 47px;
 }
-
-;
+#card
+{
+    background-color: rgb(255 255 255);
+    border-bottom: 1px solid rgb(255 255 255);
+}
 
 * {
     -ms-overflow-style: none;
@@ -250,6 +253,55 @@ input:checked+.slider:before {
     display: none;
 }
 
+#pagetitle {
+    position: absolute;
+    width: 1440px;
+    height: 84px;
+    left: 5px;
+    top: 69px;
+
+    background: #F9FAFA;
+}
+
+.card-header {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    margin-right: 570px;
+    margin-top: 10px;
+    background-color:rgb(255 255 255);;
+    color: #495055;
+    
+}
+
+.h4,
+h4 {
+    padding: 23px;
+}
+
+#Box {
+    position: absolute;
+    width: 1390px;
+    height: 635px;
+    left: 17px;
+    top: 200px;
+    padding: 13px 13px 20px 13px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    display: inline;
+}
+
+.form-group {
+    position: relative;
+    padding: 50px 70px;
+
+}
+
+.list-group-item {
+    margin-bottom: -2px;
+}
 .contact {
     position: absolute;
     width: 680px;

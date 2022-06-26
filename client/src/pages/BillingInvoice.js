@@ -180,20 +180,23 @@ class BillingInvoices extends Component {
   };
 
   render() {
-    let numberOfCustomers = "Number of Customers:";
-    let totalNetWeight = "Total Net Weight:";
-    let totalDryWeight = "Total Dry Weight:";
-    let ratePerKg = "Rate/Kg:";
-    let totaInvoiceAmount = "Total Invoice Amount:";
+    let numberOfCustomers = "Number of Customers:\t\t";
+    let totalNetWeight = "Total Net Weight:\t\t\t\t";
+    let totalDryWeight = "Total Dry Weight:\t\t\t\t";
+    let ratePerKg = "Rate/Kg:\t\t\t\t\t\t";
+    let totaInvoiceAmount = "Total Invoice Amount:\t\t\t";
 
     return (
       <>
         <Navbar></Navbar>
         <br></br>
-        <br></br>
-        <br></br>
+
+        <div id="pagetitle">
+            <h4>Billing And Invoices</h4>
+          </div>
+          <br></br>
         <Container>
-          <div>
+          <div id="Box">
             <Tabs
               defaultActiveKey="calcInvoice"
               id="uncontrolled-tab-example"
@@ -222,7 +225,7 @@ class BillingInvoices extends Component {
                         id="billFromDate" // PropTypes.string.isRequired,
                       />
                     </Form.Group>
-                  </div>
+                  </div >
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">
@@ -274,9 +277,9 @@ class BillingInvoices extends Component {
                   <div>
                     <br></br>
                     <br></br>
-                    <Card className="invoiceCard" style={{ width: "36rem" }}>
-                      <Card.Header>
-                        <h2>Invoice Summary</h2>
+                    <Card className="invoiceCard">
+                      <Card.Header id="card">
+                        <h2>Invoice Amount</h2>
                       </Card.Header>
                       <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                         <ListGroup.Item>
