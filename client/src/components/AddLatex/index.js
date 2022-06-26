@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import "./style.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import moment from "moment";
@@ -16,13 +15,13 @@ class AddLatexForm extends Component {
         validated: false,
         collectionDate: moment(),
         grossWeight: "",
-        barrelNumber: "",
+        tareWeight:"",
+        barrelNumber: "Default",
     };
     onChange = (selectedUsers) => {
         this.setState({
             selectedUsers: selectedUsers || [],
         });
-        console.log(selectedUsers);
     };
 
     // Handles updating component state when the user types into the input field
@@ -37,7 +36,6 @@ class AddLatexForm extends Component {
     handleOnSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        console.log("Submited");
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -48,18 +46,17 @@ class AddLatexForm extends Component {
                 customerId: this.state.selectedUsers.value,
                 collectionDate: moment.utc(this.state.collectionDate).format("MM/DD/YYYY"),
                 grossWeight: this.state.grossWeight,
-                barrelNumber: this.state.barrelNumber,
+                tareWeight: this.state.tareWeight,
+                barrelNumber: this.state.barrelNumber
             };
-            console.log(newLatexEntry);
             API.addLatexEntry(newLatexEntry)
                 .then((res) => {
-                    console.log(res);
                     this.setState({
                         selectedUsers: [],
                         validated: false,
                         collectionDate: moment(),
                         grossWeight: "",
-                        barrelNumber:"",
+                        tareWeight:"",
                     });
                     this.props.closeAddlatexForm();
                 })
@@ -121,14 +118,14 @@ class AddLatexForm extends Component {
                         </Form.Group>
                         <Form.Group>
                             <div className="titleText">
-                                <Form.Label>Barrel Number</Form.Label><span id="mandatory"> * </span>
+                                <Form.Label>Barrel Weight</Form.Label><span id="mandatory"> * </span>
                             </div>
                             <Form.Control
                                 type="text"
-                                placeholder="barrel-no"
-                                name="barrelNumber"
+                                placeholder="in Kgs"
+                                name="tareWeight"
                                 onChange={this.handleInputChange}
-                                value={this.state.barrelNumber}
+                                value={this.state.tareWeight}
                                 required
                             />
                         </Form.Group>

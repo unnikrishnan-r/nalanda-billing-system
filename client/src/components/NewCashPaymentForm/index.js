@@ -18,13 +18,13 @@ class NewCashPaymentForm extends Component {
     paymentDate: moment(),
     totalAmount: 0,
     paymentType: 1,
-    paymentNotes: "",
+    paymentName: "Cash Advance",
+    paymentNotes: "Advance Paid",
   };
   onChange = (selectedUsers) => {
     this.setState({
       selectedUsers: selectedUsers || [],
     });
-    console.log(selectedUsers);
   };
 
   loadOptions = async (inputText, callback) => {
@@ -45,10 +45,17 @@ class NewCashPaymentForm extends Component {
     });
   };
 
+  //Common function to handle dropdown selections - Occupancy and Locations
+  handleDropDownSelection = (eventKey, event) => {
+    this.setState({
+      paymentName: eventKey,
+      paymentNotes: event.target.id === "1" ? "Advance Paid" : "Bill Settlement",
+    });
+  };
+
   handleOnSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    console.log("Submited");
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -62,17 +69,16 @@ class NewCashPaymentForm extends Component {
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
       };
-      console.log(newCashEntry);
       API.createCashEntry(newCashEntry)
         .then((res) => {
-          console.log(res);
           this.setState({
             selectedUsers: [],
             validated: false,
             paymentDate: moment(),
             totalAmount: 0,
             paymentType: 1,
-            paymentNotes: "",
+            paymentName: "Cash Advance",
+            paymentNotes: "Advance Paid",
           });
           this.props.closeCashPaymentForm();
         })
@@ -87,10 +93,13 @@ class NewCashPaymentForm extends Component {
       <div className="newCashPayment">
         {" "}
         <div className="newCashPaymentInner">
-          <h4 style={{ fontWeight: "bold"}}>New Cash Payment entry</h4>
-          <hr size="" width="" color="grey"/>  
+          <h4 style={{ fontWeight: "bold" }}>New Cash Payment entry</h4>
+          <hr size="" width="" color="grey" />
           <br></br>
-          <h6 style={{ fontWeight:"normal",display:"inline"}}>Customer Name</h6><span id="mandatory"> * </span>
+          <h6 style={{ fontWeight: "normal", display: "inline" }}>
+            Customer Name
+          </h6>
+          <span id="mandatory"> * </span>
           <AsyncSelect
             components={animatedComponent}
             value={this.state.selectedUsers}
@@ -106,7 +115,8 @@ class NewCashPaymentForm extends Component {
             <br></br>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Payment Date</Form.Label><span id="mandatory"> * </span>
+                <Form.Label>Payment Date</Form.Label>
+                <span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="date"
@@ -119,21 +129,38 @@ class NewCashPaymentForm extends Component {
             </Form.Group>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Payment Type</Form.Label><span id="mandatory"> * </span>
+                <Form.Label>Payment Type</Form.Label>
+                <span id="mandatory"> * </span>
               </div>
-              <Form.Control
-                type="text"
-                placeholder=""
-                name="paymentType"
-                onChange={this.handleInputChange}
-                value={this.state.paymentType}
+              <Dropdown>
+                <Dropdown.Toggle variant="info" id="dropdown-basic">
+                  {this.state.paymentName}
+                </Dropdown.Toggle>
 
-                required
-              />
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    id="1"
+                    name="paymentType"
+                    eventKey="Cash Advance"
+                    onSelect={this.handleDropDownSelection}
+                  >
+                    Cash Advance
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    id="2"
+                    name="paymentType"
+                    eventKey="Bill Payment"
+                    onSelect={this.handleDropDownSelection}
+                  >
+                    Bill Payment
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Form.Group>
             <Form.Group>
               <div className="titleText">
-                <Form.Label>Amount</Form.Label><span id="mandatory"> * </span>
+                <Form.Label>Amount</Form.Label>
+                <span id="mandatory"> * </span>
               </div>
               <Form.Control
                 type="number"
@@ -158,7 +185,7 @@ class NewCashPaymentForm extends Component {
                 required
               />
             </Form.Group>
-            <hr size="" width="" color="grey"/> 
+            <hr size="" width="" color="grey" />
             <Button
               id="subBtn"
               variant="info"
