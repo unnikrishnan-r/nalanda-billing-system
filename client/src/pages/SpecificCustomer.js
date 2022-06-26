@@ -45,6 +45,13 @@ function currencyFormatter(params) {
 function currencyFormatterCollection(params) {
     return "Rs." + formatNumber(params);
 }
+function customerStatus(params){
+    if(params){
+        return "Active"
+    }else
+        return "Inactive"
+}
+
 let gridApi;
 
 var dateFilterParams = {
@@ -280,7 +287,7 @@ class SpecificCustomer extends Component {
         let customerPhone = "Phone Number:\t\t\t";
         let customerEmail = "Email id:\t\t\t\t\t";
         let netDue = "Net Due:\t\t\t"
-        let status = "Status:"
+        let status = "Status:\t\t\t\t\t"
         return (
             <>
                 <Navbar></Navbar>
@@ -302,7 +309,7 @@ class SpecificCustomer extends Component {
                                     {customerEmail + this.state.customerList.customerEmail}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    {status}
+                                    {status + customerStatus(this.state.customerList.customerStatus)}
                                 </ListGroup.Item>
                                 
                             </ListGroup>
