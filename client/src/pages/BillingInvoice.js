@@ -180,11 +180,11 @@ class BillingInvoices extends Component {
   };
 
   render() {
-    let numberOfCustomers = "Number of Customers:";
-    let totalNetWeight = "Total Net Weight:";
-    let totalDryWeight = "Total Dry Weight:";
-    let ratePerKg = "Rate/Kg:";
-    let totaInvoiceAmount = "Total Invoice Amount:";
+    let numberOfCustomers = "Number of Customers:\t\t";
+    let totalNetWeight = "Total Net Weight:\t\t\t\t";
+    let totalDryWeight = "Total Dry Weight:\t\t\t\t";
+    let ratePerKg = "Rate/Kg:\t\t\t\t\t\t";
+    let totaInvoiceAmount = "Total Invoice Amount:\t\t\t";
 
     return (
       <>
@@ -278,7 +278,7 @@ class BillingInvoices extends Component {
                     <br></br>
                     <br></br>
                     <Card className="invoiceCard">
-                      <Card.Header>
+                      <Card.Header id="card">
                         <h2>Invoice Amount</h2>
                       </Card.Header>
                       <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>

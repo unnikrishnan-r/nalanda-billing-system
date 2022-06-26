@@ -236,6 +236,11 @@ input:checked+.slider:before {
     align-items: center;
     bottom: 47px;
 }
+#card
+{
+    background-color: rgb(255 255 255);
+    border-bottom: 1px solid rgb(255 255 255);
+}
 
 * {
     -ms-overflow-style: none;
@@ -255,10 +260,6 @@ input:checked+.slider:before {
     background: #F9FAFA;
 }
 
-.ListGroup {
-    padding: 10px;
-}
-
 .card-header {
     font-family: 'Open Sans';
     font-style: normal;
@@ -266,19 +267,9 @@ input:checked+.slider:before {
     font-size: 15px;
     margin-right: 570px;
     margin-top: 10px;
-    
-
-
-    /* Gray dark / 700 */
-
+    background-color:rgb(255 255 255);;
     color: #495055;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+    
 }
 
 .h4,
@@ -303,4 +294,8 @@ h4 {
     position: relative;
     padding: 50px 70px;
 
+}
+
+.list-group-item {
+    margin-bottom: -2px;
 }
