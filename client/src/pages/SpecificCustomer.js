@@ -76,20 +76,6 @@ class SpecificCustomer extends Component {
         customerList: [],
         latexColumnDefs: [
             {
-                field: "customerId",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Id",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
-            {
-                field: "Customer.customerName",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Name",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
-            {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
                 filterParams: dateFilterParams,
@@ -163,20 +149,6 @@ class SpecificCustomer extends Component {
 
         ],
         cashcolumnDefs: [
-            {
-                field: "customerId",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Id",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
-            {
-                field: "Customer.customerName",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Name",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
             {
                 field: "paymentDate",
                 filter: "agDateColumnFilter",
