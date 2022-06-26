@@ -454,3 +454,6 @@ h4 {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.list-group-item{
+    margin-left: 105px;
+}

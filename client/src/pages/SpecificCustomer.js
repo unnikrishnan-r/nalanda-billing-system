@@ -42,6 +42,9 @@ function formatNumber(number) {
 function currencyFormatter(params) {
     return "Rs." + formatNumber(params.value);
 }
+function currencyFormatterCollection(params) {
+    return "Rs." + formatNumber(params);
+}
 let gridApi;
 
 var dateFilterParams = {
@@ -272,11 +275,11 @@ class SpecificCustomer extends Component {
             });
     };
     render() {
-        let customerName = "Name:";
-        let customerAddress = "Address:";
-        let customerPhone = "Phone Number:";
-        let customerEmail = "Email id:";
-        let netDue = "Net Due:"
+        let customerName = "Name:\t\t\t\t\t";
+        let customerAddress = "Address:\t\t\t\t\t";
+        let customerPhone = "Phone Number:\t\t\t";
+        let customerEmail = "Email id:\t\t\t\t\t";
+        let netDue = "Net Due:\t\t\t"
         let status = "Status:"
         return (
             <>
@@ -301,7 +304,7 @@ class SpecificCustomer extends Component {
                                 <ListGroup.Item>
                                     {status}
                                 </ListGroup.Item>
-
+                                
                             </ListGroup>
 
                         </div>
@@ -309,7 +312,7 @@ class SpecificCustomer extends Component {
                             <span id="collectiontitle">Collection Status</span>
                             <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                                 <ListGroup.Item>
-                                    {netDue + this.state.customerList.customerBalance}
+                                    {netDue + currencyFormatterCollection(this.state.customerList.customerBalance)}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     <button className="export">
