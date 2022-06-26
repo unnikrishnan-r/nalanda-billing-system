@@ -457,3 +457,9 @@ h4 {
 .list-group-item{
     margin-left: 105px;
 }
+#active{
+    color: green;
+}
+#inactive{
+    color: red;
+}

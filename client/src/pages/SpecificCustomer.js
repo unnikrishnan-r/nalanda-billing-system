@@ -308,7 +308,7 @@ class SpecificCustomer extends Component {
                                 <ListGroup.Item>
                                     {customerEmail + this.state.customerList.customerEmail}
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <ListGroup.Item id={this.state.customerList.customerStatus ? 'active' : 'inactive'}>
                                     {status + customerStatus(this.state.customerList.customerStatus)}
                                 </ListGroup.Item>
                                 
