@@ -7,6 +7,7 @@ import BillingInvoices from "./pages/BillingInvoice"
 
 import LatexCollection from "./pages/LatexCollection";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SpecificCustomer from "./pages/SpecificCustomer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/cashpayment" component={CashPayments} />
           <Route exact path="/latexCollection" component={LatexCollection} />
           <Route exact path="/billingInvoices" component={BillingInvoices} />
+          <Route exact path="/specificUser/:customerId" component={SpecificCustomer}/>
         </Switch>
       </div>
     </Router>

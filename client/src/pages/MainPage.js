@@ -1,10 +1,11 @@
   import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter ,Link} from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
+import ReactToPrint from "react-to-print";
 
 import {
   Container,
@@ -20,6 +21,10 @@ function formatNumber(number) {
 }
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
+}
+function LinkComponent(params) {
+  console.log(params)
+  return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
 }
 let gridApi;
 
@@ -46,6 +51,7 @@ class MainPage extends Component {
         headerName: "Customer Id",
         floatingFilter: true,
         sortable: true,
+        cellRenderer: LinkComponent,
       },
       {
         field: "customerName",
@@ -184,6 +190,7 @@ class MainPage extends Component {
             {" "}
             Export
           </button>
+
           <button className="printbtn"> Print</button>
           <br></br>
         </div>
