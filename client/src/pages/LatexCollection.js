@@ -8,15 +8,9 @@ import moment from "moment";
 import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
 import {
-  Row,
-  Col,
   Container,
   Form,
   Button,
-  Dropdown,
-  Jumbotron,
-  Modal,
-  Table,
 } from "react-bootstrap";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
@@ -24,17 +18,7 @@ import "react-dates/lib/css/_datepicker.css";
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
-function headerHeightGetter() {
-  var columnHeaderTexts = [
-    ...document.querySelectorAll(".ag-header-cell-text"),
-  ];
-  var clientHeights = columnHeaderTexts.map(
-    (headerText) => headerText.clientHeight
-  );
-  var tallestHeaderTextHeight = Math.max(...clientHeights);
 
-  return tallestHeaderTextHeight;
-}
 function formatNumber(number) {
   return Math.floor(number)
     .toString()
@@ -43,7 +27,6 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
-let gridApi;
 
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -72,6 +55,18 @@ var dateFilterParams = {
 var defaultFilterParams = {
   buttons: ["clear"],
 };
+
+function checkCellEditableStatus(params) {
+  return !params.data.paymentStatus;
+}
+
+function getRowStyle(params) {
+  return {
+    backgroundColor: params.data.paymentStatus ? "#F5F5F5" : "#FFFFFF",
+    fontStyle: params.data.paymentStatus ? "italic" : "normal",
+    color: params.data.paymentStatus ? "grey" : "black",
+  };
+}
 class LatexCollection extends Component {
   state = {
     addLatexFormTrigger: false,
@@ -107,7 +102,7 @@ class LatexCollection extends Component {
         headerName: "Gross Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "tareWeight",
@@ -115,7 +110,7 @@ class LatexCollection extends Component {
         headerName: "Barrel Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "netWeight",
@@ -130,7 +125,7 @@ class LatexCollection extends Component {
         headerName: "DRC %",
         floatingFilter: true,
         filterParams: defaultFilterParams,
-        editable: true,
+        editable: checkCellEditableStatus,
       },
       {
         field: "dryWeight",
@@ -145,7 +140,7 @@ class LatexCollection extends Component {
         headerName: "Rate /Kg",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        editable: true,
+        editable: checkCellEditableStatus,
         valueFormatter: currencyFormatter,
       },
       {
@@ -163,6 +158,7 @@ class LatexCollection extends Component {
         filterParams: defaultFilterParams,
         cellRenderer: "statusRenderer",
         floatingFilter: true,
+        editable: true,
       },
     ],
 
@@ -242,7 +238,6 @@ class LatexCollection extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     API.getLatexCollection().then((res) => {
-      console.log(res);
       this.setState({ latexCollection: res.data });
     });
   };
@@ -265,13 +260,11 @@ class LatexCollection extends Component {
   };
   componentDidMount = () => {
     this.loadLatexCollection();
-    console.log(this.componentRef);
   };
 
   loadLatexCollection = () => {
     API.getLatexCollection()
       .then((res) => {
-        console.log(res);
         this.setState({ latexCollection: res.data });
       })
       .catch((err) => {
@@ -382,6 +375,7 @@ class LatexCollection extends Component {
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
+            getRowStyle={getRowStyle}
             frameworkComponents={this.state.frameworkComponents}
             paginationAutoPageSize={true}
             pagination={true}

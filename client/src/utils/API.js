@@ -5,7 +5,6 @@ export default {
     return axios.get("https://nalandaapi.herokuapp.com/api/newcustomer");
   },
   updateCustomer: function (customer) {
-    console.log(customer);
     return axios.put(
       `https://nalandaapi.herokuapp.com/api/newcustomer/${customer.customerId}`,
       customer,
@@ -17,7 +16,6 @@ export default {
     );
   },
   createCustomer: function (customer) {
-    console.log(customer);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/newcustomer`,
       customer,
@@ -29,7 +27,6 @@ export default {
     );
   },
   createCashEntry: function (cashEntry) {
-    console.log(cashEntry);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/cashPayment`,
       cashEntry,
@@ -41,7 +38,6 @@ export default {
     );
   },
   addLatexEntry: function (latexEntry) {
-    console.log(latexEntry);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/latexCollection`,
       latexEntry,
@@ -53,7 +49,6 @@ export default {
     );
   },
   updateLatexEntry: function (latexEntry) {
-    console.log(latexEntry);
     return axios.put(
       `https://nalandaapi.herokuapp.com/api/latexCollection/key`,
       latexEntry,
@@ -74,7 +69,6 @@ export default {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId="+customerId);
   },
   calculateInvoiceAmount: function (invoiceReq) {
-    console.log(invoiceReq);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/calculateInvoiceAmount`,
       invoiceReq,
@@ -87,7 +81,6 @@ export default {
   },
 
   generateInvoices: function (billToDate) {
-    console.log(billToDate);
     return axios.put(
       `https://nalandaapi.herokuapp.com/api/invoiceGeneration/generateInvoiceForCustomer`,
       billToDate,
@@ -100,7 +93,6 @@ export default {
   },
 
   applyRate: function (invoiceReq) {
-    console.log(invoiceReq);
     return axios.post(
       `https://nalandaapi.herokuapp.com/api/applyRate`,
       invoiceReq,

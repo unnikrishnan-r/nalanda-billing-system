@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import "./style.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import moment from "moment";
@@ -23,7 +22,6 @@ class AddLatexForm extends Component {
         this.setState({
             selectedUsers: selectedUsers || [],
         });
-        console.log(selectedUsers);
     };
 
     // Handles updating component state when the user types into the input field
@@ -38,7 +36,6 @@ class AddLatexForm extends Component {
     handleOnSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        console.log("Submited");
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -52,10 +49,8 @@ class AddLatexForm extends Component {
                 tareWeight: this.state.tareWeight,
                 barrelNumber: this.state.barrelNumber
             };
-            console.log(newLatexEntry);
             API.addLatexEntry(newLatexEntry)
                 .then((res) => {
-                    console.log(res);
                     this.setState({
                         selectedUsers: [],
                         validated: false,

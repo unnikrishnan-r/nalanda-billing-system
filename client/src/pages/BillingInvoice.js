@@ -5,7 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import printJS from "print-js";
-import { PDFDocument, StandardFonts, rgb, PDFLib } from "pdf-lib";
+import { PDFDocument } from "pdf-lib";
 
 import "./style.css";
 
@@ -166,7 +166,7 @@ class BillingInvoices extends Component {
     for (let i = 0; i < 50; i++) {
       urls.push(fileName);
     }
-    let combinedPdf = mergeAllPDFs(urls);
+    mergeAllPDFs(urls);
   };
   componentDidMount = () => {
     API.getBillingHistory()
@@ -262,6 +262,7 @@ class BillingInvoices extends Component {
                       variant="info"
                       type="submit"
                       className="btn btn-success submit-button calc-button"
+                      disabled={!this.state.showBillSummary}
                       onClick={() => this.handlePrintClick()}
                     >
                       Print Invoices
