@@ -50,6 +50,9 @@ async function mergeAllPDFs(urls) {
   printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
   console.log("Printing Merged PDF");
 }
+function digitFormatter(params){
+  return Number(params.value).toFixed(2);
+}
 
 class BillingInvoices extends Component {
   state = {
@@ -89,18 +92,21 @@ class BillingInvoices extends Component {
         filter: "agSetColumnFilter",
         headerName: "Total Dry Weight",
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
       {
         field: "unitRatePerKg",
         filter: "agSetColumnFilter",
         headerName: "Unit Rate/Kg",
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
       {
         field: "totalBillAmount",
         filter: "agSetColumnFilter",
         headerName: "Total Bill Amount",
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
     ],
     defaultColDef: {

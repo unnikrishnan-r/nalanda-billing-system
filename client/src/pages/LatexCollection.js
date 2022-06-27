@@ -28,6 +28,9 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 
+function digitFormatter(params){
+  return Number(params.value).toFixed(2);
+}
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
     var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
@@ -126,6 +129,7 @@ class LatexCollection extends Component {
         floatingFilter: true,
         filterParams: defaultFilterParams,
         editable: checkCellEditableStatus,
+        valueFormatter: digitFormatter,
       },
       {
         field: "dryWeight",
@@ -133,6 +137,7 @@ class LatexCollection extends Component {
         headerName: "Dry Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
       {
         field: "unitRatePerKg",
@@ -142,6 +147,7 @@ class LatexCollection extends Component {
         floatingFilter: true,
         editable: checkCellEditableStatus,
         valueFormatter: currencyFormatter,
+        valueFormatter: digitFormatter,
       },
       {
         field: "totalAmount",
@@ -150,6 +156,7 @@ class LatexCollection extends Component {
         filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
+        valueFormatter: digitFormatter,
       },
       {
         field: "paymentStatus",

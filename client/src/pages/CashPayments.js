@@ -21,6 +21,9 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
+function digitFormatter(params){
+  return Number(params.value).toFixed(2);
+}
 let gridApi;
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -92,6 +95,7 @@ class CashPayments extends Component {
         filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
+        valueFormatter: digitFormatter,
       },
       {
         field: "paymentNotes",

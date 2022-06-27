@@ -52,6 +52,9 @@ function customerStatus(params){
         return "Inactive"
 }
 
+function digitFormatter(params){
+    return Number(params.value).toFixed(2);
+  }
 let gridApi;
 
 var dateFilterParams = {
@@ -123,6 +126,7 @@ class SpecificCustomer extends Component {
                 headerName: "DRC %",
                 floatingFilter: true,
                 filterParams: defaultFilterParams,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "dryWeight",
@@ -130,6 +134,7 @@ class SpecificCustomer extends Component {
                 headerName: "Dry Weight",
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "unitRatePerKg",
@@ -139,6 +144,7 @@ class SpecificCustomer extends Component {
                 floatingFilter: true,
                 editable: true,
                 valueFormatter: currencyFormatter,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "totalAmount",
@@ -147,6 +153,7 @@ class SpecificCustomer extends Component {
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "paymentStatus",
@@ -185,6 +192,7 @@ class SpecificCustomer extends Component {
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "paymentNotes",
