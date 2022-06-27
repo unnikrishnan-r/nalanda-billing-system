@@ -192,7 +192,7 @@ class BillingInvoices extends Component {
         <br></br>
 
         <div id="pagetitle">
-            <h4>Billing And Invoices</h4>
+            <h3>Billing And Invoices</h3>
           </div>
           <br></br>
         <Container>

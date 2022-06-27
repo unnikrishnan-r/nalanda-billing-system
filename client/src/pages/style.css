@@ -74,7 +74,8 @@ input:checked+.slider:before {
 
 #addCustomer,
 #addCollection,
-#addCashPayment {
+#addCashPayment,
+#applybtn {
     background-color: #2595FF;
     width: 121px;
     border: 5px;
@@ -167,7 +168,7 @@ input:checked+.slider:before {
 }
 
 .billingTabs {
-    width: 1403px;
+    width: 1376px;
     height: 56px;
     left: 17px;
     top: 199px;
@@ -207,9 +208,15 @@ input:checked+.slider:before {
 }
 
 .avg-rate {
-    line-height: 48px;
     padding: 11px 11px 9px;
-
+    font-weight: 200;
+    font-size: 19px;
+    line-height: 24px;
+    color: #484848;
+    background-color: #fff;
+    width: 100px;
+    padding: 11px 11px 9px;
+    border: 1px solid #dbdbdb;
 }
 
 .calc-button {
@@ -230,7 +237,7 @@ input:checked+.slider:before {
     background: #F9FAFA;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     align-items: center;
-    bottom: 47px;
+    bottom: 70px;
 }
 #card
 {
@@ -256,7 +263,7 @@ input:checked+.slider:before {
     background: #F9FAFA;
 }
 
-/*.card-header {
+.card-header {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
@@ -266,11 +273,11 @@ input:checked+.slider:before {
     background-color:rgb(255 255 255);;
     color: #495055;
     
-}*/
+}
 
 .h3,
 h3 {
-    padding: 23px;
+    padding: 30px;
 }
 
 #Box {
@@ -288,10 +295,160 @@ h3 {
 
 .grid-child {
     position: relative;
-    padding: 20px 40px;
+    padding: 50px 70px;
 
 }
 
 .list-group-item {
     margin-bottom: -2px;
+}
+.contact {
+    position: absolute;
+    width: 680px;
+    height: 261px;
+    left: 24px;
+    top: 100px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.collectionStatus {
+
+    position: absolute;
+    width: 680px;
+    height: 261px;
+    left: 737px;
+    top: 100px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.latexCollection {
+    position: absolute;
+    width: 1390px;
+    height: 547px;
+    left: 27px;
+    top: 400px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cashPayment {
+    position: absolute;
+    width: 1390px;
+    height: 569px;
+    left: 27px;
+    top: 993px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#titletext {
+    width: 264px;
+    height: 32px;
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    /* identical to box height, or 160% */
+
+    display: flex;
+    align-items: center;
+
+    color: #333333;
+    padding: 30px 20px 30px;
+}
+
+#contacttitle {
+    width: 75px;
+    height: 32px;
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    /* identical to box height, or 160% */
+
+    display: flex;
+    align-items: center;
+
+    color: #333333;
+    padding: 30px 20px 30px;
+}
+
+#collectiontitle {
+    width: 196px;
+    height: 32px;
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    /* identical to box height, or 160% */
+
+    display: flex;
+    align-items: center;
+
+    color: #333333;
+    padding: 30px 20px 30px;
+}
+.export{
+    background-color: #F9FAFA;
+    height: 32px;
+    width: 91px;
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #DBDEDF;
+    border-radius: 2px;
+    font-weight: 500;
+}
+.export:before {
+    color: green;
+    padding: 3px;
+    content: "\f1c3";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+.invoice{
+    background-color: #F9FAFA;
+    height: 32px;
+    width: 175px;
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #DBDEDF;
+    border-radius: 2px;
+    font-weight: 500;
+}
+.generateInvoice{
+    background-color: #2595FF;
+    width: 140px;
+    border: 5px;
+    height: 32px;
+    border-radius: 2px;
+    color: white;
+    font-weight: 600;
+    line-height: 20px;
+}
+.invoice:before{
+    padding: 3px;
+    content: "\f0ed";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
