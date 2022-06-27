@@ -35,12 +35,33 @@ function headerHeightGetter() {
     return tallestHeaderTextHeight;
 }
 function formatNumber(number) {
-    return Math.floor(number)
+    return Number(number).toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 function currencyFormatter(params) {
     return "Rs." + formatNumber(params.value);
+}
+function currencyFormatterCollection(params) {
+    return "Rs." + formatNumber(params);
+}
+function customerStatus(params){
+    if(params){
+        return "Active"
+    }else
+        return "Inactive"
+}
+
+function digitFormatter(params){
+    return Number(params.value).toFixed(2);
+}
+function checkEmail(params){
+    if(params != null){
+        return params;
+    }
+    else{
+        return ""
+    }
 }
 let gridApi;
 
@@ -75,20 +96,6 @@ class SpecificCustomer extends Component {
     state = {
         customerList: [],
         latexColumnDefs: [
-            {
-                field: "customerId",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Id",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
-            {
-                field: "Customer.customerName",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Name",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
             {
                 field: "collectionDate",
                 filter: "agDateColumnFilter",
@@ -127,6 +134,7 @@ class SpecificCustomer extends Component {
                 headerName: "DRC %",
                 floatingFilter: true,
                 filterParams: defaultFilterParams,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "dryWeight",
@@ -134,6 +142,7 @@ class SpecificCustomer extends Component {
                 headerName: "Dry Weight",
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
+                valueFormatter: digitFormatter,
             },
             {
                 field: "unitRatePerKg",
@@ -163,20 +172,6 @@ class SpecificCustomer extends Component {
 
         ],
         cashcolumnDefs: [
-            {
-                field: "customerId",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Id",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
-            {
-                field: "Customer.customerName",
-                filter: "agSetColumnFilter",
-                headerName: "Customer Name",
-                filterParams: defaultFilterParams,
-                floatingFilter: true,
-            },
             {
                 field: "paymentDate",
                 filter: "agDateColumnFilter",
@@ -300,12 +295,12 @@ class SpecificCustomer extends Component {
             });
     };
     render() {
-        let customerName = "Name:";
-        let customerAddress = "Address:";
-        let customerPhone = "Phone Number:";
-        let customerEmail = "Email id:";
-        let netDue = "Net Due:"
-        let status = "Status:"
+        let customerName = "Name:\t\t\t\t\t";
+        let customerAddress = "Address:\t\t\t\t\t";
+        let customerPhone = "Phone Number:\t\t\t";
+        let customerEmail = "Email id:\t\t\t\t\t";
+        let netDue = "Net Due:\t\t\t"
+        let status = "Status:\t\t\t\t\t"
         return (
             <>
                 <Navbar></Navbar>
@@ -324,12 +319,12 @@ class SpecificCustomer extends Component {
                                     {customerPhone + this.state.customerList.customerPhone}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    {customerEmail + this.state.customerList.customerEmail}
+                                    {customerEmail + checkEmail(this.state.customerList.customerEmail)}
                                 </ListGroup.Item>
-                                <ListGroup.Item>
-                                    {status}
+                                <ListGroup.Item id={this.state.customerList.customerStatus ? 'active' : 'inactive'}>
+                                    {status + customerStatus(this.state.customerList.customerStatus)}
                                 </ListGroup.Item>
-
+                                
                             </ListGroup>
 
                         </div>
@@ -337,21 +332,17 @@ class SpecificCustomer extends Component {
                             <span id="collectiontitle">Collection Status</span>
                             <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                                 <ListGroup.Item>
-                                    {netDue + this.state.customerList.customerBalance}
+                                    {netDue + currencyFormatterCollection(this.state.customerList.customerBalance)}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     <button className="export">
                                         {" "}
                                         Export
                                     </button>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
                                     <button className="invoice" >
                                         {" "}
                                         Download Invoice
                                     </button>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
                                     <button className="generateInvoice">
                                         {" "}
                                         Generate Invoice

@@ -20,7 +20,7 @@ import Navbar from "../components/Navbar";
 import API from "../utils/API";
 
 function formatNumber(number) {
-  return Math.floor(number)
+  return  Number(number).toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
@@ -28,6 +28,9 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 
+function digitFormatter(params){
+  return Number(params.value).toFixed(2);
+}
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
     var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
@@ -126,6 +129,7 @@ class LatexCollection extends Component {
         floatingFilter: true,
         filterParams: defaultFilterParams,
         editable: checkCellEditableStatus,
+        valueFormatter: digitFormatter,
       },
       {
         field: "dryWeight",
@@ -133,6 +137,7 @@ class LatexCollection extends Component {
         headerName: "Dry Weight",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
       {
         field: "unitRatePerKg",
