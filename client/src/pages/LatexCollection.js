@@ -147,7 +147,6 @@ class LatexCollection extends Component {
         floatingFilter: true,
         editable: checkCellEditableStatus,
         valueFormatter: currencyFormatter,
-        valueFormatter: digitFormatter,
       },
       {
         field: "totalAmount",
@@ -156,7 +155,6 @@ class LatexCollection extends Component {
         filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
-        valueFormatter: digitFormatter,
       },
       {
         field: "paymentStatus",

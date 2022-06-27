@@ -54,7 +54,15 @@ function customerStatus(params){
 
 function digitFormatter(params){
     return Number(params.value).toFixed(2);
-  }
+}
+function checkEmail(params){
+    if(params != null){
+        return params;
+    }
+    else{
+        return ""
+    }
+}
 let gridApi;
 
 var dateFilterParams = {
@@ -144,7 +152,6 @@ class SpecificCustomer extends Component {
                 floatingFilter: true,
                 editable: true,
                 valueFormatter: currencyFormatter,
-                valueFormatter: digitFormatter,
             },
             {
                 field: "totalAmount",
@@ -153,7 +160,6 @@ class SpecificCustomer extends Component {
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
-                valueFormatter: digitFormatter,
             },
             {
                 field: "paymentStatus",
@@ -192,7 +198,6 @@ class SpecificCustomer extends Component {
                 filterParams: defaultFilterParams,
                 floatingFilter: true,
                 valueFormatter: currencyFormatter,
-                valueFormatter: digitFormatter,
             },
             {
                 field: "paymentNotes",
@@ -314,7 +319,7 @@ class SpecificCustomer extends Component {
                                     {customerPhone + this.state.customerList.customerPhone}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    {customerEmail + this.state.customerList.customerEmail}
+                                    {customerEmail + checkEmail(this.state.customerList.customerEmail)}
                                 </ListGroup.Item>
                                 <ListGroup.Item id={this.state.customerList.customerStatus ? 'active' : 'inactive'}>
                                     {status + customerStatus(this.state.customerList.customerStatus)}
