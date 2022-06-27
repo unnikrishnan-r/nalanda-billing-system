@@ -20,7 +20,7 @@ import Navbar from "../components/Navbar";
 import API from "../utils/API";
 
 function formatNumber(number) {
-  return Math.floor(number)
+  return  Number(number).toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

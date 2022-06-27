@@ -35,7 +35,7 @@ function headerHeightGetter() {
     return tallestHeaderTextHeight;
 }
 function formatNumber(number) {
-    return Math.floor(number)
+    return Number(number).toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

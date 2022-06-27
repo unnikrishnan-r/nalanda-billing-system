@@ -14,7 +14,7 @@ import NewCashPaymentForm from "../components/NewCashPaymentForm";
 import API from "../utils/API";
 import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 function formatNumber(number) {
-  return Math.floor(number)
+  return Number(number).toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

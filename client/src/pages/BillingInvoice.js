@@ -50,6 +50,14 @@ async function mergeAllPDFs(urls) {
   printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
   console.log("Printing Merged PDF");
 }
+function formatNumber(number) {
+  return Number(number).toFixed(2)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+function currencyFormatter(params) {
+  return "Rs." + formatNumber(params.value);
+}
 function digitFormatter(params){
   return Number(params.value).toFixed(2);
 }
@@ -99,14 +107,14 @@ class BillingInvoices extends Component {
         filter: "agSetColumnFilter",
         headerName: "Unit Rate/Kg",
         floatingFilter: true,
-        valueFormatter: digitFormatter,
+        valueFormatter: currencyFormatter,
       },
       {
         field: "totalBillAmount",
         filter: "agSetColumnFilter",
         headerName: "Total Bill Amount",
         floatingFilter: true,
-        valueFormatter: digitFormatter,
+        valueFormatter: currencyFormatter,
       },
     ],
     defaultColDef: {
