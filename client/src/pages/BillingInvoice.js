@@ -51,14 +51,15 @@ async function mergeAllPDFs(urls) {
   console.log("Printing Merged PDF");
 }
 function formatNumber(number) {
-  return Number(number).toFixed(2)
+  return Number(number)
+    .toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
-function digitFormatter(params){
+function digitFormatter(params) {
   return Number(params.value).toFixed(2);
 }
 
@@ -131,6 +132,7 @@ class BillingInvoices extends Component {
     billToDate: moment(),
     ratePerKg: 0,
     showBillSummary: false,
+    generatedInvoices: [],
   };
   onBillFromDateChange = (date) => {
     this.setState({ billFromDate: moment(date).format("MM/DD/YYYY") });
@@ -165,6 +167,7 @@ class BillingInvoices extends Component {
             this.setState({
               BillSummaryRecord: billSummaryObj,
               showBillSummary: true,
+              generatedInvoices: res.data,
             });
           })
           .catch((err) => console.log(err));
@@ -174,13 +177,12 @@ class BillingInvoices extends Component {
 
   handlePrintClick = (event) => {
     console.log("Trying to print");
-    const fileName =
-      "https://nalandainvoices.s3.ap-south-1.amazonaws.com/68_02072022.pdf";
-    let urls = [];
-    for (let i = 0; i < 50; i++) {
-      urls.push(fileName);
-    }
-    mergeAllPDFs(urls);
+    console.log(this.state.generatedInvoices);
+    API.uploadInvoicesToAws({ files: this.state.generatedInvoices }).then(
+      (res) => {
+        mergeAllPDFs(res.data);
+      }
+    );
   };
   componentDidMount = () => {
     API.getBillingHistory()
@@ -206,9 +208,9 @@ class BillingInvoices extends Component {
         <br></br>
 
         <div id="pagetitle">
-            <h4>Billing And Invoices</h4>
-          </div>
-          <br></br>
+          <h4>Billing And Invoices</h4>
+        </div>
+        <br></br>
         <Container>
           <div id="Box">
             <Tabs
@@ -239,7 +241,7 @@ class BillingInvoices extends Component {
                         id="billFromDate" // PropTypes.string.isRequired,
                       />
                     </Form.Group>
-                  </div >
+                  </div>
                   <div className="grid-child purple">
                     <Form.Group>
                       <div className="titleText">

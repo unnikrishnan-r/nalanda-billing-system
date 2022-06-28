@@ -63,13 +63,21 @@ export default {
     return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection");
   },
   getCashEntryPerCustomer: function (customerId) {
-    return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment/key?customerId="+customerId);
+    return axios.get(
+      "https://nalandaapi.herokuapp.com/api/cashPayment/key?customerId=" +
+        customerId
+    );
   },
   getCustomer: function (customerId) {
-    return axios.get("https://nalandaapi.herokuapp.com/api/newcustomer/"+customerId);
+    return axios.get(
+      "https://nalandaapi.herokuapp.com/api/newcustomer/" + customerId
+    );
   },
   getLatexCollectionPerCustomer: function (customerId) {
-    return axios.get("https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId="+customerId);
+    return axios.get(
+      "https://nalandaapi.herokuapp.com/api/latexCollection/key?customerId=" +
+        customerId
+    );
   },
   calculateInvoiceAmount: function (invoiceReq) {
     return axios.post(
@@ -118,7 +126,14 @@ export default {
   getCashEntry: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/cashPayment");
   },
-  getBillingHistory: function (){
-    return axios.get("https://nalandaapi.herokuapp.com/api/billingSummary")
-  }
+  getBillingHistory: function () {
+    return axios.get("https://nalandaapi.herokuapp.com/api/billingSummary");
+  },
+  uploadInvoicesToAws: function (files) {
+    return axios.post(`https://nalandaapi.herokuapp.com/api/upload`, files, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
 };
