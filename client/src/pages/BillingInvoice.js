@@ -62,6 +62,12 @@ function currencyFormatter(params) {
 function digitFormatter(params) {
   return Number(params.value).toFixed(2);
 }
+function digitFormatterInvoice(params){
+  return Number(params).toFixed(2);
+}
+function currencyFormatterInvoice(params) {
+  return "Rs." + formatNumber(params);
+}
 
 class BillingInvoices extends Component {
   state = {
@@ -308,15 +314,15 @@ class BillingInvoices extends Component {
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totalDryWeight +
-                            this.state.BillSummaryRecord.totaldryWeight}
+                            digitFormatterInvoice(this.state.BillSummaryRecord.totaldryWeight)}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {ratePerKg +
-                            this.state.BillSummaryRecord.unitRatePerKg}
+                            currencyFormatterInvoice(this.state.BillSummaryRecord.unitRatePerKg)}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totaInvoiceAmount +
-                            this.state.BillSummaryRecord.totalBillAmount}
+                            currencyFormatterInvoice(this.state.BillSummaryRecord.totalBillAmount)}
                         </ListGroup.Item>
                       </ListGroup>
                       <Button variant="primary">
