@@ -208,14 +208,13 @@ input:checked+.slider:before {
 }
 
 .avg-rate {
-    padding: 11px 11px 9px;
     font-weight: 200;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 24px;
     color: #484848;
     background-color: #fff;
-    width: 100px;
-    padding: 11px 11px 9px;
+    width: 198px;
+    padding: 4px 8px 4px 6px;
     border: 1px solid #dbdbdb;
 }
 
@@ -293,11 +292,23 @@ h3 {
     display: inline;
 }
 
-.grid-child {
+#amtbox
+{
     position: relative;
-    padding: 50px 70px;
-
+    padding: 27px 66px;
+    display: inline-flex;
+    grid-gap: 200px;
+ 
 }
+
+#lspace
+{
+    position: relative;
+    padding: 0px 83px;
+    margin-top: -1px;
+    margin-bottom: -23px;
+}
+
 
 .list-group-item {
     margin-bottom: -2px;
@@ -451,4 +462,26 @@ h3 {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#billFromDate
+{
+    padding: 4px 16px 4px 21px;
+    font-size: 18px;
+}
+
+#billToDate
+{
+    padding: 4px 16px 4px 21px;
+    font-size: 18px;
+
+}
+.gridstyle
+{
+    margin-bottom: -22px ;
+}
+
+#lbtns
+{
+    margin-right: 25px;
 }
