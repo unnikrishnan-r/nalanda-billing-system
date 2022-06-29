@@ -50,6 +50,24 @@ async function mergeAllPDFs(urls) {
   printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
   console.log("Printing Merged PDF");
 }
+function formatNumber(number) {
+  return Number(number)
+    .toFixed(2)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+function currencyFormatter(params) {
+  return "Rs." + formatNumber(params.value);
+}
+function digitFormatter(params) {
+  return Number(params.value).toFixed(2);
+}
+function digitFormatterInvoice(params){
+  return Number(params).toFixed(2);
+}
+function currencyFormatterInvoice(params) {
+  return "Rs." + formatNumber(params);
+}
 
 class BillingInvoices extends Component {
   state = {
@@ -89,18 +107,21 @@ class BillingInvoices extends Component {
         filter: "agSetColumnFilter",
         headerName: "Total Dry Weight",
         floatingFilter: true,
+        valueFormatter: digitFormatter,
       },
       {
         field: "unitRatePerKg",
         filter: "agSetColumnFilter",
         headerName: "Unit Rate/Kg",
         floatingFilter: true,
+        valueFormatter: currencyFormatter,
       },
       {
         field: "totalBillAmount",
         filter: "agSetColumnFilter",
         headerName: "Total Bill Amount",
         floatingFilter: true,
+        valueFormatter: currencyFormatter,
       },
     ],
     defaultColDef: {
@@ -117,6 +138,7 @@ class BillingInvoices extends Component {
     billToDate: moment(),
     ratePerKg: 0,
     showBillSummary: false,
+    generatedInvoices: [],
   };
   onBillFromDateChange = (date) => {
     this.setState({ billFromDate: moment(date).format("MM/DD/YYYY") });
@@ -151,6 +173,7 @@ class BillingInvoices extends Component {
             this.setState({
               BillSummaryRecord: billSummaryObj,
               showBillSummary: true,
+              generatedInvoices: res.data,
             });
           })
           .catch((err) => console.log(err));
@@ -160,13 +183,12 @@ class BillingInvoices extends Component {
 
   handlePrintClick = (event) => {
     console.log("Trying to print");
-    const fileName =
-      "https://nalandainvoices.s3.ap-south-1.amazonaws.com/68_02072022.pdf";
-    let urls = [];
-    for (let i = 0; i < 50; i++) {
-      urls.push(fileName);
-    }
-    mergeAllPDFs(urls);
+    console.log(this.state.generatedInvoices);
+    API.uploadInvoicesToAws({ files: this.state.generatedInvoices }).then(
+      (res) => {
+        mergeAllPDFs(res.data);
+      }
+    );
   };
   componentDidMount = () => {
     API.getBillingHistory()
@@ -215,23 +237,23 @@ class BillingInvoices extends Component {
                           <Form.Label>From Date</Form.Label>
                         </div>
 
-                        <SingleDatePicker
-                          date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
-                          onDateChange={this.onBillFromDateChange}
-                          focused={this.state.focusedBillFrom} // PropTypes.bool
-                          isOutsideRange={() => false}
-                          onFocusChange={({ focused }) =>
-                            this.setState({ focusedBillFrom: focused })
-                          }
-                          id="billFromDateBill" // PropTypes.string.isRequired,
-                        />
-                      </Form.Group>
-                    </div >
-                    <div className="grid-child purple">
-                      <Form.Group>
-                        <div className="titleText">
-                          <Form.Label>To Date</Form.Label>
-                        </div>
+                      <SingleDatePicker
+                        date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
+                        onDateChange={this.onBillFromDateChange}
+                        focused={this.state.focusedBillFrom} // PropTypes.bool
+                        isOutsideRange={() => false}
+                        onFocusChange={({ focused }) =>
+                          this.setState({ focusedBillFrom: focused })
+                        }
+                        id="FromDatebill" // PropTypes.string.isRequired,
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="grid-child purple">
+                    <Form.Group>
+                      <div className="titleText">
+                        <Form.Label>To Date</Form.Label>
+                      </div>
 
                         <SingleDatePicker
                           date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
@@ -241,7 +263,7 @@ class BillingInvoices extends Component {
                           onFocusChange={({ focused }) =>
                             this.setState({ focusedBillTo: focused })
                           }
-                          id="billToDateBill" // PropTypes.string.isRequired,
+                          id="ToDateBill" // PropTypes.string.isRequired,
                         />
                       </Form.Group>
                     </div>
@@ -294,15 +316,15 @@ class BillingInvoices extends Component {
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totalDryWeight +
-                            this.state.BillSummaryRecord.totaldryWeight}
+                            digitFormatterInvoice(this.state.BillSummaryRecord.totaldryWeight)}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {ratePerKg +
-                            this.state.BillSummaryRecord.unitRatePerKg}
+                            currencyFormatterInvoice(this.state.BillSummaryRecord.unitRatePerKg)}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totaInvoiceAmount +
-                            this.state.BillSummaryRecord.totalBillAmount}
+                            currencyFormatterInvoice(this.state.BillSummaryRecord.totalBillAmount)}
                         </ListGroup.Item>
                       </ListGroup>
                       <Button variant="primary">

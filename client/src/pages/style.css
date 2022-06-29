@@ -442,6 +442,7 @@ h3 {
     border: 1px solid #DBDEDF;
     border-radius: 2px;
     font-weight: 500;
+    margin-left: 10px;
 }
 .generateInvoice{
     background-color: #2595FF;
@@ -452,6 +453,7 @@ h3 {
     color: white;
     font-weight: 600;
     line-height: 20px;
+    margin-left: 10px;
 }
 .invoice:before{
     padding: 3px;
@@ -484,4 +486,13 @@ h3 {
 #lbtns
 {
     margin-right: 25px;
+}
+.list-group-item{
+    margin-left: 105px;
+}
+#active{
+    color: green;
+}
+#inactive{
+    color: red;
 }
