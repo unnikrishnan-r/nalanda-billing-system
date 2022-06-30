@@ -18,6 +18,7 @@ import {
   Form,
   Button,
   ListGroup,
+  Spinner,
 } from "react-bootstrap";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
@@ -62,7 +63,7 @@ function currencyFormatter(params) {
 function digitFormatter(params) {
   return Number(params.value).toFixed(2);
 }
-function digitFormatterInvoice(params){
+function digitFormatterInvoice(params) {
   return Number(params).toFixed(2);
 }
 function currencyFormatterInvoice(params) {
@@ -139,6 +140,7 @@ class BillingInvoices extends Component {
     ratePerKg: 0,
     showBillSummary: false,
     generatedInvoices: [],
+    gettingInvoices: false,
   };
   onBillFromDateChange = (date) => {
     this.setState({ billFromDate: moment(date).format("MM/DD/YYYY") });
@@ -184,9 +186,12 @@ class BillingInvoices extends Component {
   handlePrintClick = (event) => {
     console.log("Trying to print");
     console.log(this.state.generatedInvoices);
+    this.setState({ gettingInvoices: true });
     API.uploadInvoicesToAws({ files: this.state.generatedInvoices }).then(
       (res) => {
-        mergeAllPDFs(res.data);
+        mergeAllPDFs(res.data).then((result) =>
+          this.setState({ gettingInvoices: false })
+        );
       }
     );
   };
@@ -194,7 +199,7 @@ class BillingInvoices extends Component {
     API.getBillingHistory()
       .then((res) => {
         console.log(res);
-        this.setState({ billHistory: res.data });
+        this.setState({ billHistory: res.data, gettingInvoices: false });
       })
       .catch((err) => {
         console.log(err);
@@ -229,7 +234,7 @@ class BillingInvoices extends Component {
                 eventKey="calcInvoice"
                 title="Calculate Invoice Amount"
               >
-                <div className="grid-container" >
+                <div className="grid-container">
                   <div id="amtbox">
                     <div className="grid-child purple">
                       <Form.Group>
@@ -237,23 +242,23 @@ class BillingInvoices extends Component {
                           <Form.Label>From Date</Form.Label>
                         </div>
 
-                      <SingleDatePicker
-                        date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
-                        onDateChange={this.onBillFromDateChange}
-                        focused={this.state.focusedBillFrom} // PropTypes.bool
-                        isOutsideRange={() => false}
-                        onFocusChange={({ focused }) =>
-                          this.setState({ focusedBillFrom: focused })
-                        }
-                        id="FromDatebill" // PropTypes.string.isRequired,
-                      />
-                    </Form.Group>
-                  </div>
-                  <div className="grid-child purple">
-                    <Form.Group>
-                      <div className="titleText">
-                        <Form.Label>To Date</Form.Label>
-                      </div>
+                        <SingleDatePicker
+                          date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
+                          onDateChange={this.onBillFromDateChange}
+                          focused={this.state.focusedBillFrom} // PropTypes.bool
+                          isOutsideRange={() => false}
+                          onFocusChange={({ focused }) =>
+                            this.setState({ focusedBillFrom: focused })
+                          }
+                          id="FromDatebill" // PropTypes.string.isRequired,
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="grid-child purple">
+                      <Form.Group>
+                        <div className="titleText">
+                          <Form.Label>To Date</Form.Label>
+                        </div>
 
                         <SingleDatePicker
                           date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
@@ -291,6 +296,17 @@ class BillingInvoices extends Component {
                         disabled={!this.state.showBillSummary}
                         onClick={() => this.handlePrintClick()}
                       >
+                        {this.state.gettingInvoices ? (
+                          <Spinner
+                            as="span"
+                            animation="grow"
+                            role="status"
+                            aria-hidden="true"
+                            variant="success"
+                          />
+                        ) : (
+                          ""
+                        )}
                         Print Invoices
                       </Button>{" "}
                     </div>
@@ -316,20 +332,23 @@ class BillingInvoices extends Component {
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totalDryWeight +
-                            digitFormatterInvoice(this.state.BillSummaryRecord.totaldryWeight)}
+                            digitFormatterInvoice(
+                              this.state.BillSummaryRecord.totaldryWeight
+                            )}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {ratePerKg +
-                            currencyFormatterInvoice(this.state.BillSummaryRecord.unitRatePerKg)}
+                            currencyFormatterInvoice(
+                              this.state.BillSummaryRecord.unitRatePerKg
+                            )}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           {totaInvoiceAmount +
-                            currencyFormatterInvoice(this.state.BillSummaryRecord.totalBillAmount)}
+                            currencyFormatterInvoice(
+                              this.state.BillSummaryRecord.totalBillAmount
+                            )}
                         </ListGroup.Item>
                       </ListGroup>
-                      <Button variant="primary">
-                        Generate & Print Invoices
-                      </Button>
                     </Card>
                   </div>
                 ) : (
