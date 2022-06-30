@@ -289,7 +289,7 @@ class BillingInvoices extends Component {
                         </Button>{" "}
                       </Form.Group>
                       <Button
-                        id="subBtn1"
+                        id="subBtn2"
                         variant="info"
                         type="submit"
                         className="btn btn-success submit-button calc-button"

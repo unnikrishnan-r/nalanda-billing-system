@@ -297,7 +297,7 @@ h3 {
     position: relative;
     padding: 27px 66px;
     display: inline-flex;
-    grid-gap: 200px;
+    grid-gap: 140px;
  
 }
 
@@ -495,4 +495,13 @@ h3 {
 }
 #inactive{
     color: red;
+}
+#subBtn2{
+    position: absolute;
+    top: 33%;
+    margin-left: -16px;
+    margin-top: 6px
+}
+#subBtn1{
+    margin-top: 6px;
 }
