@@ -1,6 +1,10 @@
 {
   "name": "nalanda-billing-system",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "description": "Application that manages Latex Collection and Billing for Nalanda Associates",
   "proxy": "http://localhost:3001/",
   "dependencies": {
