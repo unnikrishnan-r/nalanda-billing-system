@@ -168,7 +168,7 @@ input:checked+.slider:before {
 }
 
 .billingTabs {
-    width: 1403px;
+    width: 1376px;
     height: 56px;
     left: 17px;
     top: 199px;
@@ -208,14 +208,13 @@ input:checked+.slider:before {
 }
 
 .avg-rate {
-    padding: 11px 11px 9px;
     font-weight: 200;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 24px;
     color: #484848;
     background-color: #fff;
-    width: 100px;
-    padding: 11px 11px 9px;
+    width: 198px;
+    padding: 4px 8px 4px 6px;
     border: 1px solid #dbdbdb;
 }
 
@@ -237,7 +236,7 @@ input:checked+.slider:before {
     background: #F9FAFA;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     align-items: center;
-    bottom: 47px;
+    bottom: 70px;
 }
 #card
 {
@@ -275,9 +274,9 @@ input:checked+.slider:before {
     
 }
 
-.h4,
-h4 {
-    padding: 23px;
+.h3,
+h3 {
+    padding: 30px;
 }
 
 #Box {
@@ -293,11 +292,23 @@ h4 {
     display: inline;
 }
 
-.form-group {
+#amtbox
+{
     position: relative;
-    padding: 50px 70px;
-
+    padding: 27px 66px;
+    display: inline-flex;
+    grid-gap: 200px;
+ 
 }
+
+#lspace
+{
+    position: relative;
+    padding: 0px 83px;
+    margin-top: -1px;
+    margin-bottom: -23px;
+}
+
 
 .list-group-item {
     margin-bottom: -2px;
@@ -453,6 +464,28 @@ h4 {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#billFromDate
+{
+    padding: 4px 16px 4px 21px;
+    font-size: 18px;
+}
+
+#billToDate
+{
+    padding: 4px 16px 4px 21px;
+    font-size: 18px;
+
+}
+.gridstyle
+{
+    margin-bottom: -22px ;
+}
+
+#lbtns
+{
+    margin-right: 25px;
 }
 .list-group-item{
     margin-left: 105px;

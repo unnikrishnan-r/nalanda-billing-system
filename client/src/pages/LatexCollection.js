@@ -282,79 +282,81 @@ class LatexCollection extends Component {
         <Navbar></Navbar>
         <br></br>
         <Container></Container>
-        <div className="grid-container">
-          <div className="grid-child purple">
-            <Form.Group>
-              <div className="titleText">
+        <div className="gridstyle">
+          <div className="grid-container">
+            <div className="grid-child purple" id="lspace">
+              <Form.Group>
+                <div className="titleText">
                 <Form.Label>From Date</Form.Label>
-              </div>
+                </div>
 
-              <SingleDatePicker
-                date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
-                onDateChange={this.onBillFromDateChange}
-                focused={this.state.focusedBillFrom} // PropTypes.bool
-                isOutsideRange={() => false}
-                onFocusChange={({ focused }) =>
-                  this.setState({ focusedBillFrom: focused })
-                }
-                id="billFromDate" // PropTypes.string.isRequired,
-              />
-            </Form.Group>
-          </div>
-          <div className="grid-child purple">
-            <Form.Group>
-              <div className="titleText">
-                <Form.Label>To Date</Form.Label>
-              </div>
+                <SingleDatePicker
+                  date={moment(this.state.billFromDate)} // momentPropTypes.momentObj or null
+                  onDateChange={this.onBillFromDateChange}
+                  focused={this.state.focusedBillFrom} // PropTypes.bool
+                  isOutsideRange={() => false}
+                  onFocusChange={({ focused }) =>
+                    this.setState({ focusedBillFrom: focused })
+                  }
+                  id="billFromDate" // PropTypes.string.isRequired,
+                />
+              </Form.Group>
+            </div>
+            <div className="grid-child purple">
+              <Form.Group>
+                <div className="titleText">
+                  <Form.Label>To Date</Form.Label>
+                </div>
 
-              <SingleDatePicker
-                date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
-                onDateChange={this.onBillToDateChange}
-                focused={this.state.focusedBillTo} // PropTypes.bool
-                isOutsideRange={() => false}
-                onFocusChange={({ focused }) =>
-                  this.setState({ focusedBillTo: focused })
-                }
-                id="billToDate" // PropTypes.string.isRequired,
-              />
-            </Form.Group>
-          </div>
-          <div className="grid-child purple">
-            <Form.Group>
-              <div className="titleText">
-                <Form.Label className="titleText">Average Rate</Form.Label>
-              </div>
+                <SingleDatePicker
+                  date={moment(this.state.billToDate)} // momentPropTypes.momentObj or null
+                  onDateChange={this.onBillToDateChange}
+                  focused={this.state.focusedBillTo} // PropTypes.bool
+                  isOutsideRange={() => false}
+                  onFocusChange={({ focused }) =>
+                    this.setState({ focusedBillTo: focused })
+                  }
+                  id="billToDate" // PropTypes.string.isRequired,
+                />
+              </Form.Group>
+            </div>
+            <div className="grid-child purple">
+              <Form.Group>
+                <div className="titleText">
+                  <Form.Label className="titleText">Average Rate</Form.Label>
+                </div>
 
-              <Form.Control
-                type="number"
-                placeholder="Enter the rate per kg"
-                name="ratePerKg"
-                onChange={this.handleInputChange}
-                value={this.state.ratePerKg}
-                maxLength={10}
-                required
-                bsPrefix="avg-rate"
-              />
-            </Form.Group>
-          </div>
-          <div className="grid-child purple">
-            <Form.Group>
-              <div className="titleText">
-                <Form.Label className="titleText"></Form.Label>
-              </div>
-              <button id="addCollection" onClick={this.showAddLatexForm}>
-                Add Collection
-              </button>
-              <Button
-                id="applybtn"
-                variant="info"
-                type="submit"
-                className="btn btn-success submit-button calc-button"
-                onClick={() => this.applyRateForAllCustomers()}
-              >
-                Apply Rate
-              </Button>{" "}
-            </Form.Group>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter the rate per kg"
+                  name="ratePerKg"
+                  onChange={this.handleInputChange}
+                  value={this.state.ratePerKg}
+                  maxLength={10}
+                  required
+                  bsPrefix="avg-rate"
+                />
+              </Form.Group>
+            </div>
+            <div className="grid-child purple" id="lbtns" >
+              <Form.Group>
+                <div className="titleText">
+                  <Form.Label className="titleText"></Form.Label>
+                </div>
+                <button id="addCollection" onClick={this.showAddLatexForm}>
+                  Add Collection
+                </button>
+                <Button
+                  id="applybtn"
+                  variant="info"
+                  type="submit"
+                  className="btn btn-success submit-button calc-button"
+                  onClick={() => this.applyRateForAllCustomers()}
+                >
+                  Apply Rate
+                </Button>{" "}
+              </Form.Group>
+            </div>
           </div>
         </div>
         {/* <div className="sub-header"> */}
