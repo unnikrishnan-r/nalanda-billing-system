@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Application that manages Latex Collection and Billing for Nalanda Associates",
   "main": "server.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "lint-staged": {
     "*.js": "eslint"
   },
