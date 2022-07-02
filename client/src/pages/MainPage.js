@@ -22,7 +22,6 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 function LinkComponent(params) {
-  console.log(params)
   return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
 }
 let gridApi;
