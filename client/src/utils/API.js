@@ -1,5 +1,6 @@
 import axios from "axios";
-
+require("dotenv").config();
+console.log(process.env)
 export default {
   getCustomerList: function () {
     return axios.get("https://nalandaapi.herokuapp.com/api/newcustomer");
