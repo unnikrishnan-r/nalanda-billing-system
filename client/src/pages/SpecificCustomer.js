@@ -12,17 +12,6 @@ import { Container, ListGroup } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 import API from "../utils/API";
-function headerHeightGetter() {
-  var columnHeaderTexts = [
-    ...document.querySelectorAll(".ag-header-cell-text"),
-  ];
-  var clientHeights = columnHeaderTexts.map(
-    (headerText) => headerText.clientHeight
-  );
-  var tallestHeaderTextHeight = Math.max(...clientHeights);
-
-  return tallestHeaderTextHeight;
-}
 function formatNumber(number) {
   return Number(number)
     .toFixed(2)
@@ -51,7 +40,6 @@ function checkEmail(params) {
     return "";
   }
 }
-let gridApi;
 
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -229,7 +217,6 @@ class SpecificCustomer extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     API.getLatexCollectionPerCustomer().then((res) => {
-      console.log(res);
       this.setState({ latexCollection: res.data });
     });
   };
@@ -237,7 +224,6 @@ class SpecificCustomer extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     API.getCashEntryPerCustomer().then((res) => {
-      console.log(res);
       this.setState({ cashPayments: res.data });
     });
   };
@@ -245,14 +231,11 @@ class SpecificCustomer extends Component {
     const { customerId } = this.props.match.params;
     this.loadLatexCollection(customerId);
     this.loadcashPayments(customerId);
-    console.log(this.componentRef);
     this.loadCustomers(customerId);
   };
   loadLatexCollection = (customerId) => {
-    console.log("Calling Latex Data for Customer ", customerId);
     API.getLatexCollectionPerCustomer(customerId)
       .then((res) => {
-        console.log(res.data);
         this.setState({ latexCollection: res.data });
       })
       .catch((err) => {
@@ -262,7 +245,6 @@ class SpecificCustomer extends Component {
   loadcashPayments = (customerId) => {
     API.getCashEntryPerCustomer(customerId)
       .then((res) => {
-        console.log(res.data);
         this.setState({ cashPayments: res.data });
       })
       .catch((err) => {
@@ -272,9 +254,7 @@ class SpecificCustomer extends Component {
   loadCustomers = (customerId) => {
     API.getCustomer(customerId)
       .then((res) => {
-        console.log(res);
         this.setState({ customerList: res.data });
-        console.log(this.state.customerList);
       })
       .catch((err) => {
         console.log(err);
