@@ -28,7 +28,6 @@ import moment from "moment";
 import API from "../utils/API";
 
 async function mergeAllPDFs(urls) {
-  console.log(urls);
   //https://stackoverflow.com/questions/21478738/how-can-we-do-pdf-merging-using-javascript
   const pdfDoc = await PDFDocument.create();
   const numDocs = urls.length;
@@ -39,7 +38,6 @@ async function mergeAllPDFs(urls) {
     const docLength = donorPdfDoc.getPageCount();
     for (var k = 0; k < docLength; k++) {
       const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
-      //console.log("Doc " + i+ ", page " + k);
       pdfDoc.addPage(donorPage);
     }
   }
@@ -49,7 +47,6 @@ async function mergeAllPDFs(urls) {
   // strip off the first part to the first comma "data:image/png;base64,iVBORw0K..."
   var data_pdf = pdfDataUri.substring(pdfDataUri.indexOf(",") + 1);
   printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
-  console.log("Printing Merged PDF");
 }
 function formatNumber(number) {
   return Number(number)
@@ -155,16 +152,13 @@ class BillingInvoices extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(value);
   };
   calculateInvoice() {
-    console.log(this.state);
     API.calculateInvoiceAmount({
       billFromDate: this.state.billFromDate,
       billToDate: this.state.billToDate,
     })
       .then((res) => {
-        console.log(res.data);
         let billSummaryObj = res.data;
         API.generateInvoices({
           billFromDate: this.state.billFromDate,
@@ -184,8 +178,6 @@ class BillingInvoices extends Component {
   }
 
   handlePrintClick = (event) => {
-    console.log("Trying to print");
-    console.log(this.state.generatedInvoices);
     this.setState({ gettingInvoices: true });
     API.uploadInvoicesToAws({ files: this.state.generatedInvoices }).then(
       (res) => {
@@ -198,7 +190,6 @@ class BillingInvoices extends Component {
   componentDidMount = () => {
     API.getBillingHistory()
       .then((res) => {
-        console.log(res);
         this.setState({ billHistory: res.data, gettingInvoices: false });
       })
       .catch((err) => {
