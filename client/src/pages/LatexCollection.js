@@ -209,18 +209,15 @@ class LatexCollection extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(value);
   };
 
   applyRateForAllCustomers() {
-    console.log(this.state);
     API.applyRate({
       billFromDate: this.state.billFromDate,
       billToDate: this.state.billToDate,
       unitRatePerKg: parseInt(this.state.ratePerKg),
     })
       .then((res) => {
-        console.log(res);
         this.componentDidMount();
       })
       .catch((err) => console.log(err));
@@ -228,10 +225,8 @@ class LatexCollection extends Component {
 
   //Update function
   onCellValueChanged = (params) => {
-    console.log(params.data);
     API.updateLatexEntry(params.data)
       .then((res) => {
-        console.log(res);
         this.componentDidMount();
       })
       .catch((err) => {

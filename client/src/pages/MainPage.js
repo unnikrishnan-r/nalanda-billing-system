@@ -5,7 +5,6 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
-import ReactToPrint from "react-to-print";
 
 import {
   Container,
@@ -23,7 +22,6 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 function LinkComponent(params) {
-  console.log(params)
   return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
 }
 let gridApi;
