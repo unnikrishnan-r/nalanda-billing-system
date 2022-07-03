@@ -40,6 +40,7 @@ function getRowStyle(params) {
   };
 }
 
+
 class MainPage extends Component {
   state = {
     addCustomerFormTrigger: false,
@@ -96,7 +97,7 @@ class MainPage extends Component {
             checked={params.data.customerStatus}
             onChange={() => this.handleCustomerStatusChange(params)}
           />
-        ),
+        ), 
       },
     ],
     defaultColDef: {
