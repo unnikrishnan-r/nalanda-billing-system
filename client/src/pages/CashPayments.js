@@ -22,7 +22,6 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 
-let gridApi;
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
     var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
@@ -138,12 +137,6 @@ class CashPayments extends Component {
         console.log(err);
       });
   };
-  onGridReady = (params) => {
-    gridApi = params.api;
-  };
-  onExportClick = () => {
-    gridApi.exportDataAsCsv();
-  };
   render() {
     return (
       <>
@@ -154,11 +147,6 @@ class CashPayments extends Component {
           <button id="addCashPayment" onClick={this.showCashPaymentForm}>
             Add Cash Entry
           </button>
-          <button className="exportbtn" onClick={this.onExportClick}>
-            {" "}
-            Export
-          </button>
-          <button className="printbtn"> Print</button>
           <br></br>
         </div>
 
@@ -171,7 +159,6 @@ class CashPayments extends Component {
             defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
-            onGridReady={this.onGridReady}
           ></AgGridReact>
         </div>
         <NewCashPaymentForm

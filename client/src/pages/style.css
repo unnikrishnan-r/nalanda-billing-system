@@ -90,59 +90,6 @@ input:checked+.slider:before {
     font-style: normal;
     font-family: 'Open Sans', sans-serif;
 }
-
-.printbtn {
-    background-color: #F9FAFA;
-    height: 32px;
-    width: 80px;
-    border-radius: 3px;
-    color: black;
-    float: right;
-    margin: 8px;
-    border: 1px solid #DBDEDF;
-    border-radius: 2px;
-    font-weight: 500;
-
-}
-
-.printbtn:before {
-    padding: 2px;
-    content: "\f02f";
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.exportbtn {
-    background-color: #F9FAFA;
-    height: 32px;
-    width: 91px;
-    border-radius: 3px;
-    color: black;
-    float: right;
-    margin: 8px;
-    border: 1px solid #DBDEDF;
-    border-radius: 2px;
-    font-weight: 500;
-
-}
-
-.exportbtn:before {
-    color: green;
-    padding: 3px;
-    content: "\f1c3";
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-}
-
 .sub-header {
     padding-bottom: 10px;
 }

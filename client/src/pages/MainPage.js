@@ -24,7 +24,6 @@ function currencyFormatter(params) {
 function LinkComponent(params) {
   return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
 }
-let gridApi;
 
 function checkCellEditableStatus(params) {
   return params.data.customerStatus;
@@ -168,12 +167,6 @@ class MainPage extends Component {
         console.log(err);
       });
   };
-  onGridReady = (params) => {
-    gridApi = params.api;
-  };
-  onExportClick = () => {
-    gridApi.exportDataAsCsv();
-  };
   render() {
     return (
       <>
@@ -184,12 +177,6 @@ class MainPage extends Component {
           <button id="addCustomer" onClick={this.showAddCustomerForm}>
             Add Customer
           </button>
-          <button className="exportbtn" onClick={this.onExportClick}>
-            {" "}
-            Export
-          </button>
-
-          <button className="printbtn"> Print</button>
           <br></br>
         </div>
         <br></br>
@@ -202,7 +189,6 @@ class MainPage extends Component {
             paginationAutoPageSize={true}
             pagination={true}
             onCellValueChanged={this.onCellValueChanged}
-            onGridReady={this.onGridReady}
           ></AgGridReact>
         </div>
 
