@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
@@ -30,6 +30,9 @@ function currencyFormatter(params) {
 
 function digitFormatter(params){
   return Number(params.value).toFixed(2);
+}
+function LinkComponent(params) {
+  return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
 }
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -80,6 +83,7 @@ class LatexCollection extends Component {
         headerName: "Customer Id",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        cellRenderer: LinkComponent,
       },
       {
         field: "Customer.customerName",

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
@@ -21,7 +21,9 @@ function formatNumber(number) {
 function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
-
+function LinkComponent(params) {
+  return <Link to={"/specificUser/" + params.value}>{params.value}</Link>;
+}
 let gridApi;
 var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -60,6 +62,7 @@ class CashPayments extends Component {
         headerName: "Customer Id",
         filterParams: defaultFilterParams,
         floatingFilter: true,
+        cellRenderer: LinkComponent,
       },
       {
         field: "Customer.customerName",
