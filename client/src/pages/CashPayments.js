@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
+import CustomEditorComponent from "../components/customerEditorComponent";
 import moment from "moment";
 import {
   Container,
@@ -74,8 +75,10 @@ class CashPayments extends Component {
         headerName: "Payement Date",
         filterParams: dateFilterParams,
         floatingFilter: true,
+        editable : true,
+        cellEditor : "customEditor",
         cellRenderer: (data) => {
-          return moment.utc(data.data.paymentDate).format("DD/MM/YYYY");
+          return moment(data.data.paymentDate).format("DD/MM/YYYY");
         },
       },
       {
@@ -112,6 +115,7 @@ class CashPayments extends Component {
     },
     frameworkComponents: {
       paymentTypeRenderer: PaymentTypeRenderer,
+      customEditor : CustomEditorComponent,
     },
   };
 

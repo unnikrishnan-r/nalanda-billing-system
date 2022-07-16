@@ -14,11 +14,10 @@ import {
 } from "react-bootstrap";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
-
 import AddLatex from "../components/AddLatex";
 import Navbar from "../components/Navbar";
 import API from "../utils/API";
-
+import CustomEditorComponent from "../components/customerEditorComponent";
 function formatNumber(number) {
   return  Number(number).toFixed(2)
     .toString()
@@ -70,6 +69,7 @@ function getRowStyle(params) {
     color: params.data.paymentStatus ? "grey" : "black",
   };
 }
+
 class LatexCollection extends Component {
   state = {
     addLatexFormTrigger: false,
@@ -94,9 +94,10 @@ class LatexCollection extends Component {
         filterParams: dateFilterParams,
         headerName: "Collection Date",
         floatingFilter: true,
-
+        editable : true,
+        cellEditor : "customEditor",
         cellRenderer: (data) => {
-          return moment.utc(data.data.collectionDate).format("DD/MM/YYYY");
+          return moment(data.data.collectionDate).format("DD/MM/YYYY");
         },
       },
       {
@@ -190,6 +191,7 @@ class LatexCollection extends Component {
     },
     frameworkComponents: {
       statusRenderer: StatusRenderer,
+      customEditor: CustomEditorComponent,
     },
     billFromDate: moment(),
     billToDate: moment(),
