@@ -5,7 +5,15 @@ console.log(process.env);
 const API = process.env.REACT_APP_API || "http://localhost:3005";
 console.log(API)
 export default {
-  getCustomerList: function () {
+  //Check If its a valid log in
+  checkLogin: function(userLoginData) {
+    console.log(userLoginData)
+    return axios.post(API + "/api/login", userLoginData);
+  },
+  logout: function(){
+    return axios.get(API + "/api/logout");
+  },
+   getCustomerList: function () {
     return axios.get(API + "/api/newcustomer");
   },
   updateCustomer: function (customer) {
@@ -132,4 +140,7 @@ export default {
       },
     });
   },
+  isUserLoggedIn: function() {
+    return axios.get(API + "/api/login/checksession");
+  }
 };
