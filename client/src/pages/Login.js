@@ -27,6 +27,7 @@ class Login extends Component {
   };
 
   componentDidMount() {
+    sessionStorage.removeItem("UserId");
     var elementDiv = document.getElementById("loginDiv");
     var animation = elementDiv.animate(
       {

@@ -22,6 +22,12 @@ export class index extends Component {
           <Link className="mr-3" id="bill" to="/billingInvoices">
             Billing & Invoices
           </Link>
+          <Link
+            id="logout"
+            to="/login"
+          >
+            Logout
+          </Link>
         </Nav>
       </Navbar>
     );
