@@ -78,7 +78,7 @@ class Login extends Component {
           };
           API.sendEmail(emailData)
             .then((res) => {
-              console.log(res);
+              console.log(res.data);
             })
             .catch((err) => {
               console.log(err);

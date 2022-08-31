@@ -1,13 +1,11 @@
 import axios from "axios";
 require("dotenv").config();
-console.log(process.env);
 
 const API = process.env.REACT_APP_API || "http://localhost:3005";
 console.log(API);
 export default {
   //Check If its a valid log in
   checkLogin: function (userLoginData) {
-    console.log(userLoginData);
     return axios.post(API + "/api/login", userLoginData);
   },
   logout: function () {
