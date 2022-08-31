@@ -11,6 +11,8 @@ import "./css/login.css";
 import Card from "react-bootstrap/Card";
 import Nav from "../components/Navbar";
 import "web-animations-js/web-animations-next.min.js";
+import moment from "moment";
+require("dotenv").config();
 
 const loginDivStyle = {
   float: "right",
@@ -62,7 +64,26 @@ class Login extends Component {
       API.checkLogin(this.state)
         .then((res) => {
           sessionStorage.setItem("UserId", res.data.id);
-          console.log("going to redirect")
+          console.log("going to redirect");
+          console.log(process.env);
+
+          var emailData = {
+            service_id: process.env.EMAILJS_SERVICEID,
+            template_id: process.env.EMAILJS_TEMPATEID,
+            user_id: process.env.EMAILJS_USERID,
+            template_params: {
+              from_name: res.data.username,
+              timestamp: moment().format("ddd MMMM Do, YYYY HH:mm:ss"),
+              message: "",
+            },
+          };
+          API.sendEmail(emailData)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           this.props.history.push("/customer");
         })
         .catch((err) => {
