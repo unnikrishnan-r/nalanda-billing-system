@@ -65,12 +65,11 @@ class Login extends Component {
         .then((res) => {
           sessionStorage.setItem("UserId", res.data.id);
           console.log("going to redirect");
-          console.log(process.env);
 
           var emailData = {
-            service_id: process.env.EMAILJS_SERVICEID,
-            template_id: process.env.EMAILJS_TEMPATEID,
-            user_id: process.env.EMAILJS_USERID,
+            service_id: process.env.REACT_APP_EMAILJS_SERVICEID,
+            template_id: process.env.REACT_APP_EMAILJS_TEMPATEID,
+            user_id: process.env.REACT_APP_EMAILJS_USERID,
             template_params: {
               from_name: res.data.username,
               timestamp: moment().format("ddd MMMM Do, YYYY HH:mm:ss"),
