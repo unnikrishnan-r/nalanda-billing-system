@@ -8,8 +8,9 @@
     background: #FFFFFF;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
     font-family: 'Open Sans', sans-serif;
-    
+
 }
+
 #title {
     width: 188px;
     height: 32px;
@@ -23,8 +24,9 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    
+
 }
+
 .me-auto {
     font-style: normal;
     font-weight: 400;
@@ -37,6 +39,13 @@
     order: 1;
     flex-grow: 0;
 }
-#customer, #latex ,#cash, #bill{
+
+#customer, #latex, #cash, #bill #logout {
     padding: 20px;
+}
+
+#logout {
+    float: right;
+    margin-left: 6in;
+
 }

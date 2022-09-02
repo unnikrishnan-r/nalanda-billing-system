@@ -1,0 +1,54 @@
+#main {
+    /* background-color: aquamarine; */
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+    object-fit: cover;
+  }
+  
+  .loginModal{
+    color: rgb(227, 152, 40);
+    text-shadow: 2px 2px white;
+  }
+  
+  #uname,
+  #passwd {
+    border: none;
+    border-bottom: 1px solid #222;
+    background-color: transparent;
+  }
+  .msgOnLogin {
+    color: rgb(227, 152, 40);
+    
+  }
+  #buttonSubmit {
+    height: 40px;
+    width: 100%;
+    border: none;
+    background-color: gray;
+    color: #ffffff;
+  }
+  
+  #buttonSubmit:hover {
+    background-color: rgb(227, 152, 40);
+    transition-duration: 0.4s;
+  }
+  
+  #signup {
+    height: 40px;
+    width: 50%;
+    border: none;
+    background-color: gray;
+    color: #ffffff;
+  }
+  
+  #signup:hover {
+    background-color: rgb(227, 152, 40);
+    transition-duration: 0.4s;
+  }
+  

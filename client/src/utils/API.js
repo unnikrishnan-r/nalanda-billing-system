@@ -1,16 +1,22 @@
 import axios from "axios";
 require("dotenv").config();
-console.log(process.env);
 
 const API = process.env.REACT_APP_API || "http://localhost:3005";
-console.log(API)
+console.log(API);
 export default {
+  //Check If its a valid log in
+  checkLogin: function (userLoginData) {
+    return axios.post(API + "/api/login", userLoginData);
+  },
+  logout: function () {
+    return axios.get(API + "/api/logout");
+  },
   getCustomerList: function () {
     return axios.get(API + "/api/newcustomer");
   },
   updateCustomer: function (customer) {
     return axios.put(
-      API+`/api/newcustomer/${customer.customerId}`,
+      API + `/api/newcustomer/${customer.customerId}`,
       customer,
       {
         headers: {
@@ -20,48 +26,32 @@ export default {
     );
   },
   createCustomer: function (customer) {
-    return axios.post(
-      API+`/api/newcustomer`,
-      customer,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/newcustomer`, customer, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   createCashEntry: function (cashEntry) {
-    return axios.post(
-      API+`/api/cashPayment`,
-      cashEntry,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/cashPayment`, cashEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   addLatexEntry: function (latexEntry) {
-    return axios.post(
-      API+`/api/latexCollection`,
-      latexEntry,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/latexCollection`, latexEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   updateLatexEntry: function (latexEntry) {
-    return axios.put(
-      API+`/api/latexCollection/key`,
-      latexEntry,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.put(API + `/api/latexCollection/key`, latexEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   getLatexCollection: function () {
     return axios.get(API + "/api/latexCollection");
@@ -76,20 +66,16 @@ export default {
     return axios.get(API + "/api/latexCollection/key?customerId=" + customerId);
   },
   calculateInvoiceAmount: function (invoiceReq) {
-    return axios.post(
-      API+`/api/calculateInvoiceAmount`,
-      invoiceReq,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/calculateInvoiceAmount`, invoiceReq, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
 
   generateInvoices: function (billToDate) {
     return axios.put(
-      API+`/api/invoiceGeneration/generateInvoiceForCustomer`,
+      API + `/api/invoiceGeneration/generateInvoiceForCustomer`,
       billToDate,
       {
         headers: {
@@ -100,20 +86,16 @@ export default {
   },
 
   applyRate: function (invoiceReq) {
-    return axios.post(
-      API+`/api/applyRate`,
-      invoiceReq,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/applyRate`, invoiceReq, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
 
   loadOptions: async (inputText, callback) => {
     const response = await fetch(
-      API+`/api/newcustomer/search?searchString=${inputText}`
+      API + `/api/newcustomer/search?searchString=${inputText}`
     );
     const json = await response.json();
 
@@ -126,10 +108,24 @@ export default {
     return axios.get(API + "/api/billingSummary");
   },
   uploadInvoicesToAws: function (files) {
-    return axios.post(API+`/api/upload`, files, {
+    return axios.post(API + `/api/upload`, files, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+  },
+  isUserLoggedIn: function () {
+    return axios.get(API + "/api/login/checksession");
+  },
+  sendEmail: function (emailData) {
+    return axios.post(
+      "https://api.emailjs.com/api/v1.0/email/send",
+      emailData,
+      {
+        headers: {
+          contentType: "application/json",
+        },
+      }
+    );
   },
 };

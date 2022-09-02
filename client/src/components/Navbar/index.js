@@ -10,7 +10,7 @@ export class index extends Component {
           Nalanda Associates
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Link className="mr-3" id="customer" to="/">
+          <Link className="mr-3" id="customer" to="/customer">
             Customers
           </Link>
           <Link className="mr-3" id="latex" to="/latexCollection">
@@ -21,6 +21,12 @@ export class index extends Component {
           </Link>
           <Link className="mr-3" id="bill" to="/billingInvoices">
             Billing & Invoices
+          </Link>
+          <Link
+            id="logout"
+            to="/login"
+          >
+            Logout
           </Link>
         </Nav>
       </Navbar>
