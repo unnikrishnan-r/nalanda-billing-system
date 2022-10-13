@@ -177,6 +177,11 @@ class BillingInvoices extends Component {
       .catch((err) => console.log(err));
   }
 
+  calculateNetDue() {
+    API.calculateNetDue()
+      .then((res) => console.log(res.data))
+      .catch((err) => console.error(err));
+  }
   handlePrintClick = (event) => {
     this.setState({ gettingInvoices: true });
     API.uploadInvoicesToAws({ files: this.state.generatedInvoices }).then(
@@ -299,6 +304,15 @@ class BillingInvoices extends Component {
                           ""
                         )}
                         Print Invoices
+                      </Button>{" "}
+                      <Button
+                        id="subBtn3"
+                        variant="info"
+                        type="submit"
+                        className="btn btn-success submit-button calc-button"
+                        onClick={() => this.calculateNetDue()}
+                      >
+                        Calculate Net Due
                       </Button>{" "}
                     </div>
                   </div>

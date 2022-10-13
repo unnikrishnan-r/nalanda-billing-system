@@ -128,4 +128,14 @@ export default {
       }
     );
   },
+  calculateNetDue: function () {
+    return axios.post(
+      API + `/api/netdueCalc`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
 };
