@@ -188,8 +188,6 @@ class MainPage extends Component {
             {" "}
             Export
           </button>
-
-          <button className="printbtn"> Print</button>
           <br></br>
         </div>
         <br></br>

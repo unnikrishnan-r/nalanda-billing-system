@@ -158,7 +158,7 @@ class CashPayments extends Component {
             {" "}
             Export
           </button>
-          <button className="printbtn"> Print</button>
+          {/* <button className="printbtn"> Print</button> */}
           <br></br>
         </div>
 
