@@ -114,6 +114,13 @@ export default {
       },
     });
   },
+  downloadInvoices: function (req) {
+    return axios.post(API + `/api/print/download`, req, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
   isUserLoggedIn: function () {
     return axios.get(API + "/api/login/checksession");
   },
@@ -129,13 +136,10 @@ export default {
     );
   },
   calculateNetDue: function () {
-    return axios.post(
-      API + `/api/netdueCalc`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return axios.post(API + `/api/netdueCalc`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
 };
