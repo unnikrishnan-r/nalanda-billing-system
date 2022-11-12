@@ -4,6 +4,9 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
+import printJS from "print-js";
+import { PDFDocument } from "pdf-lib";
+
 import moment from "moment";
 import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
@@ -39,6 +42,26 @@ function checkEmail(params) {
   } else {
     return "";
   }
+}
+
+async function mergeAllPDFs(urls) {
+  const pdfDoc = await PDFDocument.create();
+  const numDocs = urls.length;
+  for (var i = 0; i < numDocs; i++) {
+    const donorPdfBytes = await fetch(urls[i]).then((res) => res.arrayBuffer());
+    const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
+    const docLength = donorPdfDoc.getPageCount();
+    for (var k = 0; k < docLength; k++) {
+      const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
+      pdfDoc.addPage(donorPage);
+    }
+  }
+
+  const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+
+  // strip off the first part to the first comma "data:image/png;base64,iVBORw0K..."
+  var data_pdf = pdfDataUri.substring(pdfDataUri.indexOf(",") + 1);
+  printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
 }
 
 var dateFilterParams = {
@@ -260,6 +283,15 @@ class SpecificCustomer extends Component {
         console.log(err);
       });
   };
+  handleDownloadClick = (event) => {
+    console.log(this.state.customerList.customerId);
+    API.downloadInvoices({
+      customerId: this.state.customerList.customerId,
+    }).then((res) => {
+      console.log(res);
+      mergeAllPDFs(res.data);
+    });
+  };
   render() {
     let customerName = "Name:\t\t\t\t\t";
     let customerAddress = "Address:\t\t\t\t\t";
@@ -311,7 +343,13 @@ class SpecificCustomer extends Component {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <button className="export"> Export</button>
-                  <button className="invoice"> Download Invoice</button>
+                  <button
+                    className="invoice"
+                    onClick={() => this.handleDownloadClick()}
+                  >
+                    {" "}
+                    Download Invoice
+                  </button>
                   <button className="generateInvoice"> Generate Invoice</button>
                 </ListGroup.Item>
               </ListGroup>
