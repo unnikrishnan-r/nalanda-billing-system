@@ -11,7 +11,7 @@ import moment from "moment";
 import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
 
-import { Container, ListGroup } from "react-bootstrap";
+import { Container, ListGroup,  Spinner} from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 import API from "../utils/API";
@@ -94,6 +94,7 @@ var defaultFilterParams = {
 class SpecificCustomer extends Component {
   state = {
     customerList: [],
+    gettingInvoices: false,
     latexColumnDefs: [
       {
         field: "collectionDate",
@@ -285,11 +286,14 @@ class SpecificCustomer extends Component {
   };
   handleDownloadClick = (event) => {
     console.log(this.state.customerList.customerId);
+    this.setState({ gettingInvoices: true });
     API.downloadInvoices({
       customerId: this.state.customerList.customerId,
     }).then((res) => {
       console.log(res);
-      mergeAllPDFs(res.data);
+      mergeAllPDFs(res.data).then((result) =>
+        this.setState({ gettingInvoices: false })
+      );
     });
   };
   render() {
@@ -347,8 +351,18 @@ class SpecificCustomer extends Component {
                     className="invoice"
                     onClick={() => this.handleDownloadClick()}
                   >
-                    {" "}
-                    Download Invoice
+                    {this.state.gettingInvoices ? (
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        role="status"
+                        aria-hidden="true"
+                        variant="success"
+                      />
+                    ) : (
+                      ""
+                    )}
+                    Download Invoices
                   </button>
                   <button className="generateInvoice"> Generate Invoice</button>
                 </ListGroup.Item>
