@@ -16,7 +16,7 @@ class NewCashPaymentForm extends Component {
     selectedUsers: [],
     validated: false,
     paymentDate: moment(),
-    totalAmount: 0,
+    totalAmount: null,
     paymentType: 1,
     paymentName: "Cash Advance",
     paymentNotes: "Advance Paid",
@@ -65,11 +65,11 @@ class NewCashPaymentForm extends Component {
           this.setState({
             selectedUsers: [],
             validated: false,
-            paymentDate: moment(),
-            totalAmount: 0,
-            paymentType: 1,
-            paymentName: "Cash Advance",
-            paymentNotes: "Advance Paid",
+            // paymentDate: moment(),
+            totalAmount: null,
+            // paymentType: 1,
+            // paymentName: "Cash Advance",
+            // paymentNotes: "Advance Paid",
           });
           this.props.closeCashPaymentForm();
         })
