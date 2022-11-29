@@ -364,7 +364,6 @@ class SpecificCustomer extends Component {
                     )}
                     Download Invoices
                   </button>
-                  <button className="generateInvoice"> Generate Invoice</button>
                 </ListGroup.Item>
               </ListGroup>
             </div>

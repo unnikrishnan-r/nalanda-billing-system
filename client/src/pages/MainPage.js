@@ -1,20 +1,20 @@
-  import React, { Component } from "react";
-import { withRouter ,Link} from "react-router-dom";
+import React, { Component } from "react";
+import { withRouter, Link } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
 
-import {
-  Container,
-  Form,
-} from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import NewCustomerForm from "../components/NewCustomerForm";
+import NewBillingForm from "../components/NewBillingForm";
+
 import API from "../utils/API";
 function formatNumber(number) {
-  return Number(number).toFixed(2)
+  return Number(number)
+    .toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
@@ -148,6 +148,12 @@ class MainPage extends Component {
       addCustomerFormTrigger: true,
     });
   };
+
+  showNewBillingForm = () => {
+    this.setState({
+      newBillingFormTrigger: true,
+    });
+  };
   closeAddCustomerForm = () => {
     this.setState({
       addCustomerFormTrigger: false,
@@ -155,9 +161,19 @@ class MainPage extends Component {
     this.componentDidMount();
   };
 
+  closeNewBillingForm = () => {
+    this.setState({
+      newBillingFormTrigger: false,
+    });
+    this.componentDidMount();
+  };
+
   componentDidMount = () => {
     this.loadCustomers();
-    this.setState({ addCustomerFormTrigger: false });
+    this.setState({
+      addCustomerFormTrigger: false,
+      newBillingFormTrigger: false,
+    });
   };
   loadCustomers = () => {
     API.getCustomerList()
@@ -181,6 +197,9 @@ class MainPage extends Component {
         <br></br>
         <Container></Container>
         <div className="sub-header">
+          <button id="addCustomer" onClick={this.showNewBillingForm}>
+            Generate Bill
+          </button>
           <button id="addCustomer" onClick={this.showAddCustomerForm}>
             Add Customer
           </button>
@@ -208,6 +227,12 @@ class MainPage extends Component {
           trigger={this.state.addCustomerFormTrigger}
           closeAddCustomerForm={this.closeAddCustomerForm}
         ></NewCustomerForm>
+
+        <NewBillingForm
+          trigger={this.state.newBillingFormTrigger}
+          closeNewBillingForm={this.closeNewBillingForm}
+        ></NewBillingForm>
+
         <br></br>
       </>
     );
