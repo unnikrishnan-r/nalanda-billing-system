@@ -54,7 +54,7 @@ class AddLatexForm extends Component {
                     this.setState({
                         selectedUsers: [],
                         validated: false,
-                        collectionDate: moment(),
+                        // collectionDate: moment(),
                         grossWeight: "",
                         tareWeight:"",
                     });
