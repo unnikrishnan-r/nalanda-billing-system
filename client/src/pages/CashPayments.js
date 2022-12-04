@@ -91,6 +91,7 @@ class CashPayments extends Component {
         filter: "agSetColumnFilter",
         headerName: "Amount",
         filterParams: defaultFilterParams,
+        editable: true,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
