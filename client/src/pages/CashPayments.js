@@ -6,15 +6,14 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import "./style.css";
 import moment from "moment";
-import {
-  Container,
-} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import NewCashPaymentForm from "../components/NewCashPaymentForm";
 import API from "../utils/API";
 import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
 function formatNumber(number) {
-  return Number(number).toFixed(2)
+  return Number(number)
+    .toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
@@ -27,7 +26,7 @@ var dateFilterParams = {
   comparator: (filterLocalDateAtMidnight, cellValue) => {
     var dateAsString = moment.utc(cellValue).format("DD/MM/YYYY");
     if (dateAsString == null) return -1;
-    var dateParts = dateAsString.split('/');
+    var dateParts = dateAsString.split("/");
     var cellDate = new Date(
       Number(dateParts[2]),
       Number(dateParts[1]) - 1,
@@ -45,10 +44,10 @@ var dateFilterParams = {
   },
   browserDatePicker: true,
   minValidYear: 2022,
-  buttons: ['clear']
+  buttons: ["clear"],
 };
 var defaultFilterParams = {
-  buttons: ['clear']
+  buttons: ["clear"],
 };
 class CashPayments extends Component {
   state = {
@@ -84,7 +83,7 @@ class CashPayments extends Component {
         headerName: "Payement Type",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        cellRenderer: "paymentTypeRenderer"
+        cellRenderer: "paymentTypeRenderer",
       },
       {
         field: "totalAmount",
@@ -139,6 +138,17 @@ class CashPayments extends Component {
         console.log(err);
       });
   };
+  //Update function
+  onCellValueChanged = (params) => {
+    API.updateCashEntry(params.data)
+      .then((res) => {
+        this.componentDidMount();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   onGridReady = (params) => {
     gridApi = params.api;
   };
@@ -164,7 +174,11 @@ class CashPayments extends Component {
         </div>
 
         <br></br>
-        <div className="ag-theme-alpine grid-box" style={{ height: 500 }} ref={el=>(this.componentRef=el)}>
+        <div
+          className="ag-theme-alpine grid-box"
+          style={{ height: 500 }}
+          ref={(el) => (this.componentRef = el)}
+        >
           <AgGridReact
             rowData={this.state.cashPayments}
             columnDefs={this.state.columnDefs}
@@ -172,6 +186,7 @@ class CashPayments extends Component {
             defaultColDef={this.state.defaultColDef}
             paginationAutoPageSize={true}
             pagination={true}
+            onCellValueChanged={this.onCellValueChanged}
             onGridReady={this.onGridReady}
           ></AgGridReact>
         </div>

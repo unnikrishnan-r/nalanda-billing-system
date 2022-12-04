@@ -104,6 +104,14 @@ export default {
   getCashEntry: function () {
     return axios.get(API + "/api/cashPayment");
   },
+  updateCashEntry: function (cashEntry) {
+    return axios.put(API + `/api/cashPayment/key`, cashEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
+
   getBillingHistory: function () {
     return axios.get(API + "/api/billingSummary");
   },
