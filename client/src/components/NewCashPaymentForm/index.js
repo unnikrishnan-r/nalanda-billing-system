@@ -55,7 +55,7 @@ class NewCashPaymentForm extends Component {
       this.setState({ validated: true });
       const newCashEntry = {
         customerId: this.state.selectedUsers.value,
-        paymentDate: moment.utc(this.state.paymentDate).format("MM/DD/YYYY"),
+        paymentDate: moment.utc(this.state.paymentDate).format("MM/DD/YYYY hh:mm:ss"),
         totalAmount: this.state.totalAmount,
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
