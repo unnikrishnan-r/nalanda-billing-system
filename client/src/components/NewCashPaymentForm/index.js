@@ -40,7 +40,8 @@ class NewCashPaymentForm extends Component {
   handleDropDownSelection = (eventKey, event) => {
     this.setState({
       paymentName: eventKey,
-      paymentNotes: event.target.id === "1" ? "Advance Paid" : "Bill Settlement",
+      paymentNotes:
+        event.target.id === "1" ? "Advance Paid" : "Bill Settlement",
     });
   };
 
@@ -55,7 +56,13 @@ class NewCashPaymentForm extends Component {
       this.setState({ validated: true });
       const newCashEntry = {
         customerId: this.state.selectedUsers.value,
-        paymentDate: moment.utc(this.state.paymentDate).format("MM/DD/YYYY"),
+        paymentDate: moment(this.state.paymentDate)
+          .add({
+            hours: moment().format("h"),
+            minutes: moment().format("m"),
+            seconds: moment().format("s"),
+          })
+          .format("MM/DD/YYYY HH:mm:ss"),
         totalAmount: this.state.totalAmount,
         paymentType: this.state.paymentType,
         paymentNotes: this.state.paymentNotes,
