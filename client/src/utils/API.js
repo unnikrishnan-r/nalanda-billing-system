@@ -144,7 +144,7 @@ export default {
     );
   },
   calculateNetDue: function () {
-    return axios.post(API + `/api/netdueCalc`, {
+    return axios.post(API + `/api/netdueCalc/new`, {
       headers: {
         "Content-Type": "application/json",
       },
