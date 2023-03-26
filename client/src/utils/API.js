@@ -71,7 +71,7 @@ export default {
       },
     });
   },
-  
+
   addLatexEntry: function (latexEntry) {
     return axios.post(API + `/api/latexCollection`, latexEntry, {
       headers: {
@@ -164,12 +164,30 @@ export default {
       },
     });
   },
+  uploadLedgerToAws: function (files) {
+    return axios.post(API + `/api/upload/ledger`, files, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
   downloadInvoices: function (req) {
     return axios.post(API + `/api/print/download`, req, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+  },
+  generateLedgerStatement: function (req) {
+    return axios.put(
+      API + `/api/ledgerStatement/generateLedgerStatementForCustomer`,
+      req,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   },
   isUserLoggedIn: function () {
     return axios.get(API + "/api/login/checksession");

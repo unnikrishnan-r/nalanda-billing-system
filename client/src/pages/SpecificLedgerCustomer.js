@@ -34,25 +34,16 @@ function customerStatus(params) {
   } else return "Inactive";
 }
 
-// function checkEmail(params) {
-//   if (params != null) {
-//     return params;
-//   } else {
-//     return "";
-//   }
-// }
-
 async function mergeAllPDFs(urls) {
+  console.log(urls);
   const pdfDoc = await PDFDocument.create();
   const numDocs = urls.length;
-  for (var i = 0; i < numDocs; i++) {
-    const donorPdfBytes = await fetch(urls[i]).then((res) => res.arrayBuffer());
-    const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
-    const docLength = donorPdfDoc.getPageCount();
-    for (var k = 0; k < docLength; k++) {
-      const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
-      pdfDoc.addPage(donorPage);
-    }
+  const donorPdfBytes = await fetch(urls).then((res) => res.arrayBuffer());
+  const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
+  const docLength = donorPdfDoc.getPageCount();
+  for (var k = 0; k < docLength; k++) {
+    const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
+    pdfDoc.addPage(donorPage);
   }
 
   const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
@@ -92,6 +83,7 @@ var defaultFilterParams = {
 class SpecificLedgerCustomer extends Component {
   state = {
     addLedgerEntryFormTrigger: false,
+    generatedLedger: "",
     customerList: [],
     cashcolumnDefs: [
       {
@@ -202,11 +194,15 @@ class SpecificLedgerCustomer extends Component {
             res.data[i].paymentType === "1" ? res.data[i].totalAmount : " ";
           res.data[i].debitAmount =
             res.data[i].paymentType === "0" ? res.data[i].totalAmount : " ";
-          if(i === 0){
-            res.data[i].balanceAmount = res.data[i].creditAmount - res.data[i].debitAmount
-          } else{
-            res.data[i].balanceAmount = res.data[i].creditAmount - res.data[i].debitAmount + res.data[i-1].balanceAmount
-          } 
+          if (i === 0) {
+            res.data[i].balanceAmount =
+              res.data[i].creditAmount - res.data[i].debitAmount;
+          } else {
+            res.data[i].balanceAmount =
+              res.data[i].creditAmount -
+              res.data[i].debitAmount +
+              res.data[i - 1].balanceAmount;
+          }
         }
         console.log(res.data);
         this.setState({ ledgerEntries: res.data });
@@ -224,16 +220,21 @@ class SpecificLedgerCustomer extends Component {
         console.log(err);
       });
   };
-  handleDownloadClick = (event) => {
+  handlePrintLedger = (event) => {
     console.log(this.state.customerList.customerId);
-    this.setState({ gettingInvoices: true });
-    API.downloadInvoices({
+    this.setState({ gettingLedger: true });
+    API.generateLedgerStatement({
       customerId: this.state.customerList.customerId,
     }).then((res) => {
-      console.log(res);
-      mergeAllPDFs(res.data).then((result) =>
-        this.setState({ gettingInvoices: false })
-      );
+      console.log(res.data);
+      this.setState({
+        generatedLedger: res.data,
+      });
+      API.uploadLedgerToAws({ file: res.data }).then((res) => {
+        mergeAllPDFs(res.data).then((result) =>
+          this.setState({ gettingLedger: false })
+        );
+      });
     });
   };
   render() {
@@ -253,8 +254,8 @@ class SpecificLedgerCustomer extends Component {
           <button id="addCashPayment" onClick={this.showLedgerEntryForm}>
             Add Ledger
           </button>
-          <button id="addCustomer" onClick={() => this.handleDownloadClick()}>
-            {this.state.gettingInvoices ? (
+          <button id="addCustomer" onClick={() => this.handlePrintLedger()}>
+            {this.state.gettingLedger ? (
               <Spinner
                 as="span"
                 animation="grow"
