@@ -13,7 +13,8 @@ import StatusRenderer from "../components/StatusRenderer";
 
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import Navbar from "../components/Navbar";
-import PaymentTypeRenderer from "../components/PaymenTypeRenderer";
+import NewLedgerEntryForm from "../components/NewLedgerEntryForm";
+import LedgerTypeRenderer from "../components/LedgerTypeRenderer";
 import API from "../utils/API";
 function formatNumber(number) {
   return Number(number)
@@ -22,10 +23,10 @@ function formatNumber(number) {
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 function currencyFormatter(params) {
-  return "Rs." + formatNumber(params.value);
-}
-function currencyFormatterCollection(params) {
-  return "Rs." + formatNumber(params);
+  console.log(params.value, Number.isInteger(params.value));
+  return Number.isInteger(params.value)
+    ? "Rs." + formatNumber(params.value)
+    : "";
 }
 function customerStatus(params) {
   if (params) {
@@ -33,16 +34,13 @@ function customerStatus(params) {
   } else return "Inactive";
 }
 
-function digitFormatter(params) {
-  return Number(params.value).toFixed(2);
-}
-function checkEmail(params) {
-  if (params != null) {
-    return params;
-  } else {
-    return "";
-  }
-}
+// function checkEmail(params) {
+//   if (params != null) {
+//     return params;
+//   } else {
+//     return "";
+//   }
+// }
 
 async function mergeAllPDFs(urls) {
   const pdfDoc = await PDFDocument.create();
@@ -107,18 +105,25 @@ class SpecificLedgerCustomer extends Component {
         },
       },
       {
-        field: "paymentType",
+        field: "creditAmount",
         filter: "agSetColumnFilter",
-        headerName: "Payement Type",
-        editable: true,
+        headerName: "Credit",
         filterParams: defaultFilterParams,
         floatingFilter: true,
-        cellRenderer: "paymentTypeRenderer",
+        valueFormatter: currencyFormatter,
       },
       {
-        field: "totalAmount",
+        field: "debitAmount",
         filter: "agSetColumnFilter",
-        headerName: "Amount",
+        headerName: "Debit",
+        filterParams: defaultFilterParams,
+        floatingFilter: true,
+        valueFormatter: currencyFormatter,
+      },
+      {
+        field: "balanceAmount",
+        filter: "agSetColumnFilter",
+        headerName: "Balance",
         filterParams: defaultFilterParams,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
@@ -156,7 +161,7 @@ class SpecificLedgerCustomer extends Component {
     },
     frameworkComponents: {
       statusRenderer: StatusRenderer,
-      paymentTypeRenderer: PaymentTypeRenderer,
+      ledgerTypeRenderer: LedgerTypeRenderer,
     },
   };
   showLedgerEntryForm = () => {
@@ -177,19 +182,34 @@ class SpecificLedgerCustomer extends Component {
   onGridReadyCash = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    API.getCashEntryPerCustomer().then((res) => {
-      this.setState({ cashPayments: res.data });
+    API.getLedgerEntryPerCustomer().then((res) => {
+      this.setState({ ledgerEntries: res.data });
     });
   };
   componentDidMount = () => {
     const { customerId } = this.props.match.params;
     this.loadLedgerEntries(customerId);
     this.loadLedgerCustomers(customerId);
+    this.setState({
+      addLedgerEntryFormTrigger: false,
+    });
   };
   loadLedgerEntries = (customerId) => {
     API.getLedgerEntryPerCustomer(customerId)
       .then((res) => {
-        this.setState({ cashPayments: res.data });
+        for (let i = 0; i < res.data.length; i++) {
+          res.data[i].creditAmount =
+            res.data[i].paymentType === "1" ? res.data[i].totalAmount : " ";
+          res.data[i].debitAmount =
+            res.data[i].paymentType === "0" ? res.data[i].totalAmount : " ";
+          if(i === 0){
+            res.data[i].balanceAmount = res.data[i].creditAmount - res.data[i].debitAmount
+          } else{
+            res.data[i].balanceAmount = res.data[i].creditAmount - res.data[i].debitAmount + res.data[i-1].balanceAmount
+          } 
+        }
+        console.log(res.data);
+        this.setState({ ledgerEntries: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -219,9 +239,9 @@ class SpecificLedgerCustomer extends Component {
   render() {
     let customerName = "Name:\t\t\t\t\t";
     let customerAddress = "Address:\t\t\t\t\t";
-    let customerPhone = "Phone Number:\t\t\t";
-    let customerEmail = "Email id:\t\t\t\t\t";
-    let netDue = "Net Due:\t\t\t";
+    // let customerPhone = "Phone Number:\t\t\t";
+    // let customerEmail = "Email id:\t\t\t\t\t";
+    // let netDue = "Net Due:\t\t\t";
     let status = "Status:\t\t\t\t\t";
     return (
       <>
@@ -231,11 +251,9 @@ class SpecificLedgerCustomer extends Component {
 
         <div className="sub-header">
           <button id="addCashPayment" onClick={this.showLedgerEntryForm}>
-            Add Cash Entry
+            Add Ledger
           </button>
-          <button
-            onClick={() => this.handleDownloadClick()}
-          >
+          <button id="addCustomer" onClick={() => this.handleDownloadClick()}>
             {this.state.gettingInvoices ? (
               <Spinner
                 as="span"
@@ -256,7 +274,7 @@ class SpecificLedgerCustomer extends Component {
 
         <Container>
           <div className="twoBox">
-            {/* <div className="contact">
+            <div className="ledgercontact">
               <span id="contacttitle">Contact</span>
               <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
                 <ListGroup.Item>
@@ -265,13 +283,13 @@ class SpecificLedgerCustomer extends Component {
                 <ListGroup.Item>
                   {customerAddress + this.state.customerList.customerAddress}
                 </ListGroup.Item>
-                <ListGroup.Item>
+                {/* <ListGroup.Item>
                   {customerPhone + this.state.customerList.customerPhone}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   {customerEmail +
                     checkEmail(this.state.customerList.customerEmail)}
-                </ListGroup.Item>
+                </ListGroup.Item> */}
                 <ListGroup.Item
                   id={
                     this.state.customerList.customerStatus
@@ -283,45 +301,14 @@ class SpecificLedgerCustomer extends Component {
                     customerStatus(this.state.customerList.customerStatus)}
                 </ListGroup.Item>
               </ListGroup>
-            </div> */}
-            {/* <div className="collectionStatus">
-              <span id="collectiontitle">Collection Status</span>
-              <ListGroup variant="flush" style={{ whiteSpace: "pre" }}>
-                <ListGroup.Item>
-                  {netDue +
-                    currencyFormatterCollection(
-                      this.state.customerList.customerBalance
-                    )}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <button className="export"> Export</button>
-                  <button
-                    className="invoice"
-                    onClick={() => this.handleDownloadClick()}
-                  >
-                    {this.state.gettingInvoices ? (
-                      <Spinner
-                        as="span"
-                        animation="grow"
-                        role="status"
-                        aria-hidden="true"
-                        variant="success"
-                      />
-                    ) : (
-                      ""
-                    )}
-                    Download Invoices
-                  </button>
-                </ListGroup.Item>
-              </ListGroup>
-            </div> */}
+            </div>
           </div>
 
-          <div className="latexCollection">
+          <div className="ledgerEntries">
             <span id="titletext">Ledger Statement</span>
             <div className="ag-theme-alpine grid-box" style={{ height: 450 }}>
               <AgGridReact
-                rowData={this.state.cashPayments}
+                rowData={this.state.ledgerEntries}
                 columnDefs={this.state.cashcolumnDefs}
                 defaultColDef={this.state.defaultColDef}
                 frameworkComponents={this.state.frameworkComponents}
@@ -333,6 +320,11 @@ class SpecificLedgerCustomer extends Component {
             </div>
           </div>
         </Container>
+
+        <NewLedgerEntryForm
+          trigger={this.state.addLedgerEntryFormTrigger}
+          closeLedgerEntryForm={this.closeLedgerEntryForm}
+        ></NewLedgerEntryForm>
       </>
     );
   }

@@ -64,6 +64,14 @@ export default {
       },
     });
   },
+  createLedgerEntry: function (newLedgerEntry) {
+    return axios.post(API + `/api/ledgerBook`, newLedgerEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
+  
   addLatexEntry: function (latexEntry) {
     return axios.post(API + `/api/latexCollection`, latexEntry, {
       headers: {
@@ -126,6 +134,15 @@ export default {
 
     callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
   },
+  searchLedgerCustomer: async (inputText, callback) => {
+    const response = await fetch(
+      API + `/api/ledgerCustomer/search?searchString=${inputText}`
+    );
+    const json = await response.json();
+
+    callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
+  },
+
   getCashEntry: function () {
     return axios.get(API + "/api/cashPayment");
   },
