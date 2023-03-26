@@ -32,6 +32,31 @@ export default {
       },
     });
   },
+  getLedgerCustomerList: function () {
+    return axios.get(API + "/api/ledgerCustomer");
+  },
+  getLedgerCustomer: function (customerId) {
+    return axios.get(API + "/api/ledgerCustomer/" + customerId);
+  },
+  createLedgerCustomer: function (customer) {
+    return axios.post(API + `/api/ledgerCustomer`, customer, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
+  updateLedgerCustomer: function (customer) {
+    return axios.put(
+      API + `/api/ledgerCustomer/${customer.customerId}`,
+      customer,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
+
   createCashEntry: function (cashEntry) {
     return axios.post(API + `/api/cashPayment`, cashEntry, {
       headers: {
@@ -149,5 +174,8 @@ export default {
         "Content-Type": "application/json",
       },
     });
+  },
+  getLedgerEntryPerCustomer: function (customerId) {
+    return axios.get(API + "/api/ledgerBook/key?customerId=" + customerId);
   },
 };
