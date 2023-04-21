@@ -32,6 +32,31 @@ export default {
       },
     });
   },
+  getLedgerCustomerList: function () {
+    return axios.get(API + "/api/ledgerCustomer");
+  },
+  getLedgerCustomer: function (customerId) {
+    return axios.get(API + "/api/ledgerCustomer/" + customerId);
+  },
+  createLedgerCustomer: function (customer) {
+    return axios.post(API + `/api/ledgerCustomer`, customer, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
+  updateLedgerCustomer: function (customer) {
+    return axios.put(
+      API + `/api/ledgerCustomer/${customer.customerId}`,
+      customer,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
+
   createCashEntry: function (cashEntry) {
     return axios.post(API + `/api/cashPayment`, cashEntry, {
       headers: {
@@ -39,6 +64,14 @@ export default {
       },
     });
   },
+  createLedgerEntry: function (newLedgerEntry) {
+    return axios.post(API + `/api/ledgerBook`, newLedgerEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
+
   addLatexEntry: function (latexEntry) {
     return axios.post(API + `/api/latexCollection`, latexEntry, {
       headers: {
@@ -101,6 +134,15 @@ export default {
 
     callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
   },
+  searchLedgerCustomer: async (inputText, callback) => {
+    const response = await fetch(
+      API + `/api/ledgerCustomer/search?searchString=${inputText}`
+    );
+    const json = await response.json();
+
+    callback(json.map((i) => ({ label: i.customerName, value: i.customerId })));
+  },
+
   getCashEntry: function () {
     return axios.get(API + "/api/cashPayment");
   },
@@ -122,12 +164,30 @@ export default {
       },
     });
   },
+  uploadLedgerToAws: function (files) {
+    return axios.post(API + `/api/upload/ledger`, files, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
   downloadInvoices: function (req) {
     return axios.post(API + `/api/print/download`, req, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+  },
+  generateLedgerStatement: function (req) {
+    return axios.put(
+      API + `/api/ledgerStatement/generateLedgerStatementForCustomer`,
+      req,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   },
   isUserLoggedIn: function () {
     return axios.get(API + "/api/login/checksession");
@@ -149,5 +209,8 @@ export default {
         "Content-Type": "application/json",
       },
     });
+  },
+  getLedgerEntryPerCustomer: function (customerId) {
+    return axios.get(API + "/api/ledgerBook/key?customerId=" + customerId);
   },
 };
