@@ -23,7 +23,6 @@ function formatNumber(number) {
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 function currencyFormatter(params) {
-  console.log(params.value, Number.isInteger(params.value));
   return Number.isInteger(params.value)
     ? "Rs." + formatNumber(params.value)
     : "";
@@ -101,6 +100,7 @@ class SpecificLedgerCustomer extends Component {
         filter: "agSetColumnFilter",
         headerName: "Credit",
         filterParams: defaultFilterParams,
+        editable: true,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
@@ -109,6 +109,7 @@ class SpecificLedgerCustomer extends Component {
         filter: "agSetColumnFilter",
         headerName: "Debit",
         filterParams: defaultFilterParams,
+        editable: true,
         floatingFilter: true,
         valueFormatter: currencyFormatter,
       },
@@ -170,6 +171,24 @@ class SpecificLedgerCustomer extends Component {
 
   onFirstDataRendered = (params) => {
     params.api.sizeColumnsToFit();
+  };
+  //Update function
+  onCellValueChanged = (params) => {
+    let ledgerUpdateEntry = {
+      customerId: params.data.customerId,
+      ledgerEntryDate: params.data.ledgerEntryDate,
+      paymentType: params.data.paymentType,
+      totalAmount: params.data.paymentType == 0? params.data.debitAmount : params.data.creditAmount,
+      paymentNotes: params.data.paymentNotes 
+    };
+    console.log(ledgerUpdateEntry)
+    API.updateSpecificLatexEntry(ledgerUpdateEntry)
+      .then((res) => {
+        this.componentDidMount();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   onGridReadyCash = (params) => {
     this.gridApi = params.api;
@@ -315,6 +334,7 @@ class SpecificLedgerCustomer extends Component {
                 frameworkComponents={this.state.frameworkComponents}
                 paginationAutoPageSize={true}
                 pagination={true}
+                onCellValueChanged={this.onCellValueChanged}
                 onGridReadyCash={this.onGridReadyCash}
                 onFirstDataRendered={this.onFirstDataRendered.bind(this)}
               ></AgGridReact>
