@@ -213,4 +213,11 @@ export default {
   getLedgerEntryPerCustomer: function (customerId) {
     return axios.get(API + "/api/ledgerBook/key?customerId=" + customerId);
   },
+  updateSpecificLatexEntry: function (ledgerEntry) {
+    return axios.put(API + `/api/ledgerBook/key`, ledgerEntry, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
 };

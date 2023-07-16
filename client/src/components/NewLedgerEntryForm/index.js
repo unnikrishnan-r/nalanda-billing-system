@@ -70,7 +70,7 @@ class NewLedgerEntryForm extends Component {
       API.createLedgerEntry(newLedgerEntry)
         .then((res) => {
           this.setState({
-            selectedUsers: [],
+            // selectedUsers: [],
             validated: false,
             // paymentDate: moment(),
             totalAmount: null,
