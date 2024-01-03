@@ -4,8 +4,6 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
-import printJS from "print-js";
-import { PDFDocument } from "pdf-lib";
 
 import moment from "moment";
 import "./style.css";
@@ -14,6 +12,7 @@ import StatusRenderer from "../components/StatusRenderer";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import NewLedgerEntryForm from "../components/NewLedgerEntryForm";
+import NewLedgerPrintForm from "../components/NewLedgerPrintForm";
 import LedgerTypeRenderer from "../components/LedgerTypeRenderer";
 import API from "../utils/API";
 function formatNumber(number) {
@@ -31,25 +30,6 @@ function customerStatus(params) {
   if (params) {
     return "Active";
   } else return "Inactive";
-}
-
-async function mergeAllPDFs(urls) {
-  console.log(urls);
-  const pdfDoc = await PDFDocument.create();
-  const numDocs = urls.length;
-  const donorPdfBytes = await fetch(urls).then((res) => res.arrayBuffer());
-  const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
-  const docLength = donorPdfDoc.getPageCount();
-  for (var k = 0; k < docLength; k++) {
-    const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
-    pdfDoc.addPage(donorPage);
-  }
-
-  const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-
-  // strip off the first part to the first comma "data:image/png;base64,iVBORw0K..."
-  var data_pdf = pdfDataUri.substring(pdfDataUri.indexOf(",") + 1);
-  printJS({ printable: data_pdf, type: "pdf", base64: true, showModal: true });
 }
 
 var dateFilterParams = {
@@ -82,6 +62,7 @@ var defaultFilterParams = {
 class SpecificLedgerCustomer extends Component {
   state = {
     addLedgerEntryFormTrigger: false,
+    addLedgerPrintEntryFormTrigger: false,
     generatedLedger: "",
     customerList: [],
     cashcolumnDefs: [
@@ -169,6 +150,18 @@ class SpecificLedgerCustomer extends Component {
     this.componentDidMount();
   };
 
+  showLedgerPrintEntryForm = () => {
+    this.setState({
+      addLedgerPrintEntryFormTrigger: true,
+    });
+  };
+  closeLedgerPrintEntryForm = () => {
+    this.setState({
+      addLedgerPrintEntryFormTrigger: false,
+    });
+    this.componentDidMount();
+  };
+
   onFirstDataRendered = (params) => {
     params.api.sizeColumnsToFit();
   };
@@ -178,10 +171,13 @@ class SpecificLedgerCustomer extends Component {
       customerId: params.data.customerId,
       ledgerEntryDate: params.data.ledgerEntryDate,
       paymentType: params.data.paymentType,
-      totalAmount: params.data.paymentType == 0? params.data.debitAmount : params.data.creditAmount,
-      paymentNotes: params.data.paymentNotes 
+      totalAmount:
+        params.data.paymentType === 0
+          ? params.data.debitAmount
+          : params.data.creditAmount,
+      paymentNotes: params.data.paymentNotes,
     };
-    console.log(ledgerUpdateEntry)
+    console.log(ledgerUpdateEntry);
     API.updateSpecificLatexEntry(ledgerUpdateEntry)
       .then((res) => {
         this.componentDidMount();
@@ -203,6 +199,7 @@ class SpecificLedgerCustomer extends Component {
     this.loadLedgerCustomers(customerId);
     this.setState({
       addLedgerEntryFormTrigger: false,
+      addLedgerPrintEntryFormTrigger: false,
     });
   };
   loadLedgerEntries = (customerId) => {
@@ -239,23 +236,6 @@ class SpecificLedgerCustomer extends Component {
         console.log(err);
       });
   };
-  handlePrintLedger = (event) => {
-    console.log(this.state.customerList.customerId);
-    this.setState({ gettingLedger: true });
-    API.generateLedgerStatement({
-      customerId: this.state.customerList.customerId,
-    }).then((res) => {
-      console.log(res.data);
-      this.setState({
-        generatedLedger: res.data,
-      });
-      API.uploadLedgerToAws({ file: res.data }).then((res) => {
-        mergeAllPDFs(res.data).then((result) =>
-          this.setState({ gettingLedger: false })
-        );
-      });
-    });
-  };
   render() {
     let customerName = "Name:\t\t\t\t\t";
     let customerAddress = "Address:\t\t\t\t\t";
@@ -273,7 +253,10 @@ class SpecificLedgerCustomer extends Component {
           <button id="addCashPayment" onClick={this.showLedgerEntryForm}>
             Add Ledger
           </button>
-          <button id="addCustomer" onClick={() => this.handlePrintLedger()}>
+          <button
+            id="addCustomer"
+            onClick={() => this.showLedgerPrintEntryForm()}
+          >
             {this.state.gettingLedger ? (
               <Spinner
                 as="span"
@@ -346,6 +329,11 @@ class SpecificLedgerCustomer extends Component {
           trigger={this.state.addLedgerEntryFormTrigger}
           closeLedgerEntryForm={this.closeLedgerEntryForm}
         ></NewLedgerEntryForm>
+
+        <NewLedgerPrintForm
+          trigger={this.state.addLedgerPrintEntryFormTrigger}
+          closeLedgerPrintEntryForm={this.closeLedgerPrintEntryForm}
+        ></NewLedgerPrintForm>
       </>
     );
   }
