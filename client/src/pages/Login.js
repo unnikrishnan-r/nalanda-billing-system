@@ -66,23 +66,23 @@ class Login extends Component {
           sessionStorage.setItem("UserId", res.data.id);
           console.log("going to redirect");
 
-          var emailData = {
-            service_id: process.env.REACT_APP_EMAILJS_SERVICEID,
-            template_id: process.env.REACT_APP_EMAILJS_TEMPATEID,
-            user_id: process.env.REACT_APP_EMAILJS_USERID,
-            template_params: {
-              from_name: res.data.username,
-              timestamp: moment().format("ddd MMMM Do, YYYY HH:mm:ss"),
-              message: "",
-            },
-          };
-          API.sendEmail(emailData)
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          // var emailData = {
+          //   service_id: process.env.REACT_APP_EMAILJS_SERVICEID,
+          //   template_id: process.env.REACT_APP_EMAILJS_TEMPATEID,
+          //   user_id: process.env.REACT_APP_EMAILJS_USERID,
+          //   template_params: {
+          //     from_name: res.data.username,
+          //     timestamp: moment().format("ddd MMMM Do, YYYY HH:mm:ss"),
+          //     message: "",
+          //   },
+          // };
+          // API.sendEmail(emailData)
+          //   .then((res) => {
+          //     console.log(res.data);
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //   });
           this.props.history.push("/customer");
         })
         .catch((err) => {
