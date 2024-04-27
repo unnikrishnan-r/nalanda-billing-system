@@ -7,11 +7,7 @@ import "ag-grid-enterprise";
 import moment from "moment";
 import "./style.css";
 import StatusRenderer from "../components/StatusRenderer";
-import {
-  Container,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
@@ -20,7 +16,8 @@ import Navbar from "../components/Navbar";
 import API from "../utils/API";
 
 function formatNumber(number) {
-  return  Number(number).toFixed(2)
+  return Number(number)
+    .toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
@@ -28,7 +25,7 @@ function currencyFormatter(params) {
   return "Rs." + formatNumber(params.value);
 }
 
-function digitFormatter(params){
+function digitFormatter(params) {
   return Number(params.value).toFixed(2);
 }
 var dateFilterParams = {
@@ -92,6 +89,7 @@ class LatexCollection extends Component {
         field: "collectionDate",
         filter: "agDateColumnFilter",
         filterParams: dateFilterParams,
+        cellClass: "latexCollectionDate",
         headerName: "Collection Date",
         floatingFilter: true,
 
@@ -188,6 +186,15 @@ class LatexCollection extends Component {
           "</div>",
       },
     },
+    excelStyles: [
+      {
+        id: "latexCollectionDate",
+        dataType: "DateTime",
+        numberFormat: {
+          format: 'dd/mm/yyyy'
+      }
+      },
+    ],
     frameworkComponents: {
       statusRenderer: StatusRenderer,
     },
@@ -282,7 +289,7 @@ class LatexCollection extends Component {
             <div className="grid-child purple" id="lspace">
               <Form.Group>
                 <div className="titleText">
-                <Form.Label>From Date</Form.Label>
+                  <Form.Label>From Date</Form.Label>
                 </div>
 
                 <SingleDatePicker
@@ -333,7 +340,7 @@ class LatexCollection extends Component {
                 />
               </Form.Group>
             </div>
-            <div className="grid-child purple" id="lbtns" >
+            <div className="grid-child purple" id="lbtns">
               <Form.Group>
                 <div className="titleText">
                   <Form.Label className="titleText"></Form.Label>
@@ -376,6 +383,7 @@ class LatexCollection extends Component {
           <AgGridReact
             rowData={this.state.latexCollection}
             columnDefs={this.state.columnDefs}
+            excelStyles={this.state.excelStyles}
             defaultColDef={this.state.defaultColDef}
             getRowStyle={getRowStyle}
             frameworkComponents={this.state.frameworkComponents}
