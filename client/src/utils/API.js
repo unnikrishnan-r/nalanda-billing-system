@@ -1,5 +1,4 @@
 import axios from "axios";
-require("dotenv").config();
 
 const API = process.env.REACT_APP_API || "http://localhost:3005";
 console.log(API);
