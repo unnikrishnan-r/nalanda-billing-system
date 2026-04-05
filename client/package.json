@@ -2,8 +2,8 @@
   "name": "nalanda-billing-system",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "24.x",
+    "npm": "11.x"
   },
   "description": "Application that manages Latex Collection and Billing for Nalanda Associates",
   "proxy": "http://localhost:3001/",
@@ -24,7 +24,7 @@
     "react-dates": "^21.8.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.3.2",
     "react-to-print": "^2.14.7",
     "web-animations-js": "^2.3.2"

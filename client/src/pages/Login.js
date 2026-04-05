@@ -12,7 +12,6 @@ import Card from "react-bootstrap/Card";
 import Nav from "../components/Navbar";
 import "web-animations-js/web-animations-next.min.js";
 import moment from "moment";
-require("dotenv").config();
 
 const loginDivStyle = {
   float: "right",
