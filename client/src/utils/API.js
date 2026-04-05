@@ -202,6 +202,13 @@ export default {
       }
     );
   },
+  sendAssistantMessage: function (messageData) {
+    return axios.post(API + "/api/assistant", messageData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  },
   calculateNetDue: function () {
     return axios.post(API + `/api/netdueCalc/new`, {
       headers: {

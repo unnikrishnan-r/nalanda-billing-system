@@ -14,6 +14,7 @@ import SpecificCustomer from "./pages/SpecificCustomer";
 import SpecificLedgerCustomer from "./pages/SpecificLedgerCustomer"
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
+import ChatWidget from "./components/ChatWidget";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             component={SpecificLedgerCustomer}
           />
         </Switch>
+        <ChatWidget />
       </div>
     </Router>
   );
